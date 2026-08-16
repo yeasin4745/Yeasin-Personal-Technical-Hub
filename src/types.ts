@@ -14,7 +14,7 @@ export interface TechnicalPillar {
   accentColor: 'cyan' | 'emerald' | 'indigo' | 'amber';
   protocols: string[];
   keyTopics: string[];
-  terminalCommand: string;
+  architectureFocus: string;
 }
 
 export interface ProjectItem {

@@ -2,14 +2,15 @@
  * Centralized Site & SEO Configuration
  *
  * Single source of truth for website URL, metadata, and canonical routing.
- * Uses `import.meta.env.VITE_SITE_URL` as the primary production URL configuration.
- * Automatically falls back to runtime origin in local/preview environments.
+ * Primary production domain: https://yeasin4745-dev.vercel.app
+ * Overridable via `VITE_SITE_URL` environment variable.
  */
 
 export const SITE_CONFIG = {
   name: 'Yeasin',
   legalFullName: 'Md Yeasin Mia',
   handle: 'yeasin4745',
+  productionDomain: 'https://yeasin4745-dev.vercel.app',
   title: 'Yeasin (yeasin4745) | Backend Development, Networking & Cybersecurity Hub',
   shortTitle: 'Yeasin | Backend & Network Security',
   description:
@@ -30,7 +31,7 @@ export const SITE_CONFIG = {
   email: 'yeasin.devx@gmail.com',
 
   /**
-   * Resolve the canonical base URL from environment or browser runtime
+   * Resolve the canonical base URL from environment or production default
    */
   getBaseUrl(): string {
     const metaEnv = (import.meta as unknown as { env?: Record<string, string> })?.env;
@@ -38,10 +39,7 @@ export const SITE_CONFIG = {
     if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
       return envUrl.trim().replace(/\/+$/, '');
     }
-    if (typeof window !== 'undefined' && window.location && window.location.origin) {
-      return window.location.origin;
-    }
-    return '';
+    return this.productionDomain;
   },
 
   /**
@@ -59,7 +57,7 @@ export const SITE_CONFIG = {
 
 /**
  * Initializes and synchronizes client-side canonical tags, Open Graph URLs, and JSON-LD structured data
- * based on the active production URL configuration without hard-coding old domains.
+ * based on the active production URL configuration.
  */
 export function initSiteSeo(): void {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
@@ -83,19 +81,4 @@ export function initSiteSeo(): void {
     document.head.appendChild(ogUrlMeta);
   }
   ogUrlMeta.content = canonicalUrl;
-
-  // 3. Synchronize JSON-LD Person Schema
-  const jsonLdScript = document.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
-  if (jsonLdScript) {
-    try {
-      const data = JSON.parse(jsonLdScript.textContent || '{}');
-      data.url = canonicalUrl;
-      data.name = SITE_CONFIG.name;
-      data.alternateName = ['yeasin4745', 'yeasin_4745', '#yeasin', SITE_CONFIG.legalFullName];
-      data.sameAs = [SITE_CONFIG.githubUrl];
-      jsonLdScript.textContent = JSON.stringify(data, null, 2);
-    } catch {
-      // Keep existing structure if parse fails
-    }
-  }
 }

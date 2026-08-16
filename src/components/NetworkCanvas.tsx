@@ -29,6 +29,12 @@ export const NetworkCanvas: React.FC = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
+    let isPaused = false;
+
+    // Check reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768;
+
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -36,6 +42,9 @@ export const NetworkCanvas: React.FC = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      if (prefersReducedMotion) {
+        drawStaticLayout();
+      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -50,11 +59,25 @@ export const NetworkCanvas: React.FC = () => {
       mouseRef.current.active = false;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseleave', handleMouseLeave);
+    }
 
-    // Generate balanced network nodes
-    const nodeCount = Math.min(Math.floor(width / 32), 45);
+    // Pause rendering when tab is hidden to save battery & CPU
+    const handleVisibilityChange = () => {
+      isPaused = document.hidden;
+      if (!isPaused && !prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Dynamic node scaling based on device profile
+    const nodeCount = isMobile
+      ? Math.min(Math.floor(width / 45), 18)
+      : Math.min(Math.floor(width / 32), 40);
+
     const nodes: Node[] = [];
     const colors = ['#00f0ff', '#38bdf8', '#10b981', '#6366f1'];
 
@@ -62,17 +85,56 @@ export const NetworkCanvas: React.FC = () => {
       nodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        radius: Math.random() * 1.8 + 1.2,
+        vx: (Math.random() - 0.5) * (isMobile ? 0.25 : 0.4),
+        vy: (Math.random() - 0.5) * (isMobile ? 0.25 : 0.4),
+        radius: Math.random() * 1.5 + 1.1,
         color: colors[Math.floor(Math.random() * colors.length)],
         pulsePhase: Math.random() * Math.PI * 2,
       });
     }
 
+    // Static fallback render for reduced motion
+    const drawStaticLayout = () => {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = node.color;
+        ctx.globalAlpha = 0.35;
+        ctx.fill();
+
+        for (let j = i + 1; j < nodes.length; j++) {
+          const other = nodes[j];
+          const dx = node.x - other.x;
+          const dy = node.y - other.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const maxDist = isMobile ? 100 : 130;
+
+          if (dist < maxDist) {
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(other.x, other.y);
+            ctx.strokeStyle = '#38bdf8';
+            ctx.globalAlpha = (1 - dist / maxDist) * 0.1;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+    };
+
+    if (prefersReducedMotion) {
+      drawStaticLayout();
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
+    }
+
     // Packet transmission simulator along network edges
     const packets: Packet[] = [];
-    const maxPackets = 8;
+    const maxPackets = isMobile ? 3 : 6;
 
     const spawnPacket = () => {
       if (packets.length >= maxPackets || nodes.length < 2) return;
@@ -85,7 +147,7 @@ export const NetworkCanvas: React.FC = () => {
         sourceIndex: s,
         targetIndex: t,
         progress: 0,
-        speed: 0.008 + Math.random() * 0.012,
+        speed: 0.008 + Math.random() * 0.01,
         color: Math.random() > 0.4 ? '#00f0ff' : '#10b981',
       });
     };
@@ -93,11 +155,13 @@ export const NetworkCanvas: React.FC = () => {
     let tick = 0;
 
     const render = () => {
+      if (isPaused) return;
+
       tick++;
       ctx.clearRect(0, 0, width, height);
 
       // Spawn periodic packet transmissions
-      if (tick % 60 === 0 && Math.random() > 0.3) {
+      if (tick % (isMobile ? 120 : 75) === 0 && Math.random() > 0.3) {
         spawnPacket();
       }
 
@@ -112,25 +176,25 @@ export const NetworkCanvas: React.FC = () => {
         if (node.x < 0 || node.x > width) node.vx *= -1;
         if (node.y < 0 || node.y > height) node.vy *= -1;
 
-        // Mouse gravity pull (cybernetic subtle field)
-        if (mouseRef.current.active) {
+        // Mouse gravity pull (desktop only)
+        if (!isMobile && mouseRef.current.active) {
           const dx = mouseRef.current.x - node.x;
           const dy = mouseRef.current.y - node.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 180 && dist > 10) {
-            node.x += (dx / dist) * 0.35;
-            node.y += (dy / dist) * 0.35;
+          if (dist < 160 && dist > 10) {
+            node.x += (dx / dist) * 0.25;
+            node.y += (dy / dist) * 0.25;
           }
         }
 
-        // Draw node with subtle cyber glow
-        node.pulsePhase += 0.03;
-        const currentRadius = node.radius + Math.sin(node.pulsePhase) * 0.5;
+        // Draw node
+        node.pulsePhase += 0.025;
+        const currentRadius = node.radius + Math.sin(node.pulsePhase) * 0.4;
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, currentRadius, 0, Math.PI * 2);
         ctx.fillStyle = node.color;
-        ctx.globalAlpha = 0.65;
+        ctx.globalAlpha = 0.55;
         ctx.fill();
 
         // Connect adjacent network nodes
@@ -139,15 +203,15 @@ export const NetworkCanvas: React.FC = () => {
           const dx = node.x - other.x;
           const dy = node.y - other.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 135;
+          const maxDist = isMobile ? 105 : 130;
 
           if (dist < maxDist) {
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
             ctx.strokeStyle = '#38bdf8';
-            ctx.globalAlpha = (1 - dist / maxDist) * 0.18;
-            ctx.lineWidth = 0.8;
+            ctx.globalAlpha = (1 - dist / maxDist) * 0.15;
+            ctx.lineWidth = 0.7;
             ctx.stroke();
           }
         }
@@ -170,13 +234,10 @@ export const NetworkCanvas: React.FC = () => {
         const py = src.y + (tgt.y - src.y) * pkt.progress;
 
         ctx.beginPath();
-        ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+        ctx.arc(px, py, 2.0, 0, Math.PI * 2);
         ctx.fillStyle = pkt.color;
-        ctx.globalAlpha = 0.9;
-        ctx.shadowColor = pkt.color;
-        ctx.shadowBlur = 6;
+        ctx.globalAlpha = 0.85;
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
 
       ctx.globalAlpha = 1.0;
@@ -187,8 +248,11 @@ export const NetworkCanvas: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseleave', handleMouseLeave);
+      }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

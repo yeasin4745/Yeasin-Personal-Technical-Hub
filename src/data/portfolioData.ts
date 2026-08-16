@@ -36,7 +36,7 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'Server-Side Request Validation & Rate Limiting',
       'Database Schema Design & Query Optimization',
     ],
-    terminalCommand: 'curl -I https://yeasin4745/api/v1/health',
+    architectureFocus: 'Asynchronous Event-Driven Pipelines & Resilient REST APIs',
   },
   {
     id: 'networking',
@@ -52,7 +52,7 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'Wireshark Deep Packet Inspection & Stream Analysis',
       'DNS Resolution & Recursive Query Architecture',
     ],
-    terminalCommand: 'traceroute -T -p 443 yeasin4745.net',
+    architectureFocus: 'Layer 3/4 Packet Routing, Sockets & Protocol Analysis',
   },
   {
     id: 'security',
@@ -68,7 +68,7 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'API Security: Prevention of Injection, CSRF, and Broken Auth',
       'Vulnerability Surface Scanning & Hardening',
     ],
-    terminalCommand: 'nmap -sV -sC -Pn security-target.lab',
+    architectureFocus: 'Zero-Trust Verification, Threat Modeling & Defensive Controls',
   },
   {
     id: 'linux',
@@ -84,7 +84,7 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'File Permissions (chmod/chown), ACLs, and Sudoers',
       'Process Lifecycle (kill, ps, top, htop, fork/exec)',
     ],
-    terminalCommand: 'ps aux --sort=-%mem | head -n 10',
+    architectureFocus: 'POSIX Process Lifecycles, Daemons & Automated Pipelines',
   },
 ];
 
