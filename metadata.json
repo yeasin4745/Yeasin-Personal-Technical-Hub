@@ -1,0 +1,6 @@
+{
+  "name": "Yeasin - Personal Technical Hub",
+  "description": "Personal Technical Hub for Yeasin, focusing on Backend Development, Networking, Security, Linux Systems, and Research.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

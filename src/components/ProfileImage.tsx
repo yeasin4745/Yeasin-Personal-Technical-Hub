@@ -1,0 +1,297 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Shield, ShieldCheck, Cpu, Sparkles } from 'lucide-react';
+import { PERSONAL_INFO } from '../data/portfolioData';
+
+export type ProfileSize = 'hero' | 'lg' | 'md' | 'sm' | 'xs';
+
+interface ProfileImageProps {
+  className?: string;
+  size?: ProfileSize;
+  interactive?: boolean;
+  showBadge?: boolean;
+  badgeText?: string;
+  glowIntensity?: 'high' | 'medium' | 'subtle';
+  id?: string;
+}
+
+// Single Source of Truth for Official Profile Image
+const OFFICIAL_IMAGE_SRC = '/IMG_20260816_185642.png';
+const FALLBACK_PATHS = ['/IMG_20260816_185642.png', 'IMG_20260816_185642.png', '/profile.png', '/profile.jpg'];
+
+export const ProfileImage: React.FC<ProfileImageProps> = ({
+  className = '',
+  size = 'hero',
+  interactive = true,
+  showBadge = true,
+  badgeText = 'IDENTITY // VERIFIED',
+  glowIntensity = 'high',
+  id = 'cyber-profile-image',
+}) => {
+  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  
+  // 3D Parallax Tilt state
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Check prefers-reduced-motion
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleMotionChange);
+    } else {
+      mediaQuery.addListener(handleMotionChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleMotionChange);
+      } else {
+        mediaQuery.removeListener(handleMotionChange);
+      }
+    };
+  }, []);
+
+  // Preload image
+  useEffect(() => {
+    let index = 0;
+    const testNext = () => {
+      if (index >= FALLBACK_PATHS.length) {
+        setImgError(true);
+        return;
+      }
+      const testImg = new Image();
+      testImg.src = FALLBACK_PATHS[index];
+      testImg.onload = () => {
+        setImgLoaded(true);
+      };
+      testImg.onerror = () => {
+        index++;
+        testNext();
+      };
+    };
+    testNext();
+  }, []);
+
+  // Handle subtle 3D tilt on desktop
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!interactive || prefersReducedMotion || size === 'sm' || size === 'xs' || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Controlled tilt angles (max ±7 degrees)
+    const tiltX = ((y - centerY) / centerY) * -6;
+    const tiltY = ((x - centerX) / centerX) * 6;
+    const glowX = (x / rect.width) * 100;
+    const glowY = (y / rect.height) * 100;
+
+    setTilt({ x: tiltX, y: tiltY, glowX, glowY });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0, glowX: 50, glowY: 50 });
+  };
+
+  // Dimension mapping
+  const sizeClasses: Record<ProfileSize, {
+    container: string;
+    imageBox: string;
+    ringThickness: string;
+    outerPadding: string;
+    badgeSize: string;
+    iconSize: string;
+  }> = {
+    hero: {
+      container: 'w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80',
+      imageBox: 'w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72',
+      ringThickness: 'p-[3px] sm:p-[4px]',
+      outerPadding: 'p-3 sm:p-4',
+      badgeSize: 'text-[10px] sm:text-[11px] px-3 py-1',
+      iconSize: 'w-3 h-3 sm:w-3.5 sm:h-3.5',
+    },
+    lg: {
+      container: 'w-40 h-40 sm:w-48 sm:h-48',
+      imageBox: 'w-36 h-36 sm:w-44 sm:h-44',
+      ringThickness: 'p-[2.5px]',
+      outerPadding: 'p-2',
+      badgeSize: 'text-[9px] px-2 py-0.5',
+      iconSize: 'w-3 h-3',
+    },
+    md: {
+      container: 'w-24 h-24 sm:w-28 sm:h-28',
+      imageBox: 'w-22 h-22 sm:w-26 sm:h-26',
+      ringThickness: 'p-[2px]',
+      outerPadding: 'p-1.5',
+      badgeSize: 'text-[8px] px-1.5 py-0.5',
+      iconSize: 'w-2.5 h-2.5',
+    },
+    sm: {
+      container: 'w-10 h-10',
+      imageBox: 'w-9 h-9',
+      ringThickness: 'p-[1.5px]',
+      outerPadding: 'p-0.5',
+      badgeSize: 'text-[7px]',
+      iconSize: 'w-2 h-2',
+    },
+    xs: {
+      container: 'w-8 h-8',
+      imageBox: 'w-7 h-7',
+      ringThickness: 'p-[1px]',
+      outerPadding: 'p-0.5',
+      badgeSize: 'hidden',
+      iconSize: 'w-2 h-2',
+    },
+  };
+
+  const currentSize = sizeClasses[size];
+
+  return (
+    <div
+      id={id}
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      className={`relative inline-flex flex-col items-center justify-center select-none ${className}`}
+      style={{
+        perspective: size === 'hero' ? '1000px' : 'none',
+      }}
+    >
+      {/* Dynamic 3D Transform Wrapper */}
+      <div
+        className="relative flex items-center justify-center transition-transform duration-300 ease-out will-change-transform"
+        style={{
+          transform:
+            interactive && !prefersReducedMotion && size === 'hero'
+              ? `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(0)`
+              : 'none',
+        }}
+      >
+        {/* Layer 1: Outer Neon Ambient Glow Aura */}
+        <div
+          className={`absolute -inset-2 sm:-inset-4 rounded-full pointer-events-none transition-opacity duration-700 ${
+            glowIntensity === 'high'
+              ? 'opacity-80 sm:opacity-90 blur-xl sm:blur-2xl'
+              : glowIntensity === 'medium'
+              ? 'opacity-60 blur-md sm:blur-lg'
+              : 'opacity-40 blur-sm'
+          } ${!prefersReducedMotion ? 'animate-neon-pulse' : ''}`}
+          style={{
+            background:
+              size === 'hero'
+                ? `radial-gradient(circle at ${tilt.glowX}% ${tilt.glowY}%, rgba(6, 182, 212, 0.45), rgba(59, 130, 246, 0.25) 45%, rgba(16, 185, 129, 0.15) 75%, transparent 90%)`
+                : 'radial-gradient(circle, rgba(6, 182, 212, 0.35), rgba(59, 130, 246, 0.2) 60%, transparent 85%)',
+          }}
+        />
+
+        {/* Layer 2: Cyber Geometry Rotating Energy Ring */}
+        <div
+          className={`relative ${currentSize.container} rounded-full flex items-center justify-center`}
+        >
+          {/* Animated Conic Gradient Neon Perimeter Ring */}
+          <div
+            className={`absolute inset-0 rounded-full ${
+              !prefersReducedMotion ? 'animate-neon-spin' : ''
+            }`}
+            style={{
+              padding: size === 'hero' ? '3px' : '2px',
+              background: `conic-gradient(from 0deg, #00f0ff, #38bdf8 25%, #6366f1 50%, #10b981 75%, #00f0ff 100%)`,
+              WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 2.5px), #fff calc(100% - 2px))',
+              mask: 'radial-gradient(farthest-side, transparent calc(100% - 2.5px), #fff calc(100% - 2px))',
+            }}
+          />
+
+          {/* Reverse Micro-Tick Accent Ring (Only for Hero & LG for high-tech precision) */}
+          {(size === 'hero' || size === 'lg') && (
+            <div
+              className={`absolute -inset-1.5 sm:-inset-2 rounded-full border border-dashed border-cyan-500/30 pointer-events-none ${
+                !prefersReducedMotion ? 'animate-neon-spin-reverse' : ''
+              }`}
+            />
+          )}
+
+          {/* Fixed Precision Cyber Ticks (Top, Bottom, Left, Right) for Hero */}
+          {size === 'hero' && (
+            <>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_#00f0ff] z-20" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] z-20" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8] z-20" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_8px_#6366f1] z-20" />
+            </>
+          )}
+
+          {/* Layer 3: Inner High-Depth Shield & Inner Luminous Bezel */}
+          <div
+            className={`relative ${currentSize.imageBox} rounded-full overflow-hidden bg-[#040810] border-[1.5px] border-cyan-400/80 shadow-[inset_0_0_16px_rgba(6,182,212,0.4),0_0_12px_rgba(6,182,212,0.35)] flex items-center justify-center z-10`}
+          >
+            {/* Subtle background tech grid in case of image load delay */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-40 z-0" />
+
+            {/* Official Photo - Centered & Optimized with zero distortion */}
+            {!imgError ? (
+              <img
+                src={OFFICIAL_IMAGE_SRC}
+                alt={`${PERSONAL_INFO.name} (@${PERSONAL_INFO.handle}) - Backend Systems & Cybersecurity Researcher`}
+                className="w-full h-full object-cover object-[center_12%] select-none z-10 transition-transform duration-500 hover:scale-[1.03]"
+                referrerPolicy="no-referrer"
+                loading={size === 'hero' ? 'eager' : 'lazy'}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  const currentAttempt = parseInt(target.dataset.attempt || '0', 10);
+                  if (currentAttempt + 1 < FALLBACK_PATHS.length) {
+                    target.dataset.attempt = (currentAttempt + 1).toString();
+                    target.src = FALLBACK_PATHS[currentAttempt + 1];
+                  } else {
+                    setImgError(true);
+                  }
+                }}
+              />
+            ) : (
+              /* Fallback Cyber Identity Badge if image is unreachable */
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#0b1424] to-[#040810] text-center p-2 z-10">
+                <Shield className="w-8 h-8 text-cyan-400 mb-1" />
+                <span className="font-display font-bold text-white text-xs">
+                  {PERSONAL_INFO.name}
+                </span>
+                <span className="font-mono text-[9px] text-cyan-300">
+                  @{PERSONAL_INFO.handle}
+                </span>
+              </div>
+            )}
+
+            {/* Inner Cyber Shadow Vignette for Seamless Depth */}
+            <div className="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(4,8,16,0.8)] pointer-events-none z-20" />
+
+            {/* Subtle Horizontal Scanline Reflection Overlay */}
+            <div className="absolute inset-0 pointer-events-none z-20 scanline opacity-25" />
+          </div>
+        </div>
+      </div>
+
+      {/* Layer 4: Optional Bottom Verified Telemetry Badge for Hero / LG */}
+      {showBadge && (size === 'hero' || size === 'lg') && (
+        <div className="relative -mt-3 sm:-mt-4 z-30 flex items-center justify-center">
+          <div
+            className={`inline-flex items-center gap-1.5 rounded-full bg-[#080d1a]/95 border border-cyan-500/50 ${currentSize.badgeSize} font-mono font-bold text-cyan-300 shadow-lg shadow-black/80 backdrop-blur-md`}
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] animate-pulse" />
+            <span className="tracking-wider">{badgeText}</span>
+            <ShieldCheck className={`${currentSize.iconSize} text-cyan-400`} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
