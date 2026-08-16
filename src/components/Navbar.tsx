@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Shield, Menu, X, GitFork, Cpu, Activity } from 'lucide-react';
+import { Terminal, Menu, X, GitFork } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { ProfileImage } from './ProfileImage';
+import { YeasinWordmark } from './YeasinWordmark';
 
 interface NavbarProps {
   onOpenTerminal: () => void;
@@ -34,38 +34,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
       id="main-navigation-header"
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#080c14]/90 backdrop-blur-md border-b border-cyan-500/20 py-3 shadow-lg shadow-black/40'
-          : 'bg-transparent py-4'
+          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-cyan-500/20 py-2.5 sm:py-3 shadow-lg shadow-black/50'
+          : 'bg-transparent py-3.5 sm:py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand identity with circular neon avatar */}
+        {/* Brand identity: Distinctive Animated YEASIN Wordmark */}
         <a
           href="#overview"
           id="nav-brand-logo"
-          className="group flex items-center gap-3 text-left focus:outline-none"
+          className="group flex items-center focus:outline-none"
+          aria-label="Yeasin Technical Hub"
         >
-          <ProfileImage
-            size="sm"
-            interactive={false}
-            showBadge={false}
-            glowIntensity="subtle"
-            id="nav-profile-avatar"
-          />
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-base tracking-tight text-white group-hover:text-cyan-400 transition-colors">
-                {PERSONAL_INFO.name}
-              </span>
-              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
-                @{PERSONAL_INFO.handle}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>SYS: OPERATIONAL</span>
-            </div>
-          </div>
+          <YeasinWordmark variant="header" showHandle={true} id="nav-brand-wordmark" />
         </a>
 
         {/* Desktop Navigation Links */}
@@ -158,3 +139,4 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
     </header>
   );
 };
+

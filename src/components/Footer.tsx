@@ -1,6 +1,7 @@
 import React from 'react';
-import { Cpu, Terminal, GitFork, Mail, ArrowUp, Shield } from 'lucide-react';
+import { Terminal, Mail, ArrowUp, GitFork, Shield } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { YeasinWordmark } from './YeasinWordmark';
 
 interface FooterProps {
   onOpenTerminal: () => void;
@@ -20,17 +21,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal }) => {
           
           {/* Brand & Identity */}
           <div className="md:col-span-6 space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-                <Cpu className="w-4 h-4" />
-              </div>
-              <span className="font-display font-bold text-base text-white tracking-tight">
-                {PERSONAL_INFO.name}
-              </span>
-              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
-                @{PERSONAL_INFO.handle}
-              </span>
-            </div>
+            <YeasinWordmark variant="compact" id="footer-yeasin-wordmark" />
             <p className="text-slate-400 text-xs max-w-md leading-relaxed">
               Personal Technical Hub focusing on Backend Systems, Computer Networking, Network Security, and Linux Systems. Built with zero artificial claims.
             </p>

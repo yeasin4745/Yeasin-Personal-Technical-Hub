@@ -2,6 +2,7 @@ import React from 'react';
 import { Terminal, Shield, Network, Server, ArrowRight, Activity, Database, Lock, Cpu, Radio } from 'lucide-react';
 import { PERSONAL_INFO, TELEMETRY_STATS } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
+import { YeasinWordmark } from './YeasinWordmark';
 
 interface HeroProps {
   onOpenTerminal: () => void;
@@ -12,18 +13,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
     <section id="overview" className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Top telemetry badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-6 backdrop-blur-sm shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-slate-300">PERSONAL TECHNICAL HUB //</span>
-          <span className="font-semibold text-cyan-300">@{PERSONAL_INFO.handle}</span>
+        {/* Expressive Hero Wordmark & Telemetry */}
+        <div className="mb-8">
+          <YeasinWordmark variant="hero" id="hero-yeasin-wordmark" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Main Hero Narrative Content */}
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-3">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-white leading-[1.15]">
                 Architecting <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400">Backend Systems</span>, Securing Networks.
               </h1>
               <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
