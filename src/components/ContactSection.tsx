@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, GitFork, Copy, Check, Send, ShieldCheck, Terminal, AlertCircle } from 'lucide-react';
 import { PERSONAL_INFO, EXTENSIBLE_PROFILES } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
@@ -13,8 +13,13 @@ export const ContactSection: React.FC = () => {
     message: '',
     botField: '', // Honeypot field for bot spam trap
   });
+  const [renderedAt, setRenderedAt] = useState<number>(0);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
+
+  useEffect(() => {
+    setRenderedAt(Date.now());
+  }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -24,12 +29,40 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.senderEmail.trim() || !formData.message.trim()) return;
 
-    // Client-side quick length validation
-    if (formData.senderEmail.length > 254 || formData.message.length > 3000) {
+    const name = formData.senderName.trim();
+    const email = formData.senderEmail.trim();
+    const subject = formData.subject.trim();
+    const message = formData.message.trim();
+
+    // Client-side pre-validation
+    if (!name || name.length < 2) {
       setStatus('error');
-      setStatusMessage('Payload exceeds permitted length limits.');
+      setStatusMessage('Please enter your name or handle (minimum 2 characters).');
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      setStatusMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (!subject || subject.length < 2) {
+      setStatus('error');
+      setStatusMessage('Please enter a subject topic.');
+      return;
+    }
+
+    if (!message || message.length < 10) {
+      setStatus('error');
+      setStatusMessage('Please provide a message with at least 10 characters.');
+      return;
+    }
+
+    if (name.length > 100 || email.length > 254 || subject.length > 150 || message.length > 3000) {
+      setStatus('error');
+      setStatusMessage('Input length exceeds allowed limits.');
       return;
     }
 
@@ -44,11 +77,12 @@ export const ContactSection: React.FC = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          name: formData.senderName,
-          email: formData.senderEmail,
-          subject: formData.subject,
-          message: formData.message,
+          name,
+          email,
+          subject,
+          message,
           botField: formData.botField,
+          renderedAt,
         }),
       });
 
@@ -56,22 +90,19 @@ export const ContactSection: React.FC = () => {
 
       if (response.ok && result?.success) {
         setStatus('sent');
-        setStatusMessage(result.message || 'Encrypted transmission logged successfully.');
+        setStatusMessage(result.message || 'Message transmitted successfully.');
         setFormData({ senderName: '', senderEmail: '', subject: '', message: '', botField: '' });
         setTimeout(() => setStatus('idle'), 6000);
       } else if (response.status === 429) {
         setStatus('error');
-        setStatusMessage('Rate limit active. Please wait a few moments before transmitting again.');
+        setStatusMessage('Rate limit active. Please wait a few moments before transmitting another message.');
       } else {
         setStatus('error');
-        setStatusMessage(result?.error || 'Unable to complete transmission. You may also contact directly via email.');
+        setStatusMessage(result?.error || 'Unable to deliver message at this time. Please try again or reach out directly via email.');
       }
     } catch {
-      // Fallback for offline or static client-only execution
-      setStatus('sent');
-      setStatusMessage('Transmission logged locally. For direct priority contact, use verified email below.');
-      setFormData({ senderName: '', senderEmail: '', subject: '', message: '', botField: '' });
-      setTimeout(() => setStatus('idle'), 6000);
+      setStatus('error');
+      setStatusMessage('Connection failed. Please check your network or reach out directly via verified email below.');
     }
   };
 
@@ -256,16 +287,19 @@ export const ContactSection: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label htmlFor="senderName" className="block text-xs font-mono text-slate-300">
-                        Your Name / Handle:
+                        Your Name / Handle <span className="text-cyan-400">*</span>:
                       </label>
                       <input
                         type="text"
                         id="senderName"
+                        required
+                        minLength={2}
                         maxLength={100}
+                        disabled={status === 'sending'}
                         value={formData.senderName}
                         onChange={(e) => setFormData({ ...formData, senderName: e.target.value })}
                         placeholder="e.g. Alex (systems dev)"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50"
                       />
                     </div>
 
@@ -278,26 +312,30 @@ export const ContactSection: React.FC = () => {
                         id="senderEmail"
                         required
                         maxLength={254}
+                        disabled={status === 'sending'}
                         value={formData.senderEmail}
                         onChange={(e) => setFormData({ ...formData, senderEmail: e.target.value })}
                         placeholder="name@domain.com"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
                     <label htmlFor="subject" className="block text-xs font-mono text-slate-300">
-                      Subject Topic:
+                      Subject Topic <span className="text-cyan-400">*</span>:
                     </label>
                     <input
                       type="text"
                       id="subject"
+                      required
+                      minLength={2}
                       maxLength={150}
+                      disabled={status === 'sending'}
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       placeholder="e.g. Backend Collaboration / Networking Query"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50"
                     />
                   </div>
 
@@ -313,12 +351,14 @@ export const ContactSection: React.FC = () => {
                     <textarea
                       id="message"
                       required
+                      minLength={10}
                       maxLength={3000}
                       rows={4}
+                      disabled={status === 'sending'}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Describe your technical inquiry, project question, or collaboration opportunity..."
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none resize-none"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none resize-none disabled:opacity-50"
                     />
                   </div>
 
@@ -354,7 +394,7 @@ export const ContactSection: React.FC = () => {
 
                   {status === 'sent' && (
                     <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs font-mono animate-in fade-in">
-                      ✓ {statusMessage || 'Message securely queued. Direct email is also monitored at ' + PERSONAL_INFO.email}
+                      ✓ {statusMessage || 'Message transmitted successfully.'}
                     </div>
                   )}
 
