@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { GitFork, ExternalLink, CheckCircle, Clock, AlertCircle, Code2 } from 'lucide-react';
 import { VERIFIED_PROJECTS, PERSONAL_INFO } from '../data/portfolioData';
-import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { ScrollReveal } from './ScrollReveal';
 
 export const ProjectsSection: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'verified' | 'pending'>('all');
+  const shouldReduceMotion = useReducedMotion();
 
   const filteredProjects = VERIFIED_PROJECTS.filter((p) => {
     if (activeFilter === 'verified') return p.isVerifiedReal;
@@ -69,97 +71,139 @@ export const ProjectsSection: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        {/* Project Cards Grid with Staggered Scroll Reveal */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <StaggerItem key={project.id}>
-              <div
-                id={`project-card-${project.id}`}
-                className={`h-full rounded-xl border p-6 flex flex-col justify-between transition-all duration-200 ${
-                  project.isVerifiedReal
-                    ? 'bg-[#0d1322] border-slate-800 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-950/20'
-                    : 'bg-[#0a0e17] border-dashed border-amber-500/30'
-                }`}
+        {/* Project Cards Grid with Framer Motion subtle entry animations */}
+        <motion.div
+          layout={!shouldReduceMotion}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                layout={!shouldReduceMotion}
+                initial={
+                  shouldReduceMotion
+                    ? { opacity: 1 }
+                    : { opacity: 0, y: 22, scale: 0.98 }
+                }
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: {
+                    duration: 0.4,
+                    delay: shouldReduceMotion ? 0 : index * 0.06,
+                    ease: [0.21, 0.47, 0.32, 0.98],
+                  },
+                }}
+                exit={
+                  shouldReduceMotion
+                    ? { opacity: 0 }
+                    : {
+                        opacity: 0,
+                        scale: 0.96,
+                        y: 10,
+                        transition: { duration: 0.25, ease: 'easeIn' },
+                      }
+                }
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: -5,
+                        transition: { duration: 0.2, ease: 'easeOut' },
+                      }
+                }
+                className="h-full"
               >
-                <div>
-                  {/* Status Indicator */}
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-800/90 text-slate-300 border border-slate-700">
-                      {project.category}
+                <div
+                  id={`project-card-${project.id}`}
+                  className={`h-full rounded-xl border p-6 flex flex-col justify-between transition-all duration-200 ${
+                    project.isVerifiedReal
+                      ? 'bg-[#0d1322] border-slate-800 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-950/20'
+                      : 'bg-[#0a0e17] border-dashed border-amber-500/30'
+                  }`}
+                >
+                  <div>
+                    {/* Status Indicator */}
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-800/90 text-slate-300 border border-slate-700">
+                        {project.category}
+                      </span>
+
+                      {project.isVerifiedReal ? (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          Verified Repo
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded border border-amber-500/30">
+                          <AlertCircle className="w-3.5 h-3.5" />
+                          Pending User Input
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Project Title & Repo info */}
+                    <h3 className="text-lg font-display font-bold text-white mb-1">
+                      {project.title}
+                    </h3>
+                    <span className="text-xs font-mono text-cyan-400 block mb-3">
+                      {project.repoName}
                     </span>
 
-                    {project.isVerifiedReal ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400">
-                        <CheckCircle className="w-3.5 h-3.5" />
-                        Verified Repo
-                      </span>
+                    <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                      {project.description}
+                    </p>
+
+                    {/* Highlights */}
+                    <div className="space-y-1.5 mb-6">
+                      {project.technicalHighlights.map((highlight, idx) => (
+                        <div key={idx} className="flex items-start gap-2 text-[11px] text-slate-400">
+                          <span className="text-cyan-400 font-bold">›</span>
+                          <span>{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom tags & Links */}
+                  <div>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.architectureTags.map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#131a2b] text-slate-300 border border-slate-800"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {project.githubUrl ? (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        id={`project-link-${project.id}`}
+                        className="w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono flex items-center justify-center gap-2 border border-slate-700 hover:border-slate-600 transition-colors"
+                      >
+                        <GitFork className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>View Repository on GitHub</span>
+                        <ExternalLink className="w-3 h-3 ml-auto text-slate-400" />
+                      </a>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded border border-amber-500/30">
-                        <AlertCircle className="w-3.5 h-3.5" />
-                        Pending User Input
-                      </span>
+                      <div className="w-full py-2 px-3 rounded-lg bg-amber-950/20 text-amber-300/80 text-[11px] font-mono flex items-center justify-center gap-2 border border-amber-500/20">
+                        <Clock className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Awaiting project details from Yeasin</span>
+                      </div>
                     )}
                   </div>
-
-                  {/* Project Title & Repo info */}
-                  <h3 className="text-lg font-display font-bold text-white mb-1">
-                    {project.title}
-                  </h3>
-                  <span className="text-xs font-mono text-cyan-400 block mb-3">
-                    {project.repoName}
-                  </span>
-
-                  <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* Highlights */}
-                  <div className="space-y-1.5 mb-6">
-                    {project.technicalHighlights.map((highlight, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-[11px] text-slate-400">
-                        <span className="text-cyan-400 font-bold">›</span>
-                        <span>{highlight}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
-
-                {/* Bottom tags & Links */}
-                <div>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.architectureTags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#131a2b] text-slate-300 border border-slate-800"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {project.githubUrl ? (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      id={`project-link-${project.id}`}
-                      className="w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono flex items-center justify-center gap-2 border border-slate-700 hover:border-slate-600 transition-colors"
-                    >
-                      <GitFork className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>View Repository on GitHub</span>
-                      <ExternalLink className="w-3 h-3 ml-auto text-slate-400" />
-                    </a>
-                  ) : (
-                    <div className="w-full py-2 px-3 rounded-lg bg-amber-950/20 text-amber-300/80 text-[11px] font-mono flex items-center justify-center gap-2 border border-amber-500/20">
-                      <Clock className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Awaiting project details from Yeasin</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         {/* GitHub profile banner with ScrollReveal */}
         <ScrollReveal delay={0.15} className="mt-10 p-4 rounded-xl bg-gradient-to-r from-[#0d1424] to-[#0a0f1b] border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
