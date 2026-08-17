@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ScrollProgress } from './components/ScrollProgress';
 import { Navbar } from './components/Navbar';
 import { NetworkCanvas } from './components/NetworkCanvas';
 import { Hero } from './components/Hero';
@@ -32,6 +33,9 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#070a10] text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 bg-grid-pattern overflow-hidden">
+      {/* Fixed Viewport Scroll Progress Indicator */}
+      <ScrollProgress />
+
       {/* Interactive GPU-accelerated network packet simulation background */}
       <NetworkCanvas />
 
