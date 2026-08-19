@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Menu, X, GitFork } from 'lucide-react';
+import { Terminal, Menu, X, GitFork, Rss } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface NavbarProps {
   onOpenTerminal: () => void;
+  onOpenRss: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -64,6 +66,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
 
         {/* Action triggers */}
         <div className="hidden sm:flex items-center gap-3">
+          {/* RSS Feed Trigger Button */}
+          <button
+            onClick={onOpenRss}
+            id="nav-rss-trigger"
+            type="button"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-orange-950/40 hover:bg-orange-900/60 text-orange-300 hover:text-orange-200 border border-orange-500/30 hover:border-orange-400 text-xs font-medium transition-all cursor-pointer shadow-sm"
+            title="Subscribe to RSS & JSON Feeds"
+            aria-label="Subscribe to RSS Feed"
+          >
+            <Rss className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
+            <span className="font-mono">RSS</span>
+          </button>
+
+          {/* High Contrast / Cyber Dark Theme Switcher */}
+          <ThemeSwitcher id="nav-theme-switcher" />
+
           <button
             onClick={onOpenTerminal}
             id="nav-terminal-trigger"
@@ -92,6 +110,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
         {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-2 lg:hidden">
           <button
+            onClick={onOpenRss}
+            id="mobile-rss-trigger"
+            className="p-2 rounded-lg bg-orange-950/40 border border-orange-500/40 text-orange-400"
+            aria-label="Open RSS Feeds"
+            title="RSS Feed"
+          >
+            <Rss className="w-4 h-4" />
+          </button>
+          <ThemeSwitcher variant="compact" id="mobile-quick-theme-toggle" />
+          <button
             onClick={onOpenTerminal}
             className="p-2 rounded-lg bg-[#0e1524] border border-cyan-500/30 text-cyan-400"
             aria-label="Open Terminal"
@@ -111,7 +139,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0a0e1a] border-b border-cyan-500/20 px-4 py-4 space-y-3 animate-in slide-in-from-top-2">
+        <div className="lg:hidden bg-[#0a0e1a] border-b border-cyan-500/20 px-4 py-4 space-y-4 animate-in slide-in-from-top-2">
+          {/* RSS Feed & Theme switcher inside mobile drawer */}
+          <div className="pb-2 border-b border-slate-800/80 space-y-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenRss();
+              }}
+              className="w-full flex items-center justify-between p-2.5 rounded-lg bg-orange-950/30 border border-orange-500/30 text-orange-300 text-xs font-mono"
+            >
+              <div className="flex items-center gap-2">
+                <Rss className="w-4 h-4 text-orange-400" />
+                <span>RSS & Syndicate Feeds</span>
+              </div>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300 uppercase">
+                /rss.xml
+              </span>
+            </button>
+            <ThemeSwitcher variant="full" id="mobile-drawer-theme-switcher" />
+          </div>
+
           <div className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <a

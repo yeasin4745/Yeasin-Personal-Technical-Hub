@@ -218,3 +218,79 @@
   background: #38bdf8;
 }
 
+/* ==========================================================================
+   HIGH CONTRAST ACCESSIBILITY THEME (WCAG AAA Optimized)
+   ========================================================================== */
+
+html.high-contrast body,
+html[data-theme="high-contrast"] body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.high-contrast .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px) !important;
+}
+
+html.high-contrast a:focus-visible,
+html.high-contrast button:focus-visible,
+html.high-contrast input:focus-visible,
+html.high-contrast [tabindex]:focus-visible {
+  outline: 3px solid #facc15 !important;
+  outline-offset: 3px !important;
+}
+
+/* Strengthen muted text in high contrast */
+html.high-contrast .text-slate-400,
+html.high-contrast .text-slate-500,
+html.high-contrast .text-slate-600 {
+  color: #e2e8f0 !important;
+}
+
+html.high-contrast .text-slate-300 {
+  color: #f8fafc !important;
+}
+
+/* High contrast card & container borders */
+html.high-contrast .border-slate-800,
+html.high-contrast .border-slate-700,
+html.high-contrast .border-slate-800\/80,
+html.high-contrast .border-slate-800\/60,
+html.high-contrast .border-cyan-500\/20,
+html.high-contrast .border-cyan-500\/30 {
+  border-color: #38bdf8 !important;
+  border-width: 1.5px !important;
+}
+
+html.high-contrast .bg-\[\#070a10\],
+html.high-contrast .bg-\[\#080c14\],
+html.high-contrast .bg-\[\#0a0e1a\],
+html.high-contrast .bg-\[\#0b101c\],
+html.high-contrast .bg-\[\#0b101d\],
+html.high-contrast .bg-\[\#0c111e\],
+html.high-contrast .bg-\[\#060911\],
+html.high-contrast .bg-\[\#070b14\],
+html.high-contrast .bg-\[\#060910\],
+html.high-contrast .bg-\[\#090d17\],
+html.high-contrast .bg-\[\#090d18\],
+html.high-contrast .bg-\[\#0a0f1c\] {
+  background-color: #000000 !important;
+}
+
+/* High contrast code blocks */
+html.high-contrast pre code {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+html.high-contrast ::-webkit-scrollbar-track {
+  background: #000000 !important;
+}
+
+html.high-contrast ::-webkit-scrollbar-thumb {
+  background: #facc15 !important;
+}
+
+

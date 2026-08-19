@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
+import { generateRss2Xml, generateJsonFeed, getAllFeedItems } from './src/utils/rssFeed';
 
 const app = express();
 const PORT = 3000;
@@ -275,6 +276,54 @@ app.post('/api/contact', async (req: Request, res: Response): Promise<void> => {
       error: 'An internal transmission error occurred. Please try again later or reach out via direct email.',
     });
   }
+});
+
+// ==========================================
+// RSS 2.0 & JSON Feed Endpoints for Technical Posts & Labs
+// ==========================================
+
+const getBaseUrl = (req: Request): string => {
+  const forwardedProto = req.headers['x-forwarded-proto'] as string;
+  const protocol = forwardedProto ? forwardedProto.split(',')[0].trim() : req.protocol || 'https';
+  const host = req.headers['x-forwarded-host'] || req.get('host') || 'localhost:3000';
+  return `${protocol}://${host}`;
+};
+
+// RSS 2.0 XML Feed route
+app.get(['/rss.xml', '/feed.xml', '/api/rss'], (req: Request, res: Response): void => {
+  try {
+    const baseUrl = getBaseUrl(req);
+    const xml = generateRss2Xml(baseUrl);
+    
+    res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=1800, s-maxage=3600');
+    res.status(200).send(xml);
+  } catch (err) {
+    console.error('[RSS Generation Error]', err);
+    res.status(500).setHeader('Content-Type', 'text/plain').send('Failed to generate RSS feed.');
+  }
+});
+
+// JSON Feed 1.1 Specification route
+app.get(['/feed.json', '/api/feed.json'], (req: Request, res: Response): void => {
+  try {
+    const baseUrl = getBaseUrl(req);
+    const jsonFeed = generateJsonFeed(baseUrl);
+
+    res.setHeader('Content-Type', 'application/feed+json; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=1800, s-maxage=3600');
+    res.status(200).json(jsonFeed);
+  } catch (err) {
+    console.error('[JSON Feed Error]', err);
+    res.status(500).json({ error: 'Failed to generate JSON feed' });
+  }
+});
+
+// Quick REST summary of all feed items for client components
+app.get('/api/feed/items', (req: Request, res: Response): void => {
+  const baseUrl = getBaseUrl(req);
+  const items = getAllFeedItems(baseUrl);
+  res.status(200).json({ total: items.length, items });
 });
 
 // ==========================================

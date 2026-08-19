@@ -1,13 +1,15 @@
 import React from 'react';
-import { Terminal, Mail, ArrowUp, GitFork, Shield } from 'lucide-react';
+import { Terminal, Mail, ArrowUp, GitFork, Shield, Rss } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface FooterProps {
   onOpenTerminal: () => void;
+  onOpenRss: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenTerminal }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -20,11 +22,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal }) => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
           {/* Brand & Identity */}
-          <div className="md:col-span-6 space-y-3">
+          <div className="md:col-span-6 space-y-4">
             <YeasinWordmark variant="compact" id="footer-yeasin-wordmark" />
             <p className="text-slate-400 text-xs max-w-md leading-relaxed">
               Personal Technical Hub focusing on Backend Systems, Computer Networking, Network Security, and Linux Systems. Built with zero artificial claims.
             </p>
+            <div className="pt-1 flex flex-wrap items-center gap-3">
+              <ThemeSwitcher id="footer-theme-switcher" />
+              <button
+                onClick={onOpenRss}
+                id="footer-rss-btn"
+                type="button"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-950/40 hover:bg-orange-900/60 text-orange-300 border border-orange-500/30 hover:border-orange-400 text-xs font-mono transition-all cursor-pointer"
+              >
+                <Rss className="w-3.5 h-3.5 text-orange-400" />
+                <span>RSS Feed (/rss.xml)</span>
+              </button>
+            </div>
           </div>
 
           {/* Quick Jump Links */}

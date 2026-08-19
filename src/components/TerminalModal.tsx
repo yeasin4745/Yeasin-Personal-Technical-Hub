@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal as TerminalIcon, X, Maximize2, Minimize2, CornerDownLeft, Shield, Server, Network } from 'lucide-react';
+import { Terminal as TerminalIcon, X, Maximize2, Minimize2, CornerDownLeft, Shield, Server, Network, Contrast } from 'lucide-react';
 import { PERSONAL_INFO, VERIFIED_PROJECTS, SECURITY_LABS } from '../data/portfolioData';
+import { useTheme } from '../context/ThemeContext';
 
 interface TerminalModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface CommandLog {
 }
 
 export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose }) => {
+  const { theme, isHighContrast, toggleTheme, setTheme } = useTheme();
   const [inputVal, setInputVal] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [history, setHistory] = useState<CommandLog[]>([
@@ -40,6 +42,18 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
       setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
+
+      const handleTerminalShortcuts = (e: KeyboardEvent) => {
+        // Ctrl+L or Cmd+L to clear terminal
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'l') {
+          e.preventDefault();
+          setHistory([]);
+          setInputVal('');
+        }
+      };
+
+      window.addEventListener('keydown', handleTerminalShortcuts);
+      return () => window.removeEventListener('keydown', handleTerminalShortcuts);
     }
   }, [isOpen]);
 
@@ -63,27 +77,91 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           <div className="space-y-1.5 text-xs">
             <p className="text-cyan-300 font-semibold">AVAILABLE COMMANDS:</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-slate-300">
-              <div><span className="text-emerald-400 font-mono">whoami</span> : Identity & core technical philosophy</div>
-              <div><span className="text-emerald-400 font-mono">status</span> : Telemetry & system health state</div>
-              <div><span className="text-emerald-400 font-mono">projects</span> : Verified backend & logic repositories</div>
-              <div><span className="text-emerald-400 font-mono">labs</span> : Active network & security lab logs</div>
-              <div><span className="text-emerald-400 font-mono">netstat</span> : Protocol stack & active ports</div>
-              <div><span className="text-emerald-400 font-mono">contact</span> : Verified communication channels</div>
-              <div><span className="text-emerald-400 font-mono">clear</span> : Flush terminal output logs</div>
-              <div><span className="text-emerald-400 font-mono">exit</span> : Close terminal interactive view</div>
+              <div><button type="button" onClick={() => setInputVal('whoami')} className="text-emerald-400 font-mono hover:underline text-left">whoami</button> : Identity & formatted bio of Yeasin</div>
+              <div><button type="button" onClick={() => setInputVal('status')} className="text-emerald-400 font-mono hover:underline text-left">status</button> : Telemetry & system health state</div>
+              <div><button type="button" onClick={() => setInputVal('projects')} className="text-emerald-400 font-mono hover:underline text-left">projects</button> : Verified backend & logic repositories</div>
+              <div><button type="button" onClick={() => setInputVal('labs')} className="text-emerald-400 font-mono hover:underline text-left">labs</button> : Active network & security lab logs</div>
+              <div><button type="button" onClick={() => setInputVal('netstat')} className="text-emerald-400 font-mono hover:underline text-left">netstat</button> : Protocol stack & active ports</div>
+              <div><button type="button" onClick={() => setInputVal('rss')} className="text-emerald-400 font-mono hover:underline text-left">rss</button> : Live RSS & JSON Feed endpoints</div>
+              <div><button type="button" onClick={() => setInputVal('theme')} className="text-emerald-400 font-mono hover:underline text-left">theme</button> : Switch between Cyber Dark & High Contrast</div>
+              <div><button type="button" onClick={() => setInputVal('contact')} className="text-emerald-400 font-mono hover:underline text-left">contact</button> : Verified communication channels</div>
+              <div><button type="button" onClick={() => { setHistory([]); setInputVal(''); }} className="text-emerald-400 font-mono hover:underline text-left">clear</button> : Reset terminal history (or Ctrl+L)</div>
+              <div><button type="button" onClick={onClose} className="text-emerald-400 font-mono hover:underline text-left">exit</button> : Close terminal interactive view</div>
             </div>
           </div>
         );
         break;
 
       case 'whoami':
+      case 'who am i':
+      case 'bio':
+      case 'about':
+      case 'id':
         output = (
-          <div className="text-xs space-y-1 text-slate-300">
-            <p><strong className="text-cyan-400">Name:</strong> {PERSONAL_INFO.name} ({PERSONAL_INFO.legalFullName})</p>
-            <p><strong className="text-cyan-400">Handle:</strong> {PERSONAL_INFO.handle}</p>
-            <p><strong className="text-cyan-400">Role:</strong> {PERSONAL_INFO.roleSummary}</p>
-            <p><strong className="text-cyan-400">Location:</strong> {PERSONAL_INFO.location}</p>
-            <p><strong className="text-cyan-400">Status:</strong> {PERSONAL_INFO.status}</p>
+          <div className="text-xs space-y-2.5 font-mono text-slate-200 border-l-2 border-cyan-400 pl-3 py-1.5 bg-cyan-950/20 rounded-r-md">
+            {/* Header Identity Row */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-cyan-500/20 pb-2">
+              <div>
+                <span className="text-cyan-300 font-bold text-sm">{PERSONAL_INFO.name}</span>
+                <span className="text-slate-400 text-xs ml-2">(@{PERSONAL_INFO.handle})</span>
+                <span className="text-[10px] text-slate-500 block">Legal Full Name: {PERSONAL_INFO.legalFullName}</span>
+              </div>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                ● {PERSONAL_INFO.status}
+              </span>
+            </div>
+
+            {/* Tagline */}
+            <div className="text-slate-300 italic text-[11px] leading-relaxed text-cyan-200/90">
+              "{PERSONAL_INFO.tagline}"
+            </div>
+
+            {/* Role Summary & Bio */}
+            <div className="text-xs text-slate-300 leading-relaxed space-y-0.5">
+              <p className="font-semibold text-cyan-400">TECHNICAL PROFILE & BIO:</p>
+              <p className="text-slate-300">{PERSONAL_INFO.roleSummary}</p>
+            </div>
+
+            {/* Engineering Pillars & Protocol Stack */}
+            <div className="space-y-1 text-xs">
+              <p className="font-semibold text-cyan-400">CORE SPECIALIZATIONS:</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-slate-300">
+                <div className="flex items-start gap-1.5">
+                  <span className="text-cyan-400 font-bold">▸</span>
+                  <span><strong>Backend Systems:</strong> Node.js, Python, REST APIs, Async I/O, SQL</span>
+                </div>
+                <div className="flex items-start gap-1.5">
+                  <span className="text-emerald-400 font-bold">▸</span>
+                  <span><strong>Computer Networking:</strong> TCP/IP, Sockets, Wireshark, DNS, TLS 1.3</span>
+                </div>
+                <div className="flex items-start gap-1.5">
+                  <span className="text-indigo-400 font-bold">▸</span>
+                  <span><strong>Cybersecurity:</strong> Threat Modeling, OWASP, Defense, Hardening</span>
+                </div>
+                <div className="flex items-start gap-1.5">
+                  <span className="text-amber-400 font-bold">▸</span>
+                  <span><strong>Linux Systems:</strong> POSIX CLI, Shell Scripts, Kernel /proc internals</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Coordinates & Verified Links */}
+            <div className="border-t border-cyan-500/20 pt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
+              <div>
+                <span className="text-slate-500">Location:</span> <span className="text-slate-200">{PERSONAL_INFO.location}</span>
+                <span className="mx-2 text-slate-700">•</span>
+                <span className="text-slate-500">GitHub:</span>{' '}
+                <a href={PERSONAL_INFO.githubUrl} target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline">
+                  @{PERSONAL_INFO.handle}
+                </a>
+              </div>
+              <div>
+                <span className="text-slate-500">Email:</span>{' '}
+                <a href={`mailto:${PERSONAL_INFO.email}`} className="text-emerald-400 hover:underline">
+                  {PERSONAL_INFO.email}
+                </a>
+              </div>
+            </div>
           </div>
         );
         break;
@@ -151,6 +229,24 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
         );
         break;
 
+      case 'rss':
+      case 'feed':
+      case 'feeds':
+        output = (
+          <div className="text-xs font-mono space-y-2">
+            <p className="text-orange-400 font-bold">SYNDICATION & RSS FEED ENDPOINTS:</p>
+            <div className="space-y-1 text-slate-300">
+              <p>• <strong className="text-orange-300">RSS 2.0 XML:</strong> <a href="/rss.xml" target="_blank" rel="noreferrer" className="text-cyan-400 underline">/rss.xml</a></p>
+              <p>• <strong className="text-orange-300">JSON Feed 1.1:</strong> <a href="/feed.json" target="_blank" rel="noreferrer" className="text-cyan-400 underline">/feed.json</a></p>
+              <p>• <strong className="text-orange-300">REST Feed API:</strong> <a href="/api/feed/items" target="_blank" rel="noreferrer" className="text-cyan-400 underline">/api/feed/items</a></p>
+            </div>
+            <p className="text-slate-400 text-[11px]">
+              Covers all verified labs, RFC studies, and systems posts with full XML payload enclosures.
+            </p>
+          </div>
+        );
+        break;
+
       case 'contact':
         output = (
           <div className="text-xs space-y-1 text-slate-300">
@@ -161,7 +257,44 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
         );
         break;
 
+      case 'theme':
+      case 'theme contrast':
+      case 'theme high-contrast':
+      case 'theme dark':
+      case 'theme cyber':
+      case 'theme cyber-dark': {
+        if (cmd === 'theme contrast' || cmd === 'theme high-contrast') {
+          setTheme('high-contrast');
+          output = (
+            <div className="text-xs space-y-1 text-yellow-300 font-mono">
+              <p className="text-yellow-400 font-bold">✓ DISPLAY THEME UPDATED: High Contrast Accessibility Mode</p>
+              <p className="text-white text-[11px]">Solid high-contrast borders and WCAG AAA readability enabled.</p>
+            </div>
+          );
+        } else if (cmd === 'theme dark' || cmd === 'theme cyber' || cmd === 'theme cyber-dark') {
+          setTheme('cyber-dark');
+          output = (
+            <div className="text-xs space-y-1 text-cyan-300 font-mono">
+              <p className="text-cyan-400 font-bold">✓ DISPLAY THEME UPDATED: Cyber Dark Theme</p>
+              <p className="text-slate-300 text-[11px]">Subtle neon gradients and terminal glow enabled.</p>
+            </div>
+          );
+        } else {
+          toggleTheme();
+          const targetTheme = !isHighContrast ? 'High Contrast Accessibility Mode' : 'Cyber Dark Theme';
+          output = (
+            <div className="text-xs space-y-1 text-slate-300 font-mono">
+              <p className="text-emerald-400 font-bold">✓ TOGGLED THEME: {targetTheme}</p>
+              <p className="text-slate-400 text-[11px]">Type 'theme contrast' or 'theme dark' to switch explicitly.</p>
+            </div>
+          );
+        }
+        break;
+      }
+
       case 'clear':
+      case 'cls':
+      case 'reset':
         setHistory([]);
         setInputVal('');
         return;

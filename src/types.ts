@@ -1,3 +1,5 @@
+export type ThemeMode = 'cyber-dark' | 'high-contrast';
+
 export interface NavItem {
   id: string;
   label: string;
