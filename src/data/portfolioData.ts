@@ -6,7 +6,7 @@ export const PERSONAL_INFO = {
   legalFullName: 'Md Yeasin Mia',
   email: 'yeasin.devx@gmail.com',
   githubUrl: 'https://github.com/yeasin4745',
-  profileImageUrl: '/IMG_20260816_185642.png',
+  profileImageUrl: '',
   tagline: 'Architecting Backend Systems, Securing Networks, Exploring Computer Systems.',
   roleSummary: 'Technical learner and future technology professional specializing in Backend Development, Computer Networking, Network Security, and Linux Systems.',
   location: 'Bangladesh',
@@ -37,6 +37,23 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'Database Schema Design & Query Optimization',
     ],
     architectureFocus: 'Asynchronous Event-Driven Pipelines & Resilient REST APIs',
+    codeSnippet: {
+      language: 'typescript',
+      title: 'Express Asynchronous Controller & Error Pipeline',
+      description: 'Structured request handler with try/catch and error delegation.',
+      code: `import express, { Request, Response, NextFunction } from 'express';
+
+const router = express.Router();
+
+router.get('/api/v1/telemetry', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const status = await checkHostHealth();
+    return res.status(200).json({ status: 'nominal', timestamp: Date.now(), data: status });
+  } catch (error) {
+    next(error);
+  }
+});`,
+    },
   },
   {
     id: 'networking',
@@ -53,6 +70,14 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'DNS Resolution & Recursive Query Architecture',
     ],
     architectureFocus: 'Layer 3/4 Packet Routing, Sockets & Protocol Analysis',
+    codeSnippet: {
+      language: 'bash',
+      title: 'Socket Listener & Routing Table Inspection',
+      description: 'Diagnostics for open ports, socket states, and default gateways.',
+      code: `ss -tulpn | grep -E ':(80|443|3000|5432)'
+ip route show default
+ping -c 4 -M do -s 1472 1.1.1.1`,
+    },
   },
   {
     id: 'security',
@@ -69,6 +94,13 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'Vulnerability Surface Scanning & Hardening',
     ],
     architectureFocus: 'Zero-Trust Verification, Threat Modeling & Defensive Controls',
+    codeSnippet: {
+      language: 'bash',
+      title: 'TLS 1.3 Cipher & Security Headers Audit',
+      description: 'Testing defensive HTTP response headers and cryptographic ciphers.',
+      code: `curl -sI https://api.yeasin4745.node/health | grep -iE '(strict-transport|x-frame|content-security)'
+openssl s_client -connect yeasin4745.node:443 -tls1_3`,
+    },
   },
   {
     id: 'linux',
@@ -85,6 +117,14 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
       'Process Lifecycle (kill, ps, top, htop, fork/exec)',
     ],
     architectureFocus: 'POSIX Process Lifecycles, Daemons & Automated Pipelines',
+    codeSnippet: {
+      language: 'bash',
+      title: 'Systemd Unit Status & Journal Tailing',
+      description: 'Inspecting hardened daemon services and real-time log output.',
+      code: `sudo systemctl status backend-node.service
+journalctl -u backend-node.service -f -n 50
+ps aux --sort=-%mem | head -n 10`,
+    },
   },
 ];
 
@@ -168,6 +208,12 @@ export const SECURITY_LABS: SecurityLabItem[] = [
     summary: 'Capturing and analyzing SYN, SYN-ACK, ACK sequence numbers, window scaling, and connection termination (FIN/RST) across local and remote connections.',
     toolsUsed: ['Wireshark', 'tcpdump', 'Raw Sockets', 'curl'],
     keyTakeaway: 'Deepened practical understanding of transmission reliability, retransmissions, and TCP state machine transitions.',
+    codeSnippet: {
+      language: 'bash',
+      title: 'Packet Filter & Capture Syntax',
+      description: 'Capture TCP 3-way handshake packets on port 443 with verbose headers.',
+      code: `sudo tcpdump -i any -nn -v 'tcp[tcpflags] & (tcp-syn|tcp-ack|tcp-fin) != 0 and port 443' -c 10`,
+    },
   },
   {
     id: 'lab-02',
@@ -178,6 +224,14 @@ export const SECURITY_LABS: SecurityLabItem[] = [
     summary: 'Evaluating backend endpoints against missing security headers (HSTS, CSP, X-Frame-Options), improper CORS policies, and token leakage.',
     toolsUsed: ['Postman', 'Node.js', 'JWT Inspector', 'cURL'],
     keyTakeaway: 'Standardized defensive header practices and token expiration lifecycles on backend microservices.',
+    codeSnippet: {
+      language: 'bash',
+      title: 'CORS Pre-Flight & Defensive Headers Inspection',
+      description: 'Audit API endpoint headers for strict transport security and frame restrictions.',
+      code: `curl -i -X OPTIONS https://api.yeasin.local/v1/auth \\
+  -H "Origin: https://yeasin4745.github.io" \\
+  -H "Access-Control-Request-Method: POST"`,
+    },
   },
   {
     id: 'lab-03',
@@ -188,6 +242,15 @@ export const SECURITY_LABS: SecurityLabItem[] = [
     summary: 'Configuring non-root administrative users, enforcing Ed25519 SSH keys, disabling password authentication, and setting up basic UFW firewall rules.',
     toolsUsed: ['Ubuntu Server', 'SSH (Ed25519)', 'UFW / iptables', 'systemd'],
     keyTakeaway: 'Minimized attack surface on Linux hosts by restricting open ports and eliminating brute-force vectors.',
+    codeSnippet: {
+      language: 'bash',
+      title: 'Defensive UFW Rules & Status Verification',
+      description: 'Enforce default deny incoming and explicitly enable secured OpenSSH access.',
+      code: `sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow OpenSSH
+sudo ufw enable && sudo ufw status verbose`,
+    },
   },
   {
     id: 'lab-04',
@@ -198,6 +261,13 @@ export const SECURITY_LABS: SecurityLabItem[] = [
     summary: 'Architecting multi-tier network topologies, isolating backend database subnets from public ingress, and calculating broadcast/network address boundaries.',
     toolsUsed: ['CIDR Calculators', 'Network Diagrams', 'Routing Tables'],
     keyTakeaway: 'Clear principles for network segregation and defense-in-depth layout.',
+    codeSnippet: {
+      language: 'bash',
+      title: 'IP Address & Subnet Routing Scope',
+      description: 'Inspect assigned IPv4 network interfaces and local route table metrics.',
+      code: `ip -br -c addr show
+ip route show`,
+    },
   },
 ];
 
@@ -210,6 +280,13 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
     notes: 'Studying state transition diagrams, sliding window algorithms, congestion window expansion, and socket teardown semantics.',
     references: ['IETF RFC 9293', 'TCP/IP Illustrated Vol. 1'],
     dateAdded: 'Active Study',
+    codeSnippet: {
+      language: 'bash',
+      title: 'TCP Socket State & Window Buffer Inspection',
+      description: 'Observing kernel TCP window buffers and active socket timers.',
+      code: `ss -tin 'sport = :443 or dport = :443'
+cat /proc/sys/net/ipv4/tcp_wmem`,
+    },
   },
   {
     id: 'rfc-9110',
@@ -219,6 +296,12 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
     notes: 'Analyzing stateless request-response mechanics, idempotency of methods, keep-alive connections, and QUIC over UDP.',
     references: ['IETF RFC 9110', 'Cloudflare Learning Guides'],
     dateAdded: 'Active Study',
+    codeSnippet: {
+      language: 'bash',
+      title: 'HTTP/2 Protocol Negotiation Probe',
+      description: 'Verifying TLS ALPN negotiation for HTTP/2 frames.',
+      code: `curl -Iv --http2 https://yeasin4745.node/health -o /dev/null`,
+    },
   },
   {
     id: 'linux-internals',
@@ -228,6 +311,13 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
     notes: 'Investigating how the Linux kernel exposes runtime metrics via /proc, file descriptor management, standard streams, and signals.',
     references: ['Linux Man Pages', 'The Linux Command Line'],
     dateAdded: 'Active Study',
+    codeSnippet: {
+      language: 'bash',
+      title: 'Kernel File Descriptor & Connection Backlog Check',
+      description: 'Querying runtime kernel socket backlog and file descriptors.',
+      code: `cat /proc/sys/net/core/somaxconn
+ls -l /proc/self/fd/`,
+    },
   },
   {
     id: 'owasp-api',
@@ -237,6 +327,14 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
     notes: 'Focusing on Broken Object Level Authorization (BOLA), Broken Authentication, and Unrestricted Resource Consumption prevention.',
     references: ['OWASP Foundation API Security Project'],
     dateAdded: 'Recent Review',
+    codeSnippet: {
+      language: 'bash',
+      title: 'BOLA / IDOR Defensive Verification Probe',
+      description: 'Validate that cross-tenant resource requests return 403 Forbidden.',
+      code: `curl -s -o /dev/null -w "%{http_code}\\n" \\
+  -H "Authorization: Bearer <AUTH_TOKEN>" \\
+  https://api.yeasin.local/v1/users/restricted_resource`,
+    },
   },
 ];
 

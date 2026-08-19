@@ -2,6 +2,7 @@ import React from 'react';
 import { BookOpen, Clock } from 'lucide-react';
 import { RESEARCH_ITEMS } from '../data/portfolioData';
 import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { CodeSnippetBox } from './CodeSnippetBox';
 
 export const LearningRoadmap: React.FC = () => {
   return (
@@ -54,6 +55,19 @@ export const LearningRoadmap: React.FC = () => {
                   <p className="text-xs text-slate-300 leading-relaxed mb-4">
                     {item.notes}
                   </p>
+
+                  {item.codeSnippet && (
+                    <div className="mb-4">
+                      <CodeSnippetBox
+                        code={item.codeSnippet.code}
+                        language={item.codeSnippet.language}
+                        title={item.codeSnippet.title}
+                        description={item.codeSnippet.description}
+                        id={`research-snippet-${item.id}`}
+                        compact={true}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-3 border-t border-slate-800/80">

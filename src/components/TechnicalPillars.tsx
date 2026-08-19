@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Server, Network, Shield, Cpu, Layers, CheckCircle2, Terminal } from 'lucide-react';
+import { Server, Network, Shield, Cpu, Layers, CheckCircle2, Terminal, Code2 } from 'lucide-react';
 import { TECHNICAL_PILLARS } from '../data/portfolioData';
 import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { CodeSnippetBox } from './CodeSnippetBox';
 
 export const TechnicalPillars: React.FC = () => {
   const [selectedPillarId, setSelectedPillarId] = useState<string>(TECHNICAL_PILLARS[0].id);
@@ -155,7 +156,7 @@ export const TechnicalPillars: React.FC = () => {
                 </div>
               </div>
 
-              {/* Protocols & Architecture Focus (No fake curl command) */}
+              {/* Protocols & Architecture Focus */}
               <div className="lg:col-span-5 space-y-5 bg-[#070a12] p-5 rounded-xl border border-slate-800">
                 <div>
                   <h4 className="text-xs font-mono font-bold uppercase text-slate-400 mb-3">
@@ -186,6 +187,23 @@ export const TechnicalPillars: React.FC = () => {
               </div>
 
             </div>
+
+            {/* Pillar Implementation Code Snippet with Copy to Clipboard */}
+            {activePillar.codeSnippet && (
+              <div className="mt-6 pt-6 border-t border-slate-800/80">
+                <h4 className="text-xs font-mono font-bold uppercase text-slate-400 mb-2.5 flex items-center gap-1.5">
+                  <Code2 className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Architecture Pattern & Implementation Sample:</span>
+                </h4>
+                <CodeSnippetBox
+                  code={activePillar.codeSnippet.code}
+                  language={activePillar.codeSnippet.language}
+                  title={activePillar.codeSnippet.title}
+                  description={activePillar.codeSnippet.description}
+                  id={`pillar-snippet-${activePillar.id}`}
+                />
+              </div>
+            )}
           </div>
         </ScrollReveal>
 

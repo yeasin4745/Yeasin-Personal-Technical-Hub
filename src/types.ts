@@ -5,6 +5,13 @@ export interface NavItem {
   iconName?: string;
 }
 
+export interface CodeSnippet {
+  code: string;
+  language: string;
+  title?: string;
+  description?: string;
+}
+
 export interface TechnicalPillar {
   id: string;
   title: string;
@@ -15,6 +22,7 @@ export interface TechnicalPillar {
   protocols: string[];
   keyTopics: string[];
   architectureFocus: string;
+  codeSnippet?: CodeSnippet;
 }
 
 export interface ProjectItem {
@@ -40,6 +48,7 @@ export interface SecurityLabItem {
   summary: string;
   toolsUsed: string[];
   keyTakeaway: string;
+  codeSnippet?: CodeSnippet;
 }
 
 export interface ResearchItem {
@@ -50,6 +59,7 @@ export interface ResearchItem {
   notes: string;
   references: string[];
   dateAdded: string;
+  codeSnippet?: CodeSnippet;
 }
 
 export interface ExtensibleSocialProfile {

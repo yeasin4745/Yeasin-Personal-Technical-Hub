@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Shield, CheckCircle2 } from 'lucide-react';
+import { Shield, CheckCircle2, Terminal } from 'lucide-react';
 import { SECURITY_LABS } from '../data/portfolioData';
 import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { CodeSnippetBox } from './CodeSnippetBox';
 
 export const LabsSection: React.FC = () => {
   const [selectedLabId, setSelectedLabId] = useState<string>(SECURITY_LABS[0].id);
@@ -122,6 +123,23 @@ export const LabsSection: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Lab Code & Command Snippet with Copy to Clipboard */}
+                {activeLab.codeSnippet && (
+                  <div>
+                    <h4 className="text-xs font-mono font-bold uppercase text-slate-400 mb-2 flex items-center gap-1.5">
+                      <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Lab Execution & Packet Filter Command:</span>
+                    </h4>
+                    <CodeSnippetBox
+                      code={activeLab.codeSnippet.code}
+                      language={activeLab.codeSnippet.language}
+                      title={activeLab.codeSnippet.title}
+                      description={activeLab.codeSnippet.description}
+                      id={`lab-snippet-${activeLab.id}`}
+                    />
+                  </div>
+                )}
 
                 {/* Key Practical Takeaway */}
                 <div className="border-t border-slate-800 pt-4">

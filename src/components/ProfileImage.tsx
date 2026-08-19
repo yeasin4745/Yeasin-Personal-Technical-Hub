@@ -12,10 +12,8 @@ interface ProfileImageProps {
   badgeText?: string;
   glowIntensity?: 'high' | 'medium' | 'subtle';
   id?: string;
+  imageSrc?: string;
 }
-
-// Check for custom uploaded image paths if available
-const FALLBACK_PATHS = ['/IMG_20260816_185642.png', '/profile.png', '/profile.jpg'];
 
 export const ProfileImage: React.FC<ProfileImageProps> = ({
   className = '',
@@ -25,8 +23,9 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
   badgeText = 'IDENTITY // VERIFIED',
   glowIntensity = 'high',
   id = 'cyber-profile-image',
+  imageSrc,
 }) => {
-  const [activeImageSrc, setActiveImageSrc] = useState<string | null>(null);
+  const [activeImageSrc, setActiveImageSrc] = useState<string | null>(imageSrc || null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   
   // 3D Parallax Tilt state
@@ -58,30 +57,13 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
     };
   }, []);
 
-  // Soft probe if a custom profile photo has been added to public
   useEffect(() => {
-    let isCancelled = false;
-    let index = 0;
-    const probeNext = () => {
-      if (index >= FALLBACK_PATHS.length || isCancelled) return;
-      const testImg = new Image();
-      testImg.src = FALLBACK_PATHS[index];
-      testImg.onload = () => {
-        if (!isCancelled) {
-          setActiveImageSrc(FALLBACK_PATHS[index]);
-        }
-      };
-      testImg.onerror = () => {
-        index++;
-        probeNext();
-      };
-    };
-    probeNext();
+    setActiveImageSrc(imageSrc || null);
+  }, [imageSrc]);
 
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
+  const handleImageError = () => {
+    setActiveImageSrc(null);
+  };
 
   // Handle subtle 3D tilt on desktop
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -263,7 +245,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
                 className="w-full h-full object-cover object-[center_15%] select-none z-10 transition-transform duration-500 hover:scale-[1.03]"
                 referrerPolicy="no-referrer"
                 loading={size === 'hero' ? 'eager' : 'lazy'}
-                onError={() => setActiveImageSrc(null)}
+                onError={handleImageError}
               />
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#0b1424] via-[#070d18] to-[#040810] text-center p-3 z-10 relative">
