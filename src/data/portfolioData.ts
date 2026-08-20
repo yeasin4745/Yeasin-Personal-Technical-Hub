@@ -6,6 +6,7 @@ export const PERSONAL_INFO = {
   legalFullName: 'Md Yeasin Mia',
   email: 'yeasin.devx@gmail.com',
   githubUrl: 'https://github.com/yeasin4745',
+  linkedinUrl: 'https://linkedin.com/in/yeasin4745',
   profileImageUrl: '',
   tagline: 'Architecting Backend Systems, Securing Networks, Exploring Computer Systems.',
   roleSummary: 'Technical learner and future technology professional specializing in Backend Development, Computer Networking, Network Security, and Linux Systems.',
@@ -346,6 +347,14 @@ export const EXTENSIBLE_PROFILES: ExtensibleSocialProfile[] = [
     isVerified: true,
     type: 'github',
     note: 'Primary code repositories, backend experiments, and open-source learning.',
+  },
+  {
+    platform: 'LinkedIn',
+    handle: 'in/yeasin4745',
+    url: 'https://linkedin.com/in/yeasin4745',
+    isVerified: true,
+    type: 'linkedin',
+    note: 'Professional network, career updates, and verified engineering credentials.',
   },
   {
     platform: 'Primary Technical Hub',

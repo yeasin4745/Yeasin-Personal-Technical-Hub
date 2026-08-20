@@ -11,6 +11,38 @@ interface TerminalModalProps {
 
 export type TerminalColorTheme = 'classic-green' | 'modern-cyber';
 
+export interface TerminalCommandDef {
+  command: string;
+  description: string;
+  category: 'Core' | 'Systems' | 'Display' | 'Audio' | 'Portfolio' | 'Network';
+  aliases?: string[];
+}
+
+export const COMMAND_REGISTRY: TerminalCommandDef[] = [
+  { command: 'help', description: 'List available diagnostic commands', category: 'Core' },
+  { command: 'neofetch', description: 'System specs & ASCII logo summary', category: 'Systems', aliases: ['fetch', 'screenfetch', 'sysinfo', 'systeminfo'] },
+  { command: 'whoami', description: 'Identity & formatted bio of Yeasin', category: 'Portfolio', aliases: ['who am i', 'bio', 'about', 'id'] },
+  { command: 'status', description: 'Real-time telemetry, uptime & stack health', category: 'Systems', aliases: ['uptime', 'health', 'sysstat'] },
+  { command: 'projects', description: 'List verified public repositories', category: 'Portfolio', aliases: ['repos', 'work'] },
+  { command: 'labs', description: 'Network & cybersecurity lab journals', category: 'Systems', aliases: ['security', 'experiments'] },
+  { command: 'skills', description: 'Core technical stack & engineering competencies', category: 'Portfolio', aliases: ['stack', 'tech'] },
+  { command: 'netstat', description: 'Active protocol listeners & network sockets', category: 'Network' },
+  { command: 'date', description: 'Linux system date & current time', category: 'Systems', aliases: ['time', 'datetime', 'date -u', 'date --utc'] },
+  { command: 'audio on', description: 'Enable system acoustic sound effects', category: 'Audio', aliases: ['sound on', 'unmute'] },
+  { command: 'audio off', description: 'Mute system sound effects', category: 'Audio', aliases: ['sound off', 'mute'] },
+  { command: 'audio toggle', description: 'Toggle sound effects state', category: 'Audio', aliases: ['audio', 'sound'] },
+  { command: 'bell', description: 'Trigger soft terminal acoustic bell (BEL 0x07)', category: 'Audio' },
+  { command: 'color green', description: 'Switch to CRT Phosphor Green theme', category: 'Display', aliases: ['color classic', 'theme green', 'theme classic'] },
+  { command: 'color cyber', description: 'Switch to Modern Cyber theme', category: 'Display', aliases: ['color modern', 'theme cyber', 'theme modern'] },
+  { command: 'theme', description: 'Toggle site-wide accessibility theme', category: 'Display' },
+  { command: 'theme contrast', description: 'Enable High Contrast accessibility mode', category: 'Display', aliases: ['theme high-contrast'] },
+  { command: 'theme dark', description: 'Enable Cyber Dark default theme', category: 'Display' },
+  { command: 'rss', description: 'Syndication endpoints (XML & JSON feeds)', category: 'Core', aliases: ['feed', 'feeds'] },
+  { command: 'contact', description: 'Direct contact info & verified GitHub', category: 'Portfolio', aliases: ['email', 'socials'] },
+  { command: 'clear', description: 'Clear terminal screen log (or Ctrl+L)', category: 'Core', aliases: ['cls', 'reset'] },
+  { command: 'exit', description: 'Close terminal session window', category: 'Core', aliases: ['quit', 'close'] },
+];
+
 interface CommandLog {
   id: string;
   command: string;
@@ -36,6 +68,10 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
 
   const [inputVal, setInputVal] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number>(0);
+
   const [terminalTheme, setTerminalTheme] = useState<TerminalColorTheme>(() => {
     try {
       const saved = localStorage.getItem('terminal_color_theme');
@@ -67,7 +103,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
         <div className="space-y-1">
           <p className="text-emerald-400 font-semibold">[SYS] Connected to Yeasin Technical Host (yeasin4745.node)</p>
           <p className="text-cyan-400 text-xs">Core Focus: Backend Architecture • Computer Networking • Cybersecurity • Linux Systems</p>
-          <p className="text-slate-400 text-xs">Type <span className="text-cyan-300 font-bold">'help'</span> to see available system diagnostic commands.</p>
+          <p className="text-slate-400 text-xs">Type <span className="text-cyan-300 font-bold">'help'</span> or <span className="text-cyan-300 font-bold">'neofetch'</span> to see system diagnostic info & available commands.</p>
         </div>
       ),
     },
@@ -75,6 +111,121 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  // Command auto-completion matching and ghost prediction
+  const trimmedInput = inputVal.trimStart().toLowerCase();
+
+  const matchingSuggestions = React.useMemo(() => {
+    if (!trimmedInput) return [];
+
+    const exactPrefixMatches: TerminalCommandDef[] = [];
+    const aliasPrefixMatches: TerminalCommandDef[] = [];
+    const substringMatches: TerminalCommandDef[] = [];
+
+    COMMAND_REGISTRY.forEach((def) => {
+      const cmdLower = def.command.toLowerCase();
+      if (cmdLower.startsWith(trimmedInput)) {
+        exactPrefixMatches.push(def);
+      } else if (def.aliases?.some((a) => a.toLowerCase().startsWith(trimmedInput))) {
+        aliasPrefixMatches.push(def);
+      } else if (cmdLower.includes(trimmedInput)) {
+        substringMatches.push(def);
+      }
+    });
+
+    const combined = [...exactPrefixMatches, ...aliasPrefixMatches, ...substringMatches];
+    const seen = new Set<string>();
+    return combined.filter((item) => {
+      if (seen.has(item.command)) return false;
+      seen.add(item.command);
+      return true;
+    });
+  }, [trimmedInput]);
+
+  const topMatch = matchingSuggestions[0];
+  const ghostSuffix = React.useMemo(() => {
+    if (!topMatch || !trimmedInput) return '';
+    const topCmdLower = topMatch.command.toLowerCase();
+    const rawLower = inputVal.toLowerCase();
+    if (topCmdLower.startsWith(rawLower)) {
+      return topMatch.command.slice(inputVal.length);
+    }
+    return '';
+  }, [topMatch, trimmedInput, inputVal]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Tab key: Autocomplete matching suggestion
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (matchingSuggestions.length > 0) {
+        const targetCommand = matchingSuggestions[selectedSuggestionIndex]?.command || topMatch?.command;
+        if (targetCommand) {
+          setInputVal(targetCommand);
+          playKeyPress();
+          if (matchingSuggestions.length > 1) {
+            setSelectedSuggestionIndex((prev) => (prev + 1) % matchingSuggestions.length);
+          }
+        }
+      }
+      return;
+    }
+
+    // Right Arrow: Complete ghost suggestion if cursor is at end of input
+    if (e.key === 'ArrowRight') {
+      const input = inputRef.current;
+      if (input && input.selectionStart === inputVal.length && ghostSuffix && topMatch) {
+        e.preventDefault();
+        setInputVal(topMatch.command);
+        playKeyPress();
+        return;
+      }
+    }
+
+    // Up Arrow: Suggestions list navigation OR previous command history recall
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (matchingSuggestions.length > 1 && inputVal.trim() !== '') {
+        setSelectedSuggestionIndex((prev) => (prev - 1 + matchingSuggestions.length) % matchingSuggestions.length);
+        playKeyPress();
+      } else if (commandHistory.length > 0) {
+        const nextIndex = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+        setHistoryIndex(nextIndex);
+        setInputVal(commandHistory[nextIndex]);
+        playKeyPress();
+      }
+      return;
+    }
+
+    // Down Arrow: Suggestions list navigation OR forward command history recall
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (matchingSuggestions.length > 1 && inputVal.trim() !== '') {
+        setSelectedSuggestionIndex((prev) => (prev + 1) % matchingSuggestions.length);
+        playKeyPress();
+      } else if (historyIndex !== -1) {
+        const nextIndex = historyIndex + 1;
+        if (nextIndex >= commandHistory.length) {
+          setHistoryIndex(-1);
+          setInputVal('');
+        } else {
+          setHistoryIndex(nextIndex);
+          setInputVal(commandHistory[nextIndex]);
+        }
+        playKeyPress();
+      }
+      return;
+    }
+
+    // Escape: Clear current input and reset suggestions
+    if (e.key === 'Escape') {
+      if (inputVal) {
+        e.preventDefault();
+        setInputVal('');
+        setHistoryIndex(-1);
+        setSelectedSuggestionIndex(0);
+      }
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -125,6 +276,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           <div className="space-y-1.5 text-xs">
             <p className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-cyan-300 font-semibold'}>AVAILABLE COMMANDS:</p>
             <div className={`grid grid-cols-1 sm:grid-cols-2 gap-1 ${isClassicGreen ? 'text-emerald-200/90' : 'text-slate-300'}`}>
+              <div><button type="button" onClick={() => setInputVal('neofetch')} className="text-emerald-400 font-mono hover:underline text-left cursor-pointer">neofetch</button> : System specs & ASCII logo summary</div>
               <div><button type="button" onClick={() => setInputVal('whoami')} className="text-emerald-400 font-mono hover:underline text-left cursor-pointer">whoami</button> : Identity & formatted bio of Yeasin</div>
               <div><button type="button" onClick={() => setInputVal('date')} className="text-emerald-400 font-mono hover:underline text-left cursor-pointer">date</button> : Linux system date & current time</div>
               <div><button type="button" onClick={() => setInputVal('audio on')} className="text-emerald-400 font-mono hover:underline text-left cursor-pointer">audio [on|off]</button> : System sound effects toggle</div>
@@ -284,6 +436,78 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             </div>
           );
         }
+        break;
+      }
+
+      case 'neofetch':
+      case 'fetch':
+      case 'screenfetch':
+      case 'sysinfo':
+      case 'systeminfo': {
+        output = (
+          <div className="flex flex-col md:flex-row items-start gap-3 md:gap-5 pt-1">
+            {/* ASCII Art Logo of Yeasin Technical Hub */}
+            <div className="shrink-0 select-none">
+              <pre className={`font-mono text-[11px] leading-[1.18] font-bold ${
+                isClassicGreen
+                  ? 'text-emerald-400 terminal-glow-green'
+                  : 'text-cyan-400 terminal-glow-cyan'
+              }`}>
+{`       .------------------.
+      /  __  ______  _  __ \\
+     |  / / / / __/ / |/ /  |
+     | / /_/ /\\ \\  /    /   |
+     | \\____/___/ /_/|_/    |
+     |  [YEASIN TECH HUB]   |
+      \\____________________/
+          ||          ||     
+       ====            ====  `}
+              </pre>
+              <div className={`text-[10px] text-center mt-1 font-mono font-semibold ${
+                isClassicGreen ? 'text-emerald-600' : 'text-slate-500'
+              }`}>
+                yeasin4745.node
+              </div>
+            </div>
+
+            {/* Neofetch System Information Fields */}
+            <div className="space-y-0.5 text-xs font-mono flex-1">
+              <div className="pb-1">
+                <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-cyan-300 font-bold'}>yeasin</span>
+                <span className={isClassicGreen ? 'text-emerald-500' : 'text-slate-400'}>@</span>
+                <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-indigo-400 font-bold'}>sys.local</span>
+                <div className={`h-[1px] w-full my-1 ${isClassicGreen ? 'bg-emerald-500/40' : 'bg-slate-700'}`} />
+              </div>
+
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>OS:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Linux (POSIX 6.8.0-netsec-hardened)</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Host:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Yeasin Technical Portfolio v2.4 (x86_64)</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Role:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Backend Dev & Systems Researcher</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Kernel:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>6.8.0-sys-async (Linux POSIX)</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Uptime:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Active Continuous Systems Research</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Packages:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Node.js, Express, Python 3, Vite, Tailwind</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Shell:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>yeasin-sh v1.2.0 (interactive)</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Resolution:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Responsive Canvas (WebGL Grid)</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Terminal:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>React XTerm / CRT Phosphor [{isClassicGreen ? 'Classic Green' : 'Modern Cyber'}]</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>CPU:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Asynchronous V8 Event Loop @ 8 Cores</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Memory:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Active / Optimized Static SPA Runtime</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Protocols:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>TCP/IP, Sockets, TLS 1.3, HTTP/2, REST</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Audio FX:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>{isAudioEnabled ? 'Active [Web Audio API]' : 'Muted (type "audio on")'}</span></div>
+              <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Location:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>{PERSONAL_INFO.location}</span></div>
+
+              {/* Color test strip palette */}
+              <div className="flex items-center gap-1.5 pt-2 select-none">
+                <span className="w-3.5 h-3 rounded-sm bg-slate-900 border border-slate-700 inline-block" title="Black" />
+                <span className="w-3.5 h-3 rounded-sm bg-rose-500 inline-block" title="Red" />
+                <span className="w-3.5 h-3 rounded-sm bg-emerald-500 inline-block" title="Green" />
+                <span className="w-3.5 h-3 rounded-sm bg-amber-500 inline-block" title="Yellow" />
+                <span className="w-3.5 h-3 rounded-sm bg-blue-500 inline-block" title="Blue" />
+                <span className="w-3.5 h-3 rounded-sm bg-purple-500 inline-block" title="Magenta" />
+                <span className="w-3.5 h-3 rounded-sm bg-cyan-400 inline-block" title="Cyan" />
+                <span className="w-3.5 h-3 rounded-sm bg-slate-200 inline-block" title="White" />
+              </div>
+            </div>
+          </div>
+        );
         break;
       }
 
@@ -475,6 +699,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           <div className={`text-xs space-y-1 ${isClassicGreen ? 'text-emerald-200' : 'text-slate-300'}`}>
             <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Communication:</strong> Secure Inquiry Form on site (routed to verified inbox)</p>
             <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Verified GitHub:</strong> {PERSONAL_INFO.githubUrl}</p>
+            <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-blue-400'}>Verified LinkedIn:</strong> https://linkedin.com/in/yeasin4745</p>
             <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Official Hubs:</strong> https://yeasin4745-dev.vercel.app | https://yeasin-sec.vercel.app</p>
             <p className={`text-[11px] ${isClassicGreen ? 'text-emerald-400/80' : 'text-slate-400'}`}>Direct encrypted message transmission with zero third-party trackers.</p>
           </div>
@@ -542,6 +767,12 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
     } else {
       playCommandError();
     }
+
+    if (rawCmd) {
+      setCommandHistory((prev) => [...prev, rawCmd]);
+      setHistoryIndex(-1);
+    }
+    setSelectedSuggestionIndex(0);
 
     setHistory((prev) => [
       ...prev,
@@ -727,39 +958,153 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           <div ref={bottomRef} />
         </div>
 
-        {/* Terminal Input Line */}
+        {/* Command Suggestions Bar (appears subtly when typing matching commands) */}
+        {matchingSuggestions.length > 0 && inputVal.trim() !== '' && (
+          <div
+            id="terminal-suggestions-bar"
+            className={`px-3 py-1.5 flex flex-wrap items-center gap-1.5 text-[11px] font-mono border-t transition-all ${
+              isClassicGreen
+                ? 'bg-[#020d05] border-emerald-900/50 text-emerald-300'
+                : 'bg-[#0a0f1d] border-slate-800/90 text-slate-300'
+            }`}
+          >
+            <span className={`text-[10px] uppercase font-bold flex items-center gap-1 shrink-0 ${
+              isClassicGreen ? 'text-emerald-500' : 'text-slate-500'
+            }`}>
+              <Sparkles className="w-3 h-3" />
+              Matches:
+            </span>
+            <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto py-0.5 max-h-16">
+              {matchingSuggestions.slice(0, 5).map((sug, idx) => {
+                const isSelected = idx === selectedSuggestionIndex;
+                return (
+                  <button
+                    key={sug.command}
+                    type="button"
+                    onClick={() => {
+                      playKeyPress();
+                      setInputVal(sug.command);
+                      setSelectedSuggestionIndex(0);
+                      inputRef.current?.focus();
+                    }}
+                    className={`px-2 py-0.5 rounded text-[10.5px] font-mono flex items-center gap-1.5 transition-all cursor-pointer ${
+                      isSelected
+                        ? isClassicGreen
+                          ? 'bg-emerald-500/25 text-emerald-200 border border-emerald-500/70 font-semibold shadow-sm shadow-emerald-500/20'
+                          : 'bg-cyan-500/25 text-cyan-200 border border-cyan-500/70 font-semibold shadow-sm shadow-cyan-500/20'
+                        : isClassicGreen
+                          ? 'bg-emerald-950/40 text-emerald-400/80 hover:text-emerald-200 hover:bg-emerald-900/50 border border-emerald-800/40'
+                          : 'bg-slate-800/60 text-slate-400 hover:text-cyan-300 hover:bg-slate-800 border border-slate-700/50'
+                    }`}
+                    title={`${sug.command} — ${sug.description}`}
+                  >
+                    <span className="font-bold">{sug.command}</span>
+                    <span className={`text-[9.5px] hidden md:inline ${
+                      isSelected
+                        ? isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'
+                        : isClassicGreen ? 'text-emerald-600' : 'text-slate-500'
+                    }`}>
+                      • {sug.description}
+                    </span>
+                    {isSelected && (
+                      <span className={`text-[9px] px-1 py-0.2 rounded font-sans font-medium uppercase tracking-tight ${
+                        isClassicGreen ? 'bg-emerald-500/30 text-emerald-200' : 'bg-cyan-500/30 text-cyan-200'
+                      }`}>
+                        Tab ⇥
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="ml-auto text-[10px] text-slate-500 hidden sm:flex items-center gap-1 shrink-0">
+              <span>Press</span>
+              <kbd className={`px-1 py-0.5 rounded text-[9px] border font-mono ${
+                isClassicGreen ? 'bg-emerald-950/80 border-emerald-800 text-emerald-400' : 'bg-slate-800 border-slate-700 text-slate-400'
+              }`}>Tab</kbd>
+              <span>or</span>
+              <kbd className={`px-1 py-0.5 rounded text-[9px] border font-mono ${
+                isClassicGreen ? 'bg-emerald-950/80 border-emerald-800 text-emerald-400' : 'bg-slate-800 border-slate-700 text-slate-400'
+              }`}>→</kbd>
+              <span>to complete</span>
+            </div>
+          </div>
+        )}
+
+        {/* Terminal Input Line with Ghost Auto-completion */}
         <form onSubmit={handleCommand} className={`${
           isClassicGreen
             ? 'bg-[#030f07] border-t border-emerald-900/60'
             : 'bg-[#0e1422] border-t border-slate-800/80'
-        } p-3 flex items-center gap-2`}>
-          <span className={`font-mono text-xs font-bold whitespace-nowrap ${
+        } p-3 flex items-center gap-2 relative`}>
+          <span className={`font-mono text-xs font-bold whitespace-nowrap select-none ${
             isClassicGreen ? 'text-emerald-400 terminal-glow-green' : 'text-emerald-400'
           }`}>
             yeasin@sys:~$
           </span>
-          <input
-            ref={inputRef}
-            type="text"
-            id="terminal-command-input"
-            value={inputVal}
-            onChange={(e) => {
-              setInputVal(e.target.value);
-              playKeyPress();
-            }}
-            placeholder="Type 'help', 'whoami', 'date', 'audio [on|off]', 'projects'..."
-            className={`flex-1 bg-transparent font-mono text-xs focus:outline-none ${
-              isClassicGreen
-                ? 'text-emerald-300 placeholder:text-emerald-800/80'
-                : 'text-cyan-300 placeholder:text-slate-600'
-            }`}
-            autoComplete="off"
-            spellCheck="false"
-          />
+          <div className="relative flex-1 flex items-center min-w-0">
+            {/* Ghost suggestion overlay positioned under active input */}
+            {ghostSuffix && (
+              <div
+                className="absolute inset-0 flex items-center pointer-events-none font-mono text-xs overflow-hidden select-none"
+                aria-hidden="true"
+              >
+                <span className="opacity-0 whitespace-pre">{inputVal}</span>
+                <span className={`${
+                  isClassicGreen
+                    ? 'text-emerald-500/50 terminal-glow-green font-medium'
+                    : 'text-cyan-400/50 font-medium'
+                }`}>
+                  {ghostSuffix}
+                </span>
+              </div>
+            )}
+            <input
+              ref={inputRef}
+              type="text"
+              id="terminal-command-input"
+              value={inputVal}
+              onChange={(e) => {
+                setInputVal(e.target.value);
+                setSelectedSuggestionIndex(0);
+                playKeyPress();
+              }}
+              onKeyDown={handleKeyDown}
+              placeholder="Type 'help', 'neofetch', 'whoami', 'date', 'projects'..."
+              className={`relative z-10 w-full bg-transparent font-mono text-xs focus:outline-none ${
+                isClassicGreen
+                  ? 'text-emerald-300 placeholder:text-emerald-800/80'
+                  : 'text-cyan-300 placeholder:text-slate-600'
+              }`}
+              autoComplete="off"
+              spellCheck="false"
+            />
+          </div>
+          {ghostSuffix && (
+            <button
+              type="button"
+              id="terminal-tab-complete-btn"
+              onClick={() => {
+                if (topMatch) {
+                  setInputVal(topMatch.command);
+                  playKeyPress();
+                  inputRef.current?.focus();
+                }
+              }}
+              className={`hidden sm:flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded border transition-colors cursor-pointer ${
+                isClassicGreen
+                  ? 'bg-emerald-950/80 border-emerald-800/80 text-emerald-400 hover:text-emerald-200'
+                  : 'bg-slate-800/80 border-slate-700/80 text-slate-400 hover:text-cyan-300'
+              }`}
+              title="Click or press Tab to auto-complete suggestion"
+            >
+              <span>Tab ⇥</span>
+            </button>
+          )}
           <button
             type="submit"
             id="terminal-submit-btn"
-            className={`transition-colors p-1 cursor-pointer ${
+            className={`transition-colors p-1 cursor-pointer shrink-0 ${
               isClassicGreen
                 ? 'text-emerald-600 hover:text-emerald-300'
                 : 'text-slate-500 hover:text-cyan-400'

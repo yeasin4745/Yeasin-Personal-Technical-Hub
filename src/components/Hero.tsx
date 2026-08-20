@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Shield, Network, Server, ArrowRight, Activity, Database, Lock, Cpu, Radio } from 'lucide-react';
+import { Terminal, Shield, Network, Server, ArrowRight, Activity, Lock, Cpu, Radio, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { PERSONAL_INFO, TELEMETRY_STATS } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
 import { YeasinWordmark } from './YeasinWordmark';
@@ -10,52 +10,84 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
   return (
-    <section id="overview" className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+    <section id="overview" className="relative pt-24 pb-14 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 overflow-hidden">
+      {/* Background Cyber Matrix / Dot Grid Overlay */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none z-0" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-br from-cyan-500/10 via-sky-500/5 to-transparent rounded-full blur-3xl pointer-events-none z-0" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Expressive Hero Wordmark & Telemetry */}
-        <div className="mb-8">
-          <YeasinWordmark variant="hero" id="hero-yeasin-wordmark" />
-        </div>
+        {/* Two-Column Responsive Desktop Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          {/* LEFT COLUMN: Identity, Headline, Systems Narrative, Domain Focus & CTAs */}
+          <div className="lg:col-span-7 space-y-6 text-left">
+            
+            {/* Redesigned Distinctive Cybersecurity Wordmark */}
+            <div>
+              <YeasinWordmark variant="hero" id="hero-yeasin-wordmark" />
+            </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Main Hero Narrative Content */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="space-y-3">
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-white leading-[1.15]">
+            {/* Main Headline */}
+            <div className="space-y-3 pt-1">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-white leading-[1.14]">
                 Architecting <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400">Backend Systems</span>, Securing Networks.
               </h1>
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
-                Hi, I'm <strong className="text-white font-semibold">{PERSONAL_INFO.name}</strong>. I am a technical learner and future technology professional dedicated to deep foundational engineering across <span className="text-cyan-300 font-medium">backend server architectures</span>, <span className="text-emerald-300 font-medium">computer networking protocols</span>, <span className="text-indigo-300 font-medium">network security defense</span>, and <span className="text-amber-300 font-medium">Linux systems</span>.
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-sans">
+                Dedicated technical practitioner focused on foundational systems engineering across{' '}
+                <span className="text-cyan-300 font-medium">backend architectures</span>,{' '}
+                <span className="text-emerald-300 font-medium">computer networking protocols</span>,{' '}
+                <span className="text-indigo-300 font-medium">defensive cybersecurity</span>, and{' '}
+                <span className="text-amber-300 font-medium">Linux systems internals</span>.
               </p>
             </div>
 
-            {/* Core Domain Badges */}
+            {/* Technical Domain Badges */}
             <div className="flex flex-wrap gap-2 pt-1 font-mono text-xs">
-              <span className="px-2.5 py-1 rounded bg-slate-900/90 text-cyan-300 border border-cyan-500/20 flex items-center gap-1.5">
+              <span className="px-2.5 py-1 rounded-md bg-[#0c1424] text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-sm shadow-cyan-950/40">
                 <Server className="w-3.5 h-3.5 text-cyan-400" />
-                Backend Dev
+                <span>Backend Dev (Node/Python)</span>
               </span>
-              <span className="px-2.5 py-1 rounded bg-slate-900/90 text-emerald-300 border border-emerald-500/20 flex items-center gap-1.5">
+              <span className="px-2.5 py-1 rounded-md bg-[#0c1424] text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5 shadow-sm shadow-emerald-950/40">
                 <Network className="w-3.5 h-3.5 text-emerald-400" />
-                Computer Networking
+                <span>Computer Networking (TCP/IP)</span>
               </span>
-              <span className="px-2.5 py-1 rounded bg-slate-900/90 text-indigo-300 border border-indigo-500/20 flex items-center gap-1.5">
+              <span className="px-2.5 py-1 rounded-md bg-[#0c1424] text-indigo-300 border border-indigo-500/30 flex items-center gap-1.5 shadow-sm shadow-indigo-950/40">
                 <Shield className="w-3.5 h-3.5 text-indigo-400" />
-                Network Security
+                <span>Network Security & Defense</span>
               </span>
-              <span className="px-2.5 py-1 rounded bg-slate-900/90 text-amber-300 border border-amber-500/20 flex items-center gap-1.5">
+              <span className="px-2.5 py-1 rounded-md bg-[#0c1424] text-amber-300 border border-amber-500/30 flex items-center gap-1.5 shadow-sm shadow-amber-950/40">
                 <Cpu className="w-3.5 h-3.5 text-amber-400" />
-                Linux / Systems
+                <span>Linux & Kernel Systems</span>
               </span>
             </div>
 
+            {/* Cybersecurity HUD Live Status Bar */}
+            <div className="p-3 rounded-lg bg-[#070e1a]/90 border border-cyan-500/25 flex flex-wrap items-center justify-between gap-2.5 font-mono text-[11px] backdrop-blur-sm shadow-inner">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#10b981]" />
+                <span className="text-slate-400">DEFENSE POSTURE:</span>
+                <span className="text-emerald-300 font-bold">HARDENED / ACTIVE</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-400">
+                <span className="hidden sm:inline text-slate-600">|</span>
+                <span className="flex items-center gap-1 text-cyan-300">
+                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>TLS 1.3</span>
+                </span>
+                <span className="hidden sm:inline text-slate-600">|</span>
+                <span className="text-slate-300">
+                  NODE: <strong className="text-white font-mono">0x4745</strong>
+                </span>
+              </div>
+            </div>
+
             {/* Action Callouts */}
-            <div className="flex flex-wrap items-center gap-4 pt-3">
+            <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <a
                 href="#projects"
                 id="hero-cta-projects"
-                className="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-sm transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/25 cursor-pointer"
+                className="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/40 cursor-pointer transform hover:-translate-y-0.5"
               >
                 <span>Explore Verified Projects</span>
                 <ArrowRight className="w-4 h-4" />
@@ -64,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
               <a
                 href="#labs"
                 id="hero-cta-labs"
-                className="px-5 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-cyan-500/50 font-medium text-sm transition-all flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2.5 rounded-lg bg-[#0c1220] hover:bg-[#111a2e] text-slate-200 border border-slate-700 hover:border-cyan-500/50 font-medium text-sm transition-all flex items-center gap-2 cursor-pointer transform hover:-translate-y-0.5"
               >
                 <Shield className="w-4 h-4 text-emerald-400" />
                 <span>Security & Labs</span>
@@ -73,7 +105,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
               <button
                 onClick={onOpenTerminal}
                 id="hero-cta-terminal"
-                className="px-4 py-2.5 rounded-lg bg-[#0e1626] hover:bg-cyan-950/60 text-cyan-300 border border-cyan-500/40 font-mono text-xs transition-all flex items-center gap-2 cursor-pointer"
+                className="px-4 py-2.5 rounded-lg bg-[#0e1626] hover:bg-cyan-950/70 text-cyan-300 border border-cyan-500/40 hover:border-cyan-400 font-mono text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-sm transform hover:-translate-y-0.5"
+                title="Launch Interactive CLI Terminal"
               >
                 <Terminal className="w-3.5 h-3.5 text-cyan-400" />
                 <span>CLI Terminal</span>
@@ -81,38 +114,40 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
             </div>
           </div>
 
-          {/* Right Column: Neon Circular Profile Identity + Telemetry Metrics */}
-          <div className="lg:col-span-5 flex flex-col items-center space-y-6">
+          {/* RIGHT COLUMN: Vertically Aligned Profile Image & Cyber Telemetry HUD */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-6 w-full max-w-md mx-auto lg:max-w-none">
             
             {/* Primary Neon Circular Profile Component */}
-            <ProfileImage
-              size="hero"
-              interactive={true}
-              showBadge={true}
-              badgeText="IDENTITY // VERIFIED"
-              glowIntensity="high"
-              id="hero-profile-avatar"
-            />
+            <div className="relative pt-2">
+              <ProfileImage
+                size="hero"
+                interactive={true}
+                showBadge={true}
+                badgeText="SECURITY // IDENTITY VERIFIED"
+                glowIntensity="high"
+                id="hero-profile-avatar"
+              />
+            </div>
 
-            {/* Live System Telemetry Status Card */}
-            <div className="w-full bg-[#0b101c]/90 border border-cyan-500/30 rounded-xl p-4 shadow-xl shadow-cyan-950/30 relative overflow-hidden backdrop-blur-md">
+            {/* Live System Telemetry Status HUD Card */}
+            <div className="w-full bg-[#0b101c]/95 border border-cyan-500/30 rounded-xl p-4 shadow-xl shadow-cyan-950/40 relative overflow-hidden backdrop-blur-md">
               {/* Card top bar */}
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800/80">
+              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-800/90">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   <span className="font-mono text-[11px] font-bold text-slate-200 uppercase tracking-wider">
                     SYSTEM STATUS TELEMETRY
                   </span>
                 </div>
-                <span className="font-mono text-[10px] text-cyan-400 bg-cyan-950/70 px-2 py-0.5 rounded border border-cyan-500/30">
+                <span className="font-mono text-[10px] text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/40 font-semibold">
                   ESTABLISHED
                 </span>
               </div>
 
               {/* Telemetry Metrics Grid */}
-              <div className="grid grid-cols-2 gap-2.5 mb-3">
+              <div className="grid grid-cols-2 gap-2 mb-3">
                 {TELEMETRY_STATS.map((stat, idx) => (
-                  <div key={idx} className="bg-[#0e1526]/80 p-2.5 rounded-lg border border-slate-800/80">
+                  <div key={idx} className="bg-[#0e1526]/90 p-2.5 rounded-lg border border-slate-800/80">
                     <span className="text-[9px] font-mono text-slate-400 block mb-0.5">
                       {stat.label}
                     </span>
@@ -127,22 +162,22 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
               </div>
 
               {/* Protocol Packet Tracer Simulation */}
-              <div className="bg-[#070b14] p-3 rounded-lg border border-slate-800 font-mono text-[10px] space-y-1.5">
+              <div className="bg-[#070b14] p-2.5 rounded-lg border border-slate-800/90 font-mono text-[10px] space-y-1.5">
                 <div className="flex items-center justify-between text-slate-400 text-[9px]">
-                  <span>[PACKET FLOW TRACER]</span>
+                  <span className="text-cyan-400 font-semibold">[PACKET FLOW TRACER]</span>
                   <span className="text-emerald-400 font-semibold">SYN → SYN-ACK → ACK</span>
                 </div>
                 <div className="space-y-0.5 text-slate-300">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 text-[9.5px]">
                     <span className="text-cyan-400">SRC:</span>
                     <span>192.168.1.105:54322</span>
                     <span className="text-slate-500">→</span>
                     <span className="text-emerald-400">DST:</span>
                     <span>yeasin4745.node:443</span>
                   </div>
-                  <div className="text-slate-400 text-[9px] flex items-center justify-between">
+                  <div className="text-slate-400 text-[9px] flex items-center justify-between pt-0.5 border-t border-slate-800/60">
                     <span>PROTO: TLS 1.3 / TCP</span>
-                    <span className="text-cyan-300">RTT: 14ms (OPTIMAL)</span>
+                    <span className="text-cyan-300 font-semibold">RTT: 14ms (OPTIMAL)</span>
                   </div>
                 </div>
               </div>

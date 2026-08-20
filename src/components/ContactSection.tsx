@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GitFork, Send, ShieldCheck, Terminal, AlertCircle, Globe, Lock, Check } from 'lucide-react';
+import { GitFork, Send, ShieldCheck, Terminal, AlertCircle, Globe, Lock, Check, Linkedin, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO, EXTENSIBLE_PROFILES } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
 import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
@@ -162,8 +162,44 @@ export const ContactSection: React.FC = () => {
               </div>
             </ScrollReveal>
 
+            {/* Professional LinkedIn Connect Button */}
+            <ScrollReveal delay={0.08}>
+              <a
+                href={PERSONAL_INFO.linkedinUrl || 'https://linkedin.com/in/yeasin4745'}
+                target="_blank"
+                rel="noopener noreferrer"
+                id="contact-linkedin-btn"
+                aria-label="Connect with Yeasin on LinkedIn (opens in new tab)"
+                className="group relative flex items-center justify-between p-4 rounded-xl bg-[#0b101c] hover:bg-[#0c1424] border border-blue-500/30 hover:border-blue-400 text-slate-200 transition-all duration-300 shadow-md shadow-blue-950/20 hover:shadow-[0_0_22px_rgba(59,130,246,0.22)] transform hover:-translate-y-0.5 cursor-pointer block"
+              >
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="w-10 h-10 rounded-lg bg-blue-950/80 border border-blue-500/40 flex items-center justify-center text-blue-400 group-hover:text-blue-300 group-hover:bg-blue-900/60 group-hover:border-blue-300 transition-all duration-300 shrink-0">
+                    <Linkedin className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="font-display font-bold text-sm text-white group-hover:text-blue-300 transition-colors">
+                        LinkedIn Profile
+                      </span>
+                      <span className="text-[10px] font-mono text-blue-400 bg-blue-950/80 px-2 py-0.5 rounded border border-blue-500/30 font-semibold">
+                        VERIFIED
+                      </span>
+                    </div>
+                    <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-300 transition-colors truncate block">
+                      linkedin.com/in/yeasin4745
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 group-hover:text-blue-300 transition-colors shrink-0 pl-2">
+                  <span className="hidden sm:inline font-medium">Connect</span>
+                  <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                </div>
+              </a>
+            </ScrollReveal>
+
             {/* Extensible Verified Profiles List with Staggered Scroll Reveal */}
-            <ScrollReveal delay={0.1}>
+            <ScrollReveal delay={0.12}>
               <div className="bg-[#0b101c] border border-slate-800 rounded-xl p-6 space-y-4">
                 <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
                   Verified Online Profiles & Web Hubs:
@@ -173,21 +209,28 @@ export const ContactSection: React.FC = () => {
                   {EXTENSIBLE_PROFILES.map((profile, idx) => (
                     <StaggerItem key={idx}>
                       <div
-                        className={`p-3.5 rounded-lg border text-xs font-mono flex flex-col gap-1.5 ${
+                        className={`p-3.5 rounded-lg border text-xs font-mono flex flex-col gap-1.5 transition-colors ${
                           profile.isVerified
-                            ? 'bg-[#0f1626] border-cyan-500/30'
+                            ? profile.type === 'linkedin'
+                              ? 'bg-[#0b1324] border-blue-500/30 hover:border-blue-500/50'
+                              : 'bg-[#0f1626] border-cyan-500/30'
                             : 'bg-[#0a0e17] border-dashed border-slate-800'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             {profile.type === 'github' && <GitFork className="w-4 h-4 text-cyan-400" />}
+                            {profile.type === 'linkedin' && <Linkedin className="w-4 h-4 text-blue-400" />}
                             {profile.type === 'website' && <Globe className="w-4 h-4 text-emerald-400" />}
                             {profile.type === 'upcoming' && <AlertCircle className="w-4 h-4 text-slate-500" />}
                             <span className="font-bold text-white">{profile.platform}</span>
                           </div>
                           {profile.isVerified ? (
-                            <span className="text-[10px] text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">
+                            <span className={`text-[10px] px-2 py-0.5 rounded border ${
+                              profile.type === 'linkedin'
+                                ? 'text-blue-400 bg-blue-950/80 border-blue-500/30'
+                                : 'text-emerald-400 bg-emerald-950/80 border-emerald-500/30'
+                            }`}>
                               VERIFIED
                             </span>
                           ) : (
@@ -203,10 +246,13 @@ export const ContactSection: React.FC = () => {
                             <a
                               href={profile.url}
                               target="_blank"
-                              rel="noreferrer"
-                              className="text-cyan-400 hover:underline"
+                              rel="noopener noreferrer"
+                              className={`${
+                                profile.type === 'linkedin' ? 'text-blue-400 hover:text-blue-300' : 'text-cyan-400 hover:text-cyan-300'
+                              } hover:underline flex items-center gap-1`}
                             >
-                              Visit Link →
+                              <span>Visit Link</span>
+                              <span aria-hidden="true">→</span>
                             </a>
                           )}
                         </div>

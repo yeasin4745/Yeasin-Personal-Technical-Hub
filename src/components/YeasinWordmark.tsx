@@ -47,59 +47,72 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
         id={id}
         className={`relative inline-flex flex-col items-start select-none ${className}`}
       >
-        {/* Top telemetry signal line */}
-        <div className="flex items-center gap-2 mb-2">
-          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-[11px] font-mono text-cyan-300 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_#00f0ff]" />
-            <span className="tracking-widest uppercase text-slate-300">CORE IDENTITY //</span>
-            <span className="text-cyan-300 font-bold">@{PERSONAL_INFO.handle}</span>
+        {/* Top cybersecurity telemetry signal bar */}
+        <div className="flex items-center gap-2 mb-2.5">
+          <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#091122]/90 border border-cyan-500/30 text-[11px] font-mono text-cyan-300 backdrop-blur-md shadow-sm shadow-cyan-950/40">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
+            <span className="text-slate-400 tracking-wider font-semibold">IDENTITY //</span>
+            <span className="text-cyan-300 font-bold tracking-wide">SEC.NODE:4745</span>
+            <span className="text-slate-600 font-mono">|</span>
+            <span className="text-emerald-400 font-medium hidden xs:inline text-[10px]">TLS 1.3 SECURED</span>
           </div>
-          <span className="hidden sm:inline-block w-8 h-[1px] bg-gradient-to-r from-cyan-500/40 to-transparent" />
+          <span className="hidden sm:inline-block w-12 h-[1px] bg-gradient-to-r from-cyan-500/40 via-cyan-400/20 to-transparent" />
         </div>
 
-        {/* Hero Expressive Wordmark */}
+        {/* Hero Expressive Cybersecurity Wordmark */}
         <div className="relative group">
           {/* Ambient luminous glow behind text */}
           <div
-            className={`absolute -inset-2 bg-gradient-to-r from-cyan-500/20 via-sky-500/15 to-indigo-500/20 rounded-lg blur-xl opacity-60 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none ${
+            className={`absolute -inset-3 bg-gradient-to-r from-cyan-500/25 via-sky-500/20 to-indigo-500/20 rounded-xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none ${
               !prefersReducedMotion ? 'wordmark-glow-ambient' : ''
             }`}
           />
 
-          <div className="relative flex items-center">
+          <div className="relative flex items-center bg-[#070d18]/40 px-3 py-1.5 rounded-lg border border-cyan-500/20 backdrop-blur-sm">
             {/* Left technical bracket accent */}
-            <span className="font-mono text-cyan-500/40 text-3xl sm:text-4xl lg:text-5xl font-light select-none mr-1">
-              [
+            <span className="font-mono text-cyan-400/70 text-3xl sm:text-5xl lg:text-6xl font-light select-none mr-2 font-bold">
+              [›
             </span>
 
             {/* Custom Styled Main Name "YEASIN" */}
             <span
-              className={`font-display font-black tracking-[0.16em] uppercase text-3xl sm:text-5xl lg:text-6xl ${
+              className={`font-display font-black tracking-[0.18em] uppercase text-4xl sm:text-5xl lg:text-6xl leading-none ${
                 !prefersReducedMotion ? 'wordmark-text-gradient animate-wordmark-reveal' : 'text-white'
               }`}
               style={{
-                letterSpacing: '0.14em',
-                textShadow: '0 0 20px rgba(0, 240, 255, 0.25)',
+                letterSpacing: '0.16em',
+                textShadow: '0 0 24px rgba(0, 240, 255, 0.35)',
               }}
             >
               YEASIN
             </span>
 
             {/* Right technical bracket accent */}
-            <span className="font-mono text-cyan-500/40 text-3xl sm:text-4xl lg:text-5xl font-light select-none ml-1">
-              ]
+            <span className="font-mono text-cyan-400/70 text-3xl sm:text-5xl lg:text-6xl font-light select-none ml-2 font-bold">
+              ‹]
             </span>
 
-            {/* Active digital signal cursor accent */}
-            <span className="inline-block w-1.5 sm:w-2 h-6 sm:h-9 bg-cyan-400 ml-2 rounded-xs shadow-[0_0_8px_#00f0ff] animate-signal-blink align-middle" />
+            {/* Active digital terminal cursor accent */}
+            <span className="inline-block w-2 sm:w-2.5 h-7 sm:h-10 bg-cyan-400 ml-2.5 rounded-xs shadow-[0_0_10px_#00f0ff] animate-signal-blink align-middle" />
           </div>
         </div>
 
+        {/* Subordinate Handle & Systems Metadata */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2.5">
+          <span className="font-mono text-xs text-cyan-300 font-semibold px-2.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 shadow-xs">
+            @{PERSONAL_INFO.handle}
+          </span>
+          <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-cyan-400" />
+            <span>Backend Systems & Network Security Specialist</span>
+          </span>
+        </div>
+
         {/* Bottom micro circuit trace accent */}
-        <div className="w-full max-w-[280px] sm:max-w-[340px] flex items-center gap-1.5 mt-2 opacity-75">
-          <div className="w-2 h-2 rounded-full border border-cyan-400 bg-cyan-950" />
+        <div className="w-full max-w-[320px] sm:max-w-[420px] flex items-center gap-2 mt-2 opacity-75">
+          <div className="w-1.5 h-1.5 rounded-full border border-cyan-400 bg-cyan-950" />
           <div className="h-[1px] flex-1 bg-gradient-to-r from-cyan-400/60 via-sky-500/30 to-transparent" />
-          <span className="text-[10px] font-mono text-slate-500 tracking-wider">SEC.ID.4745</span>
+          <span className="text-[10px] font-mono text-slate-500 tracking-wider">SEC.UID // 0x4745_SYS</span>
         </div>
       </div>
     );
