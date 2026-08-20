@@ -1,0 +1,207 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Yeasin (yeasin4745) | Personal Technical Hub",
+  "home_page_url": "https://yeasin4745-dev.vercel.app",
+  "feed_url": "https://yeasin4745-dev.vercel.app/feed.json",
+  "description": "Technical journal, security labs, RFC research, networking protocols, and backend engineering by Yeasin.",
+  "authors": [
+    {
+      "name": "Yeasin",
+      "url": "https://github.com/yeasin4745"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/lab-lab-01",
+      "url": "https://yeasin4745-dev.vercel.app/#labs",
+      "title": "[Lab LAB-NET-01] Wireshark TCP Handshake & Packet Flow Dissection",
+      "content_text": "Capturing and analyzing SYN, SYN-ACK, ACK sequence numbers, window scaling, and connection termination (FIN/RST) across local and remote connections.\n\nDomain: Protocol Analysis | Status: Documented | Tools: Wireshark, tcpdump, Raw Sockets, curl\nKey Takeaway: Deepened practical understanding of transmission reliability, retransmissions, and TCP state machine transitions.\n\nCode Snippet (bash):\nsudo tcpdump -i any -nn -v 'tcp[tcpflags] & (tcp-syn|tcp-ack|tcp-fin) != 0 and port 443' -c 10",
+      "summary": "Capturing and analyzing SYN, SYN-ACK, ACK sequence numbers, window scaling, and connection termination (FIN/RST) across local and remote connections.",
+      "date_published": "2026-08-20T10:57:40.000Z",
+      "tags": [
+        "Protocol Analysis",
+        "lab"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/lab-lab-02",
+      "url": "https://yeasin4745-dev.vercel.app/#labs",
+      "title": "[Lab LAB-SEC-02] REST API Authentication & Header Security Audit",
+      "content_text": "Evaluating backend endpoints against missing security headers (HSTS, CSP, X-Frame-Options), improper CORS policies, and token leakage.\n\nDomain: Defensive Security | Status: Active Lab | Tools: Postman, Node.js, JWT Inspector, cURL\nKey Takeaway: Standardized defensive header practices and token expiration lifecycles on backend microservices.\n\nCode Snippet (bash):\ncurl -i -X OPTIONS https://yeasin4745-dev.vercel.app/api/contact \\\n  -H \"Origin: https://yeasin-sec.vercel.app\" \\\n  -H \"Access-Control-Request-Method: POST\"",
+      "summary": "Evaluating backend endpoints against missing security headers (HSTS, CSP, X-Frame-Options), improper CORS policies, and token leakage.",
+      "date_published": "2026-08-18T10:57:40.000Z",
+      "tags": [
+        "Defensive Security",
+        "lab"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/lab-lab-03",
+      "url": "https://yeasin4745-dev.vercel.app/#labs",
+      "title": "[Lab LAB-SYS-03] Linux Server Hardening & SSH Key Enforcement",
+      "content_text": "Configuring non-root administrative users, enforcing Ed25519 SSH keys, disabling password authentication, and setting up basic UFW firewall rules.\n\nDomain: System Hardening | Status: Active Lab | Tools: Ubuntu Server, SSH (Ed25519), UFW / iptables, systemd\nKey Takeaway: Minimized attack surface on Linux hosts by restricting open ports and eliminating brute-force vectors.\n\nCode Snippet (bash):\nsudo ufw default deny incoming\nsudo ufw default allow outgoing\nsudo ufw allow OpenSSH\nsudo ufw enable && sudo ufw status verbose",
+      "summary": "Configuring non-root administrative users, enforcing Ed25519 SSH keys, disabling password authentication, and setting up basic UFW firewall rules.",
+      "date_published": "2026-08-16T10:57:40.000Z",
+      "tags": [
+        "System Hardening",
+        "lab"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/lab-lab-04",
+      "url": "https://yeasin4745-dev.vercel.app/#labs",
+      "title": "[Lab LAB-NET-04] Subnet Topology & CIDR Allocation Planning",
+      "content_text": "Architecting multi-tier network topologies, isolating backend database subnets from public ingress, and calculating broadcast/network address boundaries.\n\nDomain: Networking | Status: Planned Scenario | Tools: CIDR Calculators, Network Diagrams, Routing Tables\nKey Takeaway: Clear principles for network segregation and defense-in-depth layout.\n\nCode Snippet (bash):\nip -br -c addr show\nip route show",
+      "summary": "Architecting multi-tier network topologies, isolating backend database subnets from public ingress, and calculating broadcast/network address boundaries.",
+      "date_published": "2026-08-14T10:57:40.000Z",
+      "tags": [
+        "Networking",
+        "lab"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/research-rfc-793",
+      "url": "https://yeasin4745-dev.vercel.app/#research",
+      "title": "[Research] RFC 793 / RFC 9293: Transmission Control Protocol (TCP) Specification",
+      "content_text": "Studying state transition diagrams, sliding window algorithms, congestion window expansion, and socket teardown semantics.\n\nCategory: RFC & Protocol Study | Status: Deep Study\nReferences: IETF RFC 9293, TCP/IP Illustrated Vol. 1\n\nReference Inspection (bash):\nss -tin 'sport = :443 or dport = :443'\ncat /proc/sys/net/ipv4/tcp_wmem",
+      "summary": "Studying state transition diagrams, sliding window algorithms, congestion window expansion, and socket teardown semantics.",
+      "date_published": "2026-08-12T10:57:40.000Z",
+      "tags": [
+        "RFC & Protocol Study",
+        "research"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/research-rfc-9110",
+      "url": "https://yeasin4745-dev.vercel.app/#research",
+      "title": "[Research] RFC 9110: HTTP Semantics & Transport Evolution (HTTP/1.1 to HTTP/3)",
+      "content_text": "Analyzing stateless request-response mechanics, idempotency of methods, keep-alive connections, and QUIC over UDP.\n\nCategory: RFC & Protocol Study | Status: Deep Study\nReferences: IETF RFC 9110, Cloudflare Learning Guides\n\nReference Inspection (bash):\ncurl -Iv --http2 https://yeasin4745-dev.vercel.app/ -o /dev/null",
+      "summary": "Analyzing stateless request-response mechanics, idempotency of methods, keep-alive connections, and QUIC over UDP.",
+      "date_published": "2026-08-10T10:57:40.000Z",
+      "tags": [
+        "RFC & Protocol Study",
+        "research"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/research-linux-internals",
+      "url": "https://yeasin4745-dev.vercel.app/#research",
+      "title": "[Research] Linux Process Architecture & Virtual File System (/proc, /sys)",
+      "content_text": "Investigating how the Linux kernel exposes runtime metrics via /proc, file descriptor management, standard streams, and signals.\n\nCategory: Linux Systems | Status: Deep Study\nReferences: Linux Man Pages, The Linux Command Line\n\nReference Inspection (bash):\ncat /proc/sys/net/core/somaxconn\nls -l /proc/self/fd/",
+      "summary": "Investigating how the Linux kernel exposes runtime metrics via /proc, file descriptor management, standard streams, and signals.",
+      "date_published": "2026-08-08T10:57:40.000Z",
+      "tags": [
+        "Linux Systems",
+        "research"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/research-owasp-api",
+      "url": "https://yeasin4745-dev.vercel.app/#research",
+      "title": "[Research] OWASP API Security Top 10 Defensive Implementations",
+      "content_text": "Focusing on Broken Object Level Authorization (BOLA), Broken Authentication, and Unrestricted Resource Consumption prevention.\n\nCategory: Network Defense | Status: Completed Analysis\nReferences: OWASP Foundation API Security Project\n\nReference Inspection (bash):\ncurl -s -o /dev/null -w \"%{http_code}\\n\" \\\n  -H \"Authorization: Bearer <AUTH_TOKEN>\" \\\n  https://yeasin-sec.vercel.app/api/restricted_resource",
+      "summary": "Focusing on Broken Object Level Authorization (BOLA), Broken Authentication, and Unrestricted Resource Consumption prevention.",
+      "date_published": "2026-08-06T10:57:40.000Z",
+      "tags": [
+        "Network Defense",
+        "research"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/pillar-backend",
+      "url": "https://yeasin4745-dev.vercel.app/#pillars",
+      "title": "[Core Domain] Backend Systems & Architecture",
+      "content_text": "Engineering resilient server backends, structured REST endpoints, asynchronous request pipelines, and secure database interactions.\n\nProtocols: Node.js, Express, Python, RESTful APIs, Async I/O, SQL/NoSQL\nArchitecture: Asynchronous Event-Driven Pipelines & Resilient REST APIs",
+      "summary": "Engineering resilient server backends, structured REST endpoints, asynchronous request pipelines, and secure database interactions.",
+      "date_published": "2026-07-27T10:57:40.000Z",
+      "tags": [
+        "Core Engineering",
+        "pillar"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/pillar-networking",
+      "url": "https://yeasin4745-dev.vercel.app/#pillars",
+      "title": "[Core Domain] Computer Networking & Protocols",
+      "content_text": "Deconstructing the OSI & TCP/IP models, analyzing packet lifecycles with Wireshark, socket-level communication, and DNS/routing topologies.\n\nProtocols: TCP/IP, UDP, DNS, HTTP/HTTPS, TLS 1.3, ICMP, OSI Layers\nArchitecture: Layer 3/4 Packet Routing, Sockets & Protocol Analysis",
+      "summary": "Deconstructing the OSI & TCP/IP models, analyzing packet lifecycles with Wireshark, socket-level communication, and DNS/routing topologies.",
+      "date_published": "2026-07-24T10:57:40.000Z",
+      "tags": [
+        "Core Engineering",
+        "pillar"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/pillar-security",
+      "url": "https://yeasin4745-dev.vercel.app/#pillars",
+      "title": "[Core Domain] Network Security & Cybersecurity",
+      "content_text": "Studying defensive security paradigms, cryptographic standards, packet filtering, firewall configurations, and vulnerability assessments.\n\nProtocols: SSL/TLS, Firewalls / iptables, PKI & Cryptography, OWASP Top 10, Access Control (RBAC)\nArchitecture: Zero-Trust Verification, Threat Modeling & Defensive Controls",
+      "summary": "Studying defensive security paradigms, cryptographic standards, packet filtering, firewall configurations, and vulnerability assessments.",
+      "date_published": "2026-07-21T10:57:40.000Z",
+      "tags": [
+        "Core Engineering",
+        "pillar"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/pillar-linux",
+      "url": "https://yeasin4745-dev.vercel.app/#pillars",
+      "title": "[Core Domain] Linux Systems & Environment",
+      "content_text": "Harnessing the Linux operating system as a development and server backbone through automation scripting, process inspection, and permission hardening.\n\nProtocols: Bash / Shell Scripting, systemd, POSIX, SSH Hardening, Process Management, Cron\nArchitecture: POSIX Process Lifecycles, Daemons & Automated Pipelines",
+      "summary": "Harnessing the Linux operating system as a development and server backbone through automation scripting, process inspection, and permission hardening.",
+      "date_published": "2026-07-18T10:57:40.000Z",
+      "tags": [
+        "Core Engineering",
+        "pillar"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/project-nodejs-server",
+      "url": "https://github.com/yeasin4745/nodeJS-server",
+      "title": "[Project] nodeJS-server (Backend)",
+      "content_text": "Custom Node.js server implementation exploring modular routing structures, middleware pipelines, dynamic request handling, and backend service lifecycle.\n\nHighlights: Custom HTTP request/response dispatching logic • Middleware integration for request lifecycle management • Modular route handlers and clean API separation • Verified directly from public GitHub repository\nStack: Node.js, JavaScript, HTTP/REST, Backend Architecture",
+      "summary": "Custom Node.js server implementation exploring modular routing structures, middleware pipelines, dynamic request handling, and backend service lifecycle.",
+      "date_published": "2026-07-15T10:57:40.000Z",
+      "tags": [
+        "Backend",
+        "project"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/project-python-systems",
+      "url": "https://github.com/yeasin4745/Python-",
+      "title": "[Project] Python- (Systems & Logic Scripts) (Systems & Scripts)",
+      "content_text": "Structured repository of Python programs exploring core programming logic, algorithmic patterns, file handling, and computational problem-solving.\n\nHighlights: Modular functional programming & logic structures • File I/O and data processing scripts • Algorithmic foundations for backend automation • Verified directly from public GitHub repository\nStack: Python, Automation, Algorithms, Logic Design",
+      "summary": "Structured repository of Python programs exploring core programming logic, algorithmic patterns, file handling, and computational problem-solving.",
+      "date_published": "2026-07-12T10:57:40.000Z",
+      "tags": [
+        "Systems & Scripts",
+        "project"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/project-pending-project-slot-1",
+      "url": "https://yeasin4745-dev.vercel.app/#projects",
+      "title": "[Project] Network Protocol & Sockets Project (Networking)",
+      "content_text": "Designated slot for upcoming socket-level server implementation, network daemon, or protocol parser currently under study or development.\n\nHighlights: Authentic placeholder awaiting project input from Yeasin • Planned for socket communication / packet parser integration • No fictional achievements or fabricated repositories\nStack: Sockets, TCP/UDP, Under Development",
+      "summary": "Designated slot for upcoming socket-level server implementation, network daemon, or protocol parser currently under study or development.",
+      "date_published": "2026-07-09T10:57:40.000Z",
+      "tags": [
+        "Networking",
+        "project"
+      ]
+    },
+    {
+      "id": "https://yeasin4745-dev.vercel.app/item/project-pending-project-slot-2",
+      "url": "https://yeasin4745-dev.vercel.app/#projects",
+      "title": "[Project] Security Hardening & Defensive Lab Project (Cybersecurity)",
+      "content_text": "Dedicated slot for upcoming network security audit tool, authentication gateway, or Linux server hardening framework.\n\nHighlights: Authentic placeholder awaiting project documentation from Yeasin • Planned for defensive authentication & security rule configuration • Strictly maintained with zero artificial claims\nStack: Security, Defensive Auth, Under Development",
+      "summary": "Dedicated slot for upcoming network security audit tool, authentication gateway, or Linux server hardening framework.",
+      "date_published": "2026-07-06T10:57:40.000Z",
+      "tags": [
+        "Cybersecurity",
+        "project"
+      ]
+    }
+  ]
+}

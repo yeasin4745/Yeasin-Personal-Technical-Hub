@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Menu, X, GitFork, Rss } from 'lucide-react';
+import { Terminal, Menu, X, GitFork, Rss, Globe, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
 import { ThemeSwitcher } from './ThemeSwitcher';
@@ -86,6 +86,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
           {/* System Audio FX Toggle (Muted by default) */}
           <SystemAudioToggle id="nav-audio-toggle" variant="compact" />
 
+          {/* Secondary Official Technical Hub (Node.js) Link */}
+          <a
+            href="https://yeasin4745-node.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="nav-secondary-hub-link"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 hover:text-emerald-200 border border-emerald-500/30 hover:border-emerald-400 text-xs font-medium transition-all shadow-sm group"
+            title="Open Secondary Technical Hub: Node.js Architecture (opens in new tab)"
+            aria-label="Open Secondary Technical Hub (opens in new tab)"
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="font-mono text-xs">Node.js Hub</span>
+            <ExternalLink className="w-3 h-3 text-emerald-400/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+
           <button
             onClick={onOpenTerminal}
             id="nav-terminal-trigger"
@@ -159,7 +174,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
               </a>
             ))}
           </div>
-          <div className="pt-2">
+          <div className="pt-2 space-y-2">
+            <a
+              href="https://yeasin4745-node.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-2.5 text-center rounded-lg bg-emerald-950/40 text-emerald-300 text-xs font-mono font-medium border border-emerald-500/40 hover:bg-emerald-900/60 transition-colors"
+            >
+              <Globe className="w-4 h-4 text-emerald-400" />
+              <span>Node.js Technical Hub (Secondary)</span>
+              <ExternalLink className="w-3.5 h-3.5 text-emerald-400/80" />
+            </a>
             <a
               href={PERSONAL_INFO.githubUrl}
               target="_blank"

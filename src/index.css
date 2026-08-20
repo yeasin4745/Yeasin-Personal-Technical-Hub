@@ -174,6 +174,151 @@
   animation: signal-cursor-blink 1.4s ease-in-out infinite;
 }
 
+/* Controlled Cybersecurity Glitch Effect on Hover */
+.wordmark-glitch-text {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+/* Individual letter cinematic construction glow */
+@keyframes letter-cyber-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px) scale(0.9);
+    filter: brightness(2) drop-shadow(0 0 14px #00f0ff);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1.05);
+    filter: brightness(1.4) drop-shadow(0 0 10px #00f0ff);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: brightness(1) drop-shadow(0 0 4px rgba(0, 240, 255, 0.4));
+  }
+}
+
+.animate-letter-construct {
+  animation: letter-cyber-reveal 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.wordmark-glitch-text::before,
+.wordmark-glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cyan chromatic slice layer on hover */
+.group:hover .wordmark-glitch-text::before,
+.wordmark-glitch-text:hover::before {
+  opacity: 0.9;
+  color: #00f0ff;
+  -webkit-text-fill-color: #00f0ff;
+  text-shadow: -1.5px 0 #00f0ff;
+  animation: cyber-glitch-slice-1 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Indigo/sky chromatic slice layer on hover */
+.group:hover .wordmark-glitch-text::after,
+.wordmark-glitch-text:hover::after {
+  opacity: 0.85;
+  color: #818cf8;
+  -webkit-text-fill-color: #818cf8;
+  text-shadow: 1.5px 0 #818cf8;
+  animation: cyber-glitch-slice-2 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Subtle micro-skew on hover */
+.group:hover .wordmark-glitch-text,
+.wordmark-glitch-text:hover {
+  animation: cyber-glitch-micro-skew 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes cyber-glitch-micro-skew {
+  0% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+  20% {
+    transform: translate(-1px, 0.5px) skewX(-1deg);
+  }
+  40% {
+    transform: translate(1px, -0.5px) skewX(0.8deg);
+  }
+  60% {
+    transform: translate(-0.5px, 0.2px) skewX(-0.4deg);
+  }
+  80% {
+    transform: translate(0.5px, 0px) skewX(0.2deg);
+  }
+  100% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+}
+
+@keyframes cyber-glitch-slice-1 {
+  0% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 38%, 0 38%);
+    transform: translate(-2px, -1px);
+    opacity: 0.9;
+  }
+  25% {
+    clip-path: polygon(0 58%, 100% 58%, 100% 75%, 0 75%);
+    transform: translate(2px, 0.5px);
+    opacity: 0.8;
+  }
+  50% {
+    clip-path: polygon(0 10%, 100% 10%, 100% 28%, 0 28%);
+    transform: translate(-1px, 0);
+    opacity: 0.9;
+  }
+  75% {
+    clip-path: polygon(0 72%, 100% 72%, 100% 88%, 0 88%);
+    transform: translate(1.5px, -0.5px);
+    opacity: 0.7;
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes cyber-glitch-slice-2 {
+  0% {
+    clip-path: polygon(0 62%, 100% 62%, 100% 82%, 0 82%);
+    transform: translate(2px, 1px);
+    opacity: 0.85;
+  }
+  25% {
+    clip-path: polygon(0 18%, 100% 18%, 100% 36%, 0 36%);
+    transform: translate(-2px, -0.5px);
+    opacity: 0.75;
+  }
+  50% {
+    clip-path: polygon(0 45%, 100% 45%, 100% 60%, 0 60%);
+    transform: translate(1px, 0);
+    opacity: 0.85;
+  }
+  75% {
+    clip-path: polygon(0 28%, 100% 28%, 100% 48%, 0 48%);
+    transform: translate(-1px, 0.5px);
+    opacity: 0.7;
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
 .animate-neon-spin {
   animation: neon-ring-spin 12s linear infinite;
   will-change: transform;
@@ -207,8 +352,15 @@
   .animate-neon-breath,
   .animate-wordmark-reveal,
   .animate-signal-blink,
-  .wordmark-glow-ambient {
+  .wordmark-glow-ambient,
+  .wordmark-glitch-text,
+  .wordmark-glitch-text::before,
+  .wordmark-glitch-text::after {
     animation: none !important;
+  }
+  .wordmark-glitch-text::before,
+  .wordmark-glitch-text::after {
+    display: none !important;
   }
   .wordmark-text-gradient {
     animation: none !important;

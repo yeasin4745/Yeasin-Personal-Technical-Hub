@@ -700,7 +700,9 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Communication:</strong> Secure Inquiry Form on site (routed to verified inbox)</p>
             <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Verified GitHub:</strong> {PERSONAL_INFO.githubUrl}</p>
             <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-blue-400'}>Verified LinkedIn:</strong> https://linkedin.com/in/yeasin4745</p>
-            <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Official Hubs:</strong> https://yeasin4745-dev.vercel.app | https://yeasin-sec.vercel.app</p>
+            <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Primary Hub:</strong> https://yeasin4745-dev.vercel.app</p>
+            <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-emerald-400'}>Secondary Hub (Node.js):</strong> https://yeasin4745-node.vercel.app/</p>
+            <p><strong className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>Security Hub:</strong> https://yeasin-sec.vercel.app</p>
             <p className={`text-[11px] ${isClassicGreen ? 'text-emerald-400/80' : 'text-slate-400'}`}>Direct encrypted message transmission with zero third-party trackers.</p>
           </div>
         );

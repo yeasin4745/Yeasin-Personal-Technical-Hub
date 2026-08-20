@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Shield, Network, Server, ArrowRight, Activity, Lock, Cpu, Radio, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Terminal, Shield, Network, Server, ArrowRight, Activity, Lock, Cpu, Radio, ShieldCheck, CheckCircle2, Globe, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO, TELEMETRY_STATS } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
 import { YeasinWordmark } from './YeasinWordmark';
@@ -100,6 +100,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTerminal }) => {
               >
                 <Shield className="w-4 h-4 text-emerald-400" />
                 <span>Security & Labs</span>
+              </a>
+
+              {/* Secondary Official Website Link */}
+              <a
+                href="https://yeasin4745-node.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="hero-cta-secondary-hub"
+                className="group px-4 py-2.5 rounded-lg bg-[#091322] hover:bg-[#0c1b33] text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 hover:border-emerald-400 font-mono text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-md shadow-emerald-950/30 hover:shadow-[0_0_16px_rgba(16,185,129,0.25)] transform hover:-translate-y-0.5"
+                title="Open Secondary Technical Hub: Node.js Architecture (opens in new tab)"
+                aria-label="Open Node.js Technical Hub at yeasin4745-node.vercel.app (opens in new tab)"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 group-hover:animate-ping" />
+                <span>Node.js Technical Hub</span>
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
 
               <button

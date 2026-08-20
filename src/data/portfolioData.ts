@@ -365,6 +365,14 @@ export const EXTENSIBLE_PROFILES: ExtensibleSocialProfile[] = [
     note: 'Primary production hub for backend architecture and systems documentation.',
   },
   {
+    platform: 'Node.js Technical Hub (Secondary)',
+    handle: 'yeasin4745-node.vercel.app',
+    url: 'https://yeasin4745-node.vercel.app/',
+    isVerified: true,
+    type: 'website',
+    note: 'Secondary official technical hub for Node.js systems, server micro-architectures, and backend experiments.',
+  },
+  {
     platform: 'Security & Systems Hub',
     handle: 'yeasin-sec.vercel.app',
     url: 'https://yeasin-sec.vercel.app',

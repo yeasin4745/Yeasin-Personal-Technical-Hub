@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, ArrowUp, GitFork, Shield, Rss, Globe, Lock } from 'lucide-react';
+import { Terminal, ArrowUp, GitFork, Shield, Rss, Globe, Lock, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
 import { ThemeSwitcher } from './ThemeSwitcher';
@@ -76,19 +76,40 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
                 href="https://yeasin4745-dev.vercel.app"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 text-slate-300 hover:text-cyan-400 transition-colors"
+                className="flex items-center justify-between text-slate-300 hover:text-cyan-400 transition-colors"
               >
-                <Globe className="w-3.5 h-3.5 text-cyan-400" />
-                <span>yeasin4745-dev.vercel.app</span>
+                <span className="flex items-center gap-2">
+                  <Globe className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Primary Hub (dev)</span>
+                </span>
+                <span className="text-[10px] text-cyan-400/70">PROD</span>
+              </a>
+              <a
+                href="https://yeasin4745-node.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between text-slate-300 hover:text-emerald-300 transition-colors group"
+                title="Secondary Official Technical Hub: Node.js"
+              >
+                <span className="flex items-center gap-2">
+                  <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="text-emerald-300/90 group-hover:text-emerald-200 font-medium">Node.js Technical Hub</span>
+                </span>
+                <span className="text-[10px] text-emerald-400/80 bg-emerald-950/60 px-1.5 py-0.2 rounded border border-emerald-500/30">
+                  SEC.HUB
+                </span>
               </a>
               <a
                 href="https://yeasin-sec.vercel.app"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 transition-colors"
+                className="flex items-center justify-between text-slate-300 hover:text-emerald-400 transition-colors"
               >
-                <Globe className="w-3.5 h-3.5 text-emerald-400" />
-                <span>yeasin-sec.vercel.app</span>
+                <span className="flex items-center gap-2">
+                  <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>yeasin-sec.vercel.app</span>
+                </span>
+                <span className="text-[10px] text-slate-500">LABS</span>
               </a>
               <a
                 href="#contact"
