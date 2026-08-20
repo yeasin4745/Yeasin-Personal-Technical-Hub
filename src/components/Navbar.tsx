@@ -3,6 +3,7 @@ import { Terminal, Menu, X, GitFork, Rss } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
 import { ThemeSwitcher } from './ThemeSwitcher';
+import { SystemAudioToggle } from './SystemAudioToggle';
 
 interface NavbarProps {
   onOpenTerminal: () => void;
@@ -82,6 +83,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
           {/* High Contrast / Cyber Dark Theme Switcher */}
           <ThemeSwitcher id="nav-theme-switcher" />
 
+          {/* System Audio FX Toggle (Muted by default) */}
+          <SystemAudioToggle id="nav-audio-toggle" variant="compact" />
+
           <button
             onClick={onOpenTerminal}
             id="nav-terminal-trigger"
@@ -119,6 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
             <Rss className="w-4 h-4" />
           </button>
           <ThemeSwitcher variant="compact" id="mobile-quick-theme-toggle" />
+          <SystemAudioToggle variant="compact" id="mobile-quick-audio-toggle" />
           <button
             onClick={onOpenTerminal}
             className="p-2 rounded-lg bg-[#0e1524] border border-cyan-500/30 text-cyan-400"
@@ -140,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#0a0e1a] border-b border-cyan-500/20 px-4 py-4 space-y-4 animate-in slide-in-from-top-2">
-          {/* RSS Feed & Theme switcher inside mobile drawer */}
+          {/* RSS Feed, Theme switcher & Audio toggle inside mobile drawer */}
           <div className="pb-2 border-b border-slate-800/80 space-y-2">
             <button
               onClick={() => {
@@ -158,6 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
               </span>
             </button>
             <ThemeSwitcher variant="full" id="mobile-drawer-theme-switcher" />
+            <SystemAudioToggle variant="full" id="mobile-drawer-audio-toggle" />
           </div>
 
           <div className="flex flex-col space-y-2">

@@ -69,7 +69,7 @@ export interface ExtensibleSocialProfile {
   handle: string;
   url: string;
   isVerified: boolean;
-  type: 'github' | 'email' | 'upcoming';
+  type: 'github' | 'website' | 'email' | 'upcoming';
   note?: string;
 }
 

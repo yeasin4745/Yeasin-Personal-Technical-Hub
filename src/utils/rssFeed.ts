@@ -48,7 +48,7 @@ export function getAllFeedItems(baseUrl: string): FeedItem[] {
       contentSnippet: lab.summary,
       category: lab.domain,
       date: new Date(Date.now() - index * 86400000 * 2).toUTCString(),
-      author: `${PERSONAL_INFO.email} (${PERSONAL_INFO.name})`,
+      author: `${PERSONAL_INFO.handle} (${PERSONAL_INFO.name})`,
       type: 'lab',
     });
   });
@@ -66,7 +66,7 @@ export function getAllFeedItems(baseUrl: string): FeedItem[] {
       contentSnippet: research.notes,
       category: research.category,
       date: new Date(Date.now() - (index + 4) * 86400000 * 2).toUTCString(),
-      author: `${PERSONAL_INFO.email} (${PERSONAL_INFO.name})`,
+      author: `${PERSONAL_INFO.handle} (${PERSONAL_INFO.name})`,
       type: 'research',
     });
   });
@@ -81,7 +81,7 @@ export function getAllFeedItems(baseUrl: string): FeedItem[] {
       contentSnippet: pillar.description,
       category: 'Core Engineering',
       date: new Date(Date.now() - (index + 8) * 86400000 * 3).toUTCString(),
-      author: `${PERSONAL_INFO.email} (${PERSONAL_INFO.name})`,
+      author: `${PERSONAL_INFO.handle} (${PERSONAL_INFO.name})`,
       type: 'pillar',
     });
   });
@@ -96,7 +96,7 @@ export function getAllFeedItems(baseUrl: string): FeedItem[] {
       contentSnippet: proj.description,
       category: proj.category,
       date: new Date(Date.now() - (index + 12) * 86400000 * 3).toUTCString(),
-      author: `${PERSONAL_INFO.email} (${PERSONAL_INFO.name})`,
+      author: `${PERSONAL_INFO.handle} (${PERSONAL_INFO.name})`,
       type: 'project',
     });
   });
@@ -138,8 +138,8 @@ export function generateRss2Xml(baseUrl: string): string {
     <lastBuildDate>${buildDate}</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <generator>Yeasin Technical Hub Feed Generator v1.0</generator>
-    <managingEditor>${escapeXml(`${PERSONAL_INFO.email} (${PERSONAL_INFO.name})`)}</managingEditor>
-    <webMaster>${escapeXml(`${PERSONAL_INFO.email} (${PERSONAL_INFO.name})`)}</webMaster>
+    <managingEditor>${escapeXml(`${PERSONAL_INFO.handle} (${PERSONAL_INFO.name})`)}</managingEditor>
+    <webMaster>${escapeXml(`${PERSONAL_INFO.handle} (${PERSONAL_INFO.name})`)}</webMaster>
     <atom:link href="${escapeXml(`${cleanBase}/rss.xml`)}" rel="self" type="application/rss+xml" />
 ${xmlItems}
   </channel>

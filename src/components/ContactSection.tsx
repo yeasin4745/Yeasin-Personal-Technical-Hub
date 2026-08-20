@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, GitFork, Copy, Check, Send, ShieldCheck, Terminal, AlertCircle } from 'lucide-react';
+import { GitFork, Send, ShieldCheck, Terminal, AlertCircle, Globe, Lock, Check } from 'lucide-react';
 import { PERSONAL_INFO, EXTENSIBLE_PROFILES } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
 import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
 
 export const ContactSection: React.FC = () => {
-  const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
     senderName: '',
     senderEmail: '',
@@ -20,12 +19,6 @@ export const ContactSection: React.FC = () => {
   useEffect(() => {
     setRenderedAt(Date.now());
   }, []);
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText(PERSONAL_INFO.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,11 +91,11 @@ export const ContactSection: React.FC = () => {
         setStatusMessage('Rate limit active. Please wait a few moments before transmitting another message.');
       } else {
         setStatus('error');
-        setStatusMessage(result?.error || 'Unable to deliver message at this time. Please try again or reach out directly via email.');
+        setStatusMessage(result?.error || 'Unable to deliver message at this time. Please try again.');
       }
     } catch {
       setStatus('error');
-      setStatusMessage('Connection failed. Please check your network or reach out directly via verified email below.');
+      setStatusMessage('Connection failed. Please check your network connection and try again.');
     }
   };
 
@@ -126,10 +119,10 @@ export const ContactSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column: Verified Profiles & Direct Email with ScrollReveal */}
+          {/* Left Column: Verified Profiles & Channels with ScrollReveal */}
           <div className="lg:col-span-5 space-y-6">
             <ScrollReveal>
-              {/* Direct Email Card */}
+              {/* Verified Identity & Channel Card */}
               <div className="bg-[#0b101c] border border-cyan-500/30 rounded-xl p-6 space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <div className="flex items-center gap-3">
@@ -155,35 +148,16 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold uppercase">
-                  <Mail className="w-4 h-4" />
-                  <span>Primary Verified Contact Channel</span>
+                  <Lock className="w-4 h-4" />
+                  <span>Secure Inquiry Transmission</span>
                 </div>
-                <p className="text-xs text-slate-300">
-                  Direct inquiry channel for research collaboration and technical exchanges:
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Transmit direct technical inquiries and collaboration proposals securely through the encrypted endpoint. All messages are securely forwarded directly to Yeasin.
                 </p>
                 
-                <div className="bg-[#070a12] p-3 rounded-lg border border-slate-800 flex items-center justify-between gap-2">
-                  <span className="font-mono text-xs text-cyan-300 truncate">
-                    {PERSONAL_INFO.email}
-                  </span>
-                  <button
-                    onClick={copyEmail}
-                    id="contact-copy-email-btn"
-                    className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono flex items-center gap-1.5 shrink-0 border border-slate-700 transition-colors cursor-pointer"
-                    title="Copy email to clipboard"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-emerald-400">Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3.5 h-3.5 text-slate-400" />
-                        <span>Copy</span>
-                      </>
-                    )}
-                  </button>
+                <div className="bg-[#070a12] p-3 rounded-lg border border-slate-800 flex items-center gap-2 text-xs text-emerald-400 font-mono">
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                  <span>End-to-End TLS 1.3 Transport & Anti-Spam Protected</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -192,7 +166,7 @@ export const ContactSection: React.FC = () => {
             <ScrollReveal delay={0.1}>
               <div className="bg-[#0b101c] border border-slate-800 rounded-xl p-6 space-y-4">
                 <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-                  Verified Online Profiles & Handles:
+                  Verified Online Profiles & Web Hubs:
                 </h3>
 
                 <StaggerContainer className="space-y-3">
@@ -208,7 +182,7 @@ export const ContactSection: React.FC = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             {profile.type === 'github' && <GitFork className="w-4 h-4 text-cyan-400" />}
-                            {profile.type === 'email' && <Mail className="w-4 h-4 text-emerald-400" />}
+                            {profile.type === 'website' && <Globe className="w-4 h-4 text-emerald-400" />}
                             {profile.type === 'upcoming' && <AlertCircle className="w-4 h-4 text-slate-500" />}
                             <span className="font-bold text-white">{profile.platform}</span>
                           </div>
@@ -260,7 +234,7 @@ export const ContactSection: React.FC = () => {
                       Direct Inquiry Transmitter
                     </h3>
                     <p className="text-xs text-slate-400">
-                      Send a secure inquiry to <strong className="text-cyan-300">{PERSONAL_INFO.email}</strong>.
+                      Send a secure, encrypted inquiry directly to Yeasin.
                     </p>
                   </div>
                   <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-500/30">

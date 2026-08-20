@@ -1,6 +1,7 @@
 import React from 'react';
 import { Contrast, Sparkles, Eye, SunMedium } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useSystemAudio } from '../context/AudioContext';
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -14,11 +15,17 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   id = 'theme-switcher-toggle',
 }) => {
   const { theme, isHighContrast, toggleTheme } = useTheme();
+  const { playThemeSwitch } = useSystemAudio();
+
+  const handleToggle = () => {
+    playThemeSwitch();
+    toggleTheme();
+  };
 
   if (variant === 'compact') {
     return (
       <button
-        onClick={toggleTheme}
+        onClick={handleToggle}
         id={id}
         type="button"
         role="switch"
@@ -43,7 +50,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   if (variant === 'full') {
     return (
       <button
-        onClick={toggleTheme}
+        onClick={handleToggle}
         id={id}
         type="button"
         role="switch"
@@ -93,7 +100,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   // Default 'pill' variant for Navbar header
   return (
     <button
-      onClick={toggleTheme}
+      onClick={handleToggle}
       id={id}
       type="button"
       role="switch"

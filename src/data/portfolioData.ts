@@ -98,8 +98,8 @@ ping -c 4 -M do -s 1472 1.1.1.1`,
       language: 'bash',
       title: 'TLS 1.3 Cipher & Security Headers Audit',
       description: 'Testing defensive HTTP response headers and cryptographic ciphers.',
-      code: `curl -sI https://api.yeasin4745.node/health | grep -iE '(strict-transport|x-frame|content-security)'
-openssl s_client -connect yeasin4745.node:443 -tls1_3`,
+      code: `curl -sI https://yeasin-sec.vercel.app/api/health | grep -iE '(strict-transport|x-frame|content-security)'
+openssl s_client -connect yeasin-sec.vercel.app:443 -tls1_3`,
     },
   },
   {
@@ -228,8 +228,8 @@ export const SECURITY_LABS: SecurityLabItem[] = [
       language: 'bash',
       title: 'CORS Pre-Flight & Defensive Headers Inspection',
       description: 'Audit API endpoint headers for strict transport security and frame restrictions.',
-      code: `curl -i -X OPTIONS https://api.yeasin.local/v1/auth \\
-  -H "Origin: https://yeasin4745.github.io" \\
+      code: `curl -i -X OPTIONS https://yeasin4745-dev.vercel.app/api/contact \\
+  -H "Origin: https://yeasin-sec.vercel.app" \\
   -H "Access-Control-Request-Method: POST"`,
     },
   },
@@ -300,7 +300,7 @@ cat /proc/sys/net/ipv4/tcp_wmem`,
       language: 'bash',
       title: 'HTTP/2 Protocol Negotiation Probe',
       description: 'Verifying TLS ALPN negotiation for HTTP/2 frames.',
-      code: `curl -Iv --http2 https://yeasin4745.node/health -o /dev/null`,
+      code: `curl -Iv --http2 https://yeasin4745-dev.vercel.app/ -o /dev/null`,
     },
   },
   {
@@ -333,7 +333,7 @@ ls -l /proc/self/fd/`,
       description: 'Validate that cross-tenant resource requests return 403 Forbidden.',
       code: `curl -s -o /dev/null -w "%{http_code}\\n" \\
   -H "Authorization: Bearer <AUTH_TOKEN>" \\
-  https://api.yeasin.local/v1/users/restricted_resource`,
+  https://yeasin-sec.vercel.app/api/restricted_resource`,
     },
   },
 ];
@@ -348,19 +348,19 @@ export const EXTENSIBLE_PROFILES: ExtensibleSocialProfile[] = [
     note: 'Primary code repositories, backend experiments, and open-source learning.',
   },
   {
-    platform: 'Direct Email',
-    handle: 'yeasin.devx@gmail.com',
-    url: 'mailto:yeasin.devx@gmail.com',
+    platform: 'Primary Technical Hub',
+    handle: 'yeasin4745-dev.vercel.app',
+    url: 'https://yeasin4745-dev.vercel.app',
     isVerified: true,
-    type: 'email',
-    note: 'Direct channel for technical communication, research, and collaboration.',
+    type: 'website',
+    note: 'Primary production hub for backend architecture and systems documentation.',
   },
   {
-    platform: 'Professional Network Profile',
-    handle: 'Pending Verification',
-    url: '#',
-    isVerified: false,
-    type: 'upcoming',
-    note: 'Profile slot prepared — will be linked once verified by Yeasin.',
+    platform: 'Security & Systems Hub',
+    handle: 'yeasin-sec.vercel.app',
+    url: 'https://yeasin-sec.vercel.app',
+    isVerified: true,
+    type: 'website',
+    note: 'Dedicated domain for network security, protocol analysis, and lab explorations.',
   },
 ];

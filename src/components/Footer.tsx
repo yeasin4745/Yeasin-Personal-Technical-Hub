@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Mail, ArrowUp, GitFork, Shield, Rss } from 'lucide-react';
+import { Terminal, ArrowUp, GitFork, Shield, Rss, Globe, Lock } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
 import { ThemeSwitcher } from './ThemeSwitcher';
@@ -53,14 +53,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
               <li><a href="#labs" className="hover:text-cyan-400 transition-colors">Security & Labs</a></li>
               <li><a href="#research" className="hover:text-cyan-400 transition-colors">Research & RFCs</a></li>
               <li><a href="#about" className="hover:text-cyan-400 transition-colors">About & Mindset</a></li>
-              <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
+              <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Direct Contact</a></li>
             </ul>
           </div>
 
-          {/* Verified Channels & Tools */}
+          {/* Verified Channels & Official Hubs */}
           <div className="md:col-span-3 space-y-3">
             <span className="font-mono text-xs font-bold text-slate-200 uppercase tracking-wider block">
-              Verified Outlets
+              Official Hubs & Outlets
             </span>
             <div className="space-y-2 font-mono text-xs">
               <a
@@ -73,15 +73,33 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
                 <span>GitHub: @{PERSONAL_INFO.handle}</span>
               </a>
               <a
-                href={`mailto:${PERSONAL_INFO.email}`}
+                href="https://yeasin4745-dev.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 text-slate-300 hover:text-cyan-400 transition-colors"
+              >
+                <Globe className="w-3.5 h-3.5 text-cyan-400" />
+                <span>yeasin4745-dev.vercel.app</span>
+              </a>
+              <a
+                href="https://yeasin-sec.vercel.app"
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 transition-colors"
               >
-                <Mail className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{PERSONAL_INFO.email}</span>
+                <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                <span>yeasin-sec.vercel.app</span>
+              </a>
+              <a
+                href="#contact"
+                className="flex items-center gap-2 text-slate-300 hover:text-cyan-300 transition-colors"
+              >
+                <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Secure Contact Channel</span>
               </a>
               <button
                 onClick={onOpenTerminal}
-                className="flex items-center gap-2 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer text-left"
+                className="flex items-center gap-2 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer text-left pt-1"
               >
                 <Terminal className="w-3.5 h-3.5 text-cyan-400" />
                 <span>Launch Interactive CLI Terminal</span>
@@ -90,8 +108,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
           </div>
 
         </div>
-
-
 
         {/* Bottom copyright & Back to top */}
         <div className="pt-4 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">

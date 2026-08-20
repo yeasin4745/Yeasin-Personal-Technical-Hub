@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { AudioProvider } from './context/AudioContext';
 import { ScrollProgress } from './components/ScrollProgress';
 import { Navbar } from './components/Navbar';
 import { NetworkCanvas } from './components/NetworkCanvas';
@@ -13,6 +14,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { TerminalModal } from './components/TerminalModal';
 import { RssFeedModal } from './components/RssFeedModal';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -37,48 +39,53 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <div className="relative min-h-screen bg-[#070a10] text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 bg-grid-pattern overflow-hidden">
-        {/* Fixed Viewport Scroll Progress Indicator */}
-        <ScrollProgress />
+      <AudioProvider>
+        <div className="relative min-h-screen bg-[#070a10] text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 bg-grid-pattern overflow-hidden">
+          {/* Fixed Viewport Scroll Progress Indicator */}
+          <ScrollProgress />
 
-        {/* Interactive GPU-accelerated network packet simulation background */}
-        <NetworkCanvas />
+          {/* Interactive GPU-accelerated network packet simulation background */}
+          <NetworkCanvas />
 
-        {/* Primary Navigation */}
-        <Navbar
-          onOpenTerminal={() => setTerminalOpen(true)}
-          onOpenRss={() => setRssModalOpen(true)}
-        />
+          {/* Primary Navigation */}
+          <Navbar
+            onOpenTerminal={() => setTerminalOpen(true)}
+            onOpenRss={() => setRssModalOpen(true)}
+          />
 
-        {/* Main Content Sections */}
-        <main id="main-content" className="relative z-10">
-          <Hero onOpenTerminal={() => setTerminalOpen(true)} />
-          <TechnicalPillars />
-          <ProjectsSection />
-          <LabsSection />
-          <LearningRoadmap />
-          <AboutSection />
-          <ContactSection />
-        </main>
+          {/* Main Content Sections */}
+          <main id="main-content" className="relative z-10">
+            <Hero onOpenTerminal={() => setTerminalOpen(true)} />
+            <TechnicalPillars />
+            <ProjectsSection />
+            <LabsSection />
+            <LearningRoadmap />
+            <AboutSection />
+            <ContactSection />
+          </main>
 
-        {/* Footer */}
-        <Footer
-          onOpenTerminal={() => setTerminalOpen(true)}
-          onOpenRss={() => setRssModalOpen(true)}
-        />
+          {/* Footer */}
+          <Footer
+            onOpenTerminal={() => setTerminalOpen(true)}
+            onOpenRss={() => setRssModalOpen(true)}
+          />
 
-        {/* Interactive CLI Terminal Emulator Modal */}
-        <TerminalModal
-          isOpen={terminalOpen}
-          onClose={() => setTerminalOpen(false)}
-        />
+          {/* Interactive CLI Terminal Emulator Modal */}
+          <TerminalModal
+            isOpen={terminalOpen}
+            onClose={() => setTerminalOpen(false)}
+          />
 
-        {/* RSS & Syndication Feed Modal */}
-        <RssFeedModal
-          isOpen={rssModalOpen}
-          onClose={() => setRssModalOpen(false)}
-        />
-      </div>
+          {/* RSS & Syndication Feed Modal */}
+          <RssFeedModal
+            isOpen={rssModalOpen}
+            onClose={() => setRssModalOpen(false)}
+          />
+
+          {/* Vercel Speed Insights Telemetry */}
+          <SpeedInsights />
+        </div>
+      </AudioProvider>
     </ThemeProvider>
   );
 }

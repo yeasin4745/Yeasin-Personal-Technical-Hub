@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Copy, Check, Terminal, Code2 } from 'lucide-react';
+import { useSystemAudio } from '../context/AudioContext';
 
 interface CopyButtonProps {
   textToCopy: string;
@@ -19,10 +20,12 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
   label = 'Copy',
 }) => {
   const [copied, setCopied] = useState(false);
+  const { playCommandExecute } = useSystemAudio();
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
+      playCommandExecute();
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(textToCopy);
       } else {

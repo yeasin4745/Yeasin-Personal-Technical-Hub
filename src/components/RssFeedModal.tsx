@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Rss, X, Copy, Check, ExternalLink, Radio, Terminal, FileCode2, BookOpen, Layers } from 'lucide-react';
 import { getAllFeedItems, FeedItem } from '../utils/rssFeed';
+import { useSystemAudio } from '../context/AudioContext';
 
 interface RssFeedModalProps {
   isOpen: boolean;
@@ -10,8 +11,14 @@ interface RssFeedModalProps {
 export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) => {
   const [copiedType, setCopiedType] = useState<'xml' | 'json' | null>(null);
   const [filterType, setFilterType] = useState<string>('all');
+  const { playClick, playCommandExecute, playModalClose } = useSystemAudio();
 
   if (!isOpen) return null;
+
+  const handleClose = () => {
+    playModalClose();
+    onClose();
+  };
 
   const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
   const rssXmlUrl = `${currentOrigin}/rss.xml`;
@@ -25,6 +32,7 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
 
   const copyToClipboard = async (text: string, type: 'xml' | 'json') => {
     try {
+      playCommandExecute();
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(text);
       } else {
@@ -73,7 +81,7 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
           </div>
 
           <button
-            onClick={onClose}
+            onClick={handleClose}
             id="close-rss-modal-btn"
             aria-label="Close RSS modal"
             className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
@@ -198,7 +206,10 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
                 {['all', 'lab', 'research', 'pillar', 'project'].map((type) => (
                   <button
                     key={type}
-                    onClick={() => setFilterType(type)}
+                    onClick={() => {
+                      playClick();
+                      setFilterType(type);
+                    }}
                     className={`px-2 py-0.5 rounded capitalize transition-colors ${
                       filterType === type
                         ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40 font-bold'
