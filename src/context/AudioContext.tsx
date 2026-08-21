@@ -6,6 +6,7 @@ interface AudioContextType {
   setAudioEnabled: (enabled: boolean) => void;
   playClick: () => void;
   playKeyPress: () => void;
+  playMechanicalTick: () => void;
   playTerminalBeep: () => void;
   playCommandExecute: () => void;
   playCommandError: () => void;
@@ -19,9 +20,13 @@ const SystemAudioContext = createContext<AudioContextType | undefined>(undefined
 export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAudioEnabled, setIsAudioEnabledState] = useState<boolean>(() => {
     try {
-      return localStorage.getItem('system_audio_enabled') === 'true';
+      const saved = localStorage.getItem('system_audio_enabled');
+      if (saved !== null) {
+        return saved === 'true';
+      }
+      return true;
     } catch {
-      return false;
+      return true;
     }
   });
 
@@ -85,34 +90,68 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [isAudioEnabled, getAudioContext]);
 
-  const playKeyPress = useCallback(() => {
+  /**
+   * Subtle, low-frequency 'mechanical' tick sound for terminal keystrokes and typing.
+   * Synthesizes an organic, warm mechanical switch bottom-out tap with low-pass filtered resonance.
+   */
+  const playMechanicalTick = useCallback(() => {
     if (!isAudioEnabled) return;
     const ctx = getAudioContext();
     if (!ctx) return;
 
     try {
       const now = ctx.currentTime;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
 
-      // Soft mechanical tap
-      const freq = 650 + Math.random() * 80;
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now);
-      osc.frequency.exponentialRampToValueAtTime(180, now + 0.02);
+      // 1. Low-frequency mechanical bottom-out body (triangle wave with pitch drop)
+      const oscThump = ctx.createOscillator();
+      const gainThump = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
 
-      gain.gain.setValueAtTime(0.025, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+      // Subtle frequency micro-jitter (±12Hz) for organic mechanical switch variety
+      const pitchJitter = (Math.random() - 0.5) * 24;
+      const baseFreq = 160 + pitchJitter;
 
-      osc.connect(gain);
-      gain.connect(ctx.destination);
+      oscThump.type = 'triangle';
+      oscThump.frequency.setValueAtTime(baseFreq, now);
+      oscThump.frequency.exponentialRampToValueAtTime(45, now + 0.022);
 
-      osc.start(now);
-      osc.stop(now + 0.025);
+      // Low-pass filter to keep sound deep, smooth, and non-fatiguing
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(420, now);
+      filter.frequency.exponentialRampToValueAtTime(110, now + 0.022);
+
+      gainThump.gain.setValueAtTime(0.04, now);
+      gainThump.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
+
+      oscThump.connect(filter);
+      filter.connect(gainThump);
+      gainThump.connect(ctx.destination);
+
+      oscThump.start(now);
+      oscThump.stop(now + 0.026);
+
+      // 2. Micro tactile contact transient (low-mid sine click)
+      const oscClick = ctx.createOscillator();
+      const gainClick = ctx.createGain();
+
+      oscClick.type = 'sine';
+      oscClick.frequency.setValueAtTime(290 + Math.random() * 40, now);
+      oscClick.frequency.exponentialRampToValueAtTime(75, now + 0.009);
+
+      gainClick.gain.setValueAtTime(0.018, now);
+      gainClick.gain.exponentialRampToValueAtTime(0.0001, now + 0.009);
+
+      oscClick.connect(gainClick);
+      gainClick.connect(ctx.destination);
+
+      oscClick.start(now);
+      oscClick.stop(now + 0.012);
     } catch {
       // Ignore audio synthesis errors
     }
   }, [isAudioEnabled, getAudioContext]);
+
+  const playKeyPress = playMechanicalTick;
 
   const playTerminalBeep = useCallback(() => {
     if (!isAudioEnabled) return;
@@ -292,6 +331,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setAudioEnabled,
         playClick,
         playKeyPress,
+        playMechanicalTick,
         playTerminalBeep,
         playCommandExecute,
         playCommandError,

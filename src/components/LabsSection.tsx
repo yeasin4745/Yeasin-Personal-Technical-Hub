@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Shield, CheckCircle2, Terminal } from 'lucide-react';
 import { SECURITY_LABS } from '../data/portfolioData';
-import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection } from './ScrollReveal';
 import { CodeSnippetBox } from './CodeSnippetBox';
 
 export const LabsSection: React.FC = () => {
@@ -10,7 +10,7 @@ export const LabsSection: React.FC = () => {
   const activeLab = SECURITY_LABS.find((l) => l.id === selectedLabId) || SECURITY_LABS[0];
 
   return (
-    <section id="labs" className="py-20 bg-[#080c14] border-t border-b border-slate-800/80 relative">
+    <FadeInUpSection id="labs" className="py-20 bg-[#080c14] border-t border-b border-slate-800/80 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with ScrollReveal */}
@@ -187,6 +187,6 @@ export const LabsSection: React.FC = () => {
         </div>
 
       </div>
-    </section>
+    </FadeInUpSection>
   );
 };

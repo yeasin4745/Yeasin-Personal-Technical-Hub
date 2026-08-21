@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GitFork, Send, ShieldCheck, Terminal, AlertCircle, Globe, Lock, Check, Linkedin, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO, EXTENSIBLE_PROFILES } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
-import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection } from './ScrollReveal';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -100,7 +100,7 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 relative">
+    <FadeInUpSection id="contact" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with ScrollReveal */}
@@ -432,6 +432,6 @@ export const ContactSection: React.FC = () => {
         </div>
 
       </div>
-    </section>
+    </FadeInUpSection>
   );
 };

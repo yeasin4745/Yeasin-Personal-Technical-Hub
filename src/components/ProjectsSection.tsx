@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { GitFork, ExternalLink, CheckCircle, Clock, AlertCircle, Code2 } from 'lucide-react';
 import { VERIFIED_PROJECTS, PERSONAL_INFO } from '../data/portfolioData';
-import { ScrollReveal } from './ScrollReveal';
+import { ScrollReveal, FadeInUpSection } from './ScrollReveal';
 
 export const ProjectsSection: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'verified' | 'pending'>('all');
@@ -15,7 +15,7 @@ export const ProjectsSection: React.FC = () => {
   });
 
   return (
-    <section id="projects" className="py-20 relative">
+    <FadeInUpSection id="projects" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with ScrollReveal */}
@@ -232,6 +232,6 @@ export const ProjectsSection: React.FC = () => {
         </ScrollReveal>
 
       </div>
-    </section>
+    </FadeInUpSection>
   );
 };

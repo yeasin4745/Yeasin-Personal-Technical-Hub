@@ -1,12 +1,12 @@
 import React from 'react';
 import { BookOpen, Clock } from 'lucide-react';
 import { RESEARCH_ITEMS } from '../data/portfolioData';
-import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection } from './ScrollReveal';
 import { CodeSnippetBox } from './CodeSnippetBox';
 
 export const LearningRoadmap: React.FC = () => {
   return (
-    <section id="research" className="py-20 relative">
+    <FadeInUpSection id="research" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with ScrollReveal */}
@@ -128,6 +128,6 @@ export const LearningRoadmap: React.FC = () => {
         </ScrollReveal>
 
       </div>
-    </section>
+    </FadeInUpSection>
   );
 };

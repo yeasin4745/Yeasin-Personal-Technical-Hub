@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Server, Network, Shield, Cpu, Layers, CheckCircle2, Terminal, Code2 } from 'lucide-react';
 import { TECHNICAL_PILLARS } from '../data/portfolioData';
-import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection } from './ScrollReveal';
 import { CodeSnippetBox } from './CodeSnippetBox';
 
 export const TechnicalPillars: React.FC = () => {
@@ -65,7 +65,7 @@ export const TechnicalPillars: React.FC = () => {
   };
 
   return (
-    <section id="pillars" className="py-20 bg-[#080c14] border-t border-b border-slate-800/80 relative">
+    <FadeInUpSection id="pillars" className="py-20 bg-[#080c14] border-t border-b border-slate-800/80 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with ScrollReveal */}
@@ -208,6 +208,6 @@ export const TechnicalPillars: React.FC = () => {
         </ScrollReveal>
 
       </div>
-    </section>
+    </FadeInUpSection>
   );
 };
