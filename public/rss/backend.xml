@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Yeasin | Backend Systems &amp; Software Architecture</title>
+    <link>https://yeasin4745-dev.vercel.app</link>
+    <description>Backend engineering articles, asynchronous request pipelines, Node.js server architectures, REST API designs, and database flows by Yeasin.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 21 Aug 2026 13:43:38 GMT</lastBuildDate>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>Yeasin Technical Hub RSS Engine v2.0</generator>
+    <managingEditor>yeasin.devx@gmail.com (Yeasin)</managingEditor>
+    <webMaster>yeasin.devx@gmail.com (Yeasin)</webMaster>
+    <atom:link href="https://yeasin4745-dev.vercel.app/rss/backend.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Backend Systems &amp; Architecture: High-throughput, asynchronous server engines and persistent data flows</title>
+      <link>https://yeasin4745-dev.vercel.app/#pillars</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/pillar-backend</guid>
+      <description><![CDATA[Engineering resilient server backends, structured REST endpoints, asynchronous request pipelines, and secure database interactions.
+
+Architecture Focus: Asynchronous Event-Driven Pipelines & Resilient REST APIs
+Key Topics: Asynchronous Event Loop & Concurrency Control • API Authentication, JWT & Session Management • Server-Side Request Validation & Rate Limiting • Database Schema Design & Query Optimization
+Protocols: Node.js, Express, Python, RESTful APIs, Async I/O, SQL/NoSQL
+
+Code Implementation (typescript):
+import express, { Request, Response, NextFunction } from 'express';
+
+const router = express.Router();
+
+router.get('/api/v1/telemetry', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const status = await checkHostHealth();
+    return res.status(200).json({ status: 'nominal', timestamp: Date.now(), data: status });
+  } catch (error) {
+    next(error);
+  }
+});]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Backend Systems &amp; Architecture</category>
+      <category>Node.js</category>
+      <category>Express</category>
+      <category>Python</category>
+      <category>RESTful APIs</category>
+      <category>Async I/O</category>
+      <category>SQL/NoSQL</category>
+      <category>Architecture</category>
+      <category>Systems</category>
+      <pubDate>Thu, 20 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[LAB-SEC-02] REST API Authentication &amp; Header Security Audit</title>
+      <link>https://yeasin4745-dev.vercel.app/#labs</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-02</guid>
+      <description><![CDATA[Evaluating backend endpoints against missing security headers (HSTS, CSP, X-Frame-Options), improper CORS policies, and token leakage.
+
+Domain: Defensive Security | Status: Active Lab
+Tools: Postman, Node.js, JWT Inspector, cURL
+Key Takeaway: Standardized defensive header practices and token expiration lifecycles on backend microservices.
+
+Lab Syntax & Commands (bash):
+curl -i -X OPTIONS https://yeasin4745-dev.vercel.app/api/contact \
+  -H "Origin: https://yeasin-sec.vercel.app" \
+  -H "Access-Control-Request-Method: POST"]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Defensive Security</category>
+      <category>Defensive Security</category>
+      <category>Postman</category>
+      <category>Node.js</category>
+      <category>JWT Inspector</category>
+      <category>cURL</category>
+      <category>LAB-SEC-02</category>
+      <category>Security Lab</category>
+      <pubDate>Mon, 10 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>RFC 9110: HTTP Semantics &amp; Transport Evolution (HTTP/1.1 to HTTP/3)</title>
+      <link>https://yeasin4745-dev.vercel.app/#research</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-rfc-9110</guid>
+      <description><![CDATA[Analyzing stateless request-response mechanics, idempotency of methods, keep-alive connections, and QUIC over UDP.
+
+Field: RFC & Protocol Study | Status: Deep Study
+References: IETF RFC 9110, Cloudflare Learning Guides
+
+Reference Probe Syntax (bash):
+curl -Iv --http2 https://yeasin4745-dev.vercel.app/ -o /dev/null]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>RFC &amp; Protocol Study</category>
+      <category>RFC &amp; Protocol Study</category>
+      <category>IETF RFC 9110</category>
+      <category>Cloudflare Learning Guides</category>
+      <category>Research Log</category>
+      <pubDate>Sun, 02 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>OWASP API Security Top 10 Defensive Implementations</title>
+      <link>https://yeasin4745-dev.vercel.app/#research</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-owasp-api</guid>
+      <description><![CDATA[Focusing on Broken Object Level Authorization (BOLA), Broken Authentication, and Unrestricted Resource Consumption prevention.
+
+Field: Network Defense | Status: Completed Analysis
+References: OWASP Foundation API Security Project
+
+Reference Probe Syntax (bash):
+curl -s -o /dev/null -w "%{http_code}\n" \
+  -H "Authorization: Bearer <AUTH_TOKEN>" \
+  https://yeasin-sec.vercel.app/api/restricted_resource]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Network Defense</category>
+      <category>Network Defense</category>
+      <category>OWASP Foundation API Security Project</category>
+      <category>Research Log</category>
+      <pubDate>Wed, 29 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[Repository] nodeJS-server (Backend)</title>
+      <link>https://github.com/yeasin4745/nodeJS-server</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/project-nodejs-server</guid>
+      <description><![CDATA[Custom Node.js server implementation exploring modular routing structures, middleware pipelines, dynamic request handling, and backend service lifecycle.
+
+Technical Highlights:
+• Custom HTTP request/response dispatching logic
+• Middleware integration for request lifecycle management
+• Modular route handlers and clean API separation
+• Verified directly from public GitHub repository
+
+Architecture Stack: Node.js, JavaScript, HTTP/REST, Backend Architecture]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Backend</category>
+      <category>Backend</category>
+      <category>Node.js</category>
+      <category>JavaScript</category>
+      <category>HTTP/REST</category>
+      <category>Backend Architecture</category>
+      <category>GitHub Repository</category>
+      <pubDate>Thu, 09 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[Repository] Python- (Systems &amp; Logic Scripts) (Systems &amp; Scripts)</title>
+      <link>https://github.com/yeasin4745/Python-</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/project-python-systems</guid>
+      <description><![CDATA[Structured repository of Python programs exploring core programming logic, algorithmic patterns, file handling, and computational problem-solving.
+
+Technical Highlights:
+• Modular functional programming & logic structures
+• File I/O and data processing scripts
+• Algorithmic foundations for backend automation
+• Verified directly from public GitHub repository
+
+Architecture Stack: Python, Automation, Algorithms, Logic Design]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Systems &amp; Scripts</category>
+      <category>Systems &amp; Scripts</category>
+      <category>Python</category>
+      <category>Automation</category>
+      <category>Algorithms</category>
+      <category>Logic Design</category>
+      <category>GitHub Repository</category>
+      <pubDate>Mon, 06 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

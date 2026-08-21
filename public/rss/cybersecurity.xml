@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Yeasin | Network Security &amp; Defensive Systems</title>
+    <link>https://yeasin4745-dev.vercel.app</link>
+    <description>Defensive security articles, OWASP Top 10 research, REST API security audits, TLS encryption, and server hardening logs by Yeasin.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 21 Aug 2026 13:43:38 GMT</lastBuildDate>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>Yeasin Technical Hub RSS Engine v2.0</generator>
+    <managingEditor>yeasin.devx@gmail.com (Yeasin)</managingEditor>
+    <webMaster>yeasin.devx@gmail.com (Yeasin)</webMaster>
+    <atom:link href="https://yeasin4745-dev.vercel.app/rss/cybersecurity.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network Security &amp; Cybersecurity: Threat modeling, access control, encryption, and defensive posture</title>
+      <link>https://yeasin4745-dev.vercel.app/#pillars</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/pillar-security</guid>
+      <description><![CDATA[Studying defensive security paradigms, cryptographic standards, packet filtering, firewall configurations, and vulnerability assessments.
+
+Architecture Focus: Zero-Trust Verification, Threat Modeling & Defensive Controls
+Key Topics: Defensive Network Perimeter & Packet Filtering • Transport Layer Security (TLS) Handshake Decryption • API Security: Prevention of Injection, CSRF, and Broken Auth • Vulnerability Surface Scanning & Hardening
+Protocols: SSL/TLS, Firewalls / iptables, PKI & Cryptography, OWASP Top 10, Access Control (RBAC)
+
+Code Implementation (bash):
+curl -sI https://yeasin-sec.vercel.app/api/health | grep -iE '(strict-transport|x-frame|content-security)'
+openssl s_client -connect yeasin-sec.vercel.app:443 -tls1_3]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Network Security &amp; Cybersecurity</category>
+      <category>SSL/TLS</category>
+      <category>Firewalls / iptables</category>
+      <category>PKI &amp; Cryptography</category>
+      <category>OWASP Top 10</category>
+      <category>Access Control (RBAC)</category>
+      <category>Architecture</category>
+      <category>Systems</category>
+      <category>Network Security &amp; Cybersecurity</category>
+      <pubDate>Fri, 14 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[LAB-SEC-02] REST API Authentication &amp; Header Security Audit</title>
+      <link>https://yeasin4745-dev.vercel.app/#labs</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-02</guid>
+      <description><![CDATA[Evaluating backend endpoints against missing security headers (HSTS, CSP, X-Frame-Options), improper CORS policies, and token leakage.
+
+Domain: Defensive Security | Status: Active Lab
+Tools: Postman, Node.js, JWT Inspector, cURL
+Key Takeaway: Standardized defensive header practices and token expiration lifecycles on backend microservices.
+
+Lab Syntax & Commands (bash):
+curl -i -X OPTIONS https://yeasin4745-dev.vercel.app/api/contact \
+  -H "Origin: https://yeasin-sec.vercel.app" \
+  -H "Access-Control-Request-Method: POST"]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Defensive Security</category>
+      <category>Defensive Security</category>
+      <category>Postman</category>
+      <category>Node.js</category>
+      <category>JWT Inspector</category>
+      <category>cURL</category>
+      <category>LAB-SEC-02</category>
+      <category>Security Lab</category>
+      <pubDate>Mon, 10 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[LAB-SYS-03] Linux Server Hardening &amp; SSH Key Enforcement</title>
+      <link>https://yeasin4745-dev.vercel.app/#labs</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-03</guid>
+      <description><![CDATA[Configuring non-root administrative users, enforcing Ed25519 SSH keys, disabling password authentication, and setting up basic UFW firewall rules.
+
+Domain: System Hardening | Status: Active Lab
+Tools: Ubuntu Server, SSH (Ed25519), UFW / iptables, systemd
+Key Takeaway: Minimized attack surface on Linux hosts by restricting open ports and eliminating brute-force vectors.
+
+Lab Syntax & Commands (bash):
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow OpenSSH
+sudo ufw enable && sudo ufw status verbose]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>System Hardening</category>
+      <category>System Hardening</category>
+      <category>Ubuntu Server</category>
+      <category>SSH (Ed25519)</category>
+      <category>UFW / iptables</category>
+      <category>systemd</category>
+      <category>LAB-SYS-03</category>
+      <category>Security Lab</category>
+      <pubDate>Sat, 08 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>OWASP API Security Top 10 Defensive Implementations</title>
+      <link>https://yeasin4745-dev.vercel.app/#research</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-owasp-api</guid>
+      <description><![CDATA[Focusing on Broken Object Level Authorization (BOLA), Broken Authentication, and Unrestricted Resource Consumption prevention.
+
+Field: Network Defense | Status: Completed Analysis
+References: OWASP Foundation API Security Project
+
+Reference Probe Syntax (bash):
+curl -s -o /dev/null -w "%{http_code}\n" \
+  -H "Authorization: Bearer <AUTH_TOKEN>" \
+  https://yeasin-sec.vercel.app/api/restricted_resource]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Network Defense</category>
+      <category>Network Defense</category>
+      <category>OWASP Foundation API Security Project</category>
+      <category>Research Log</category>
+      <pubDate>Wed, 29 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

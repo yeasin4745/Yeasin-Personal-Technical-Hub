@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Rss, X, Copy, Check, ExternalLink, Radio, Terminal, FileCode2, BookOpen, Layers } from 'lucide-react';
-import { getAllFeedItems, FeedItem } from '../utils/rssFeed';
+import { Rss, X, Copy, Check, ExternalLink, Radio, FileCode2, Globe, Shield, Server, Terminal, Filter } from 'lucide-react';
+import { getAllFeedItems, FeedItem, CATEGORY_FEEDS, FeedCategorySlug } from '../utils/rssFeed';
 import { useSystemAudio } from '../context/AudioContext';
 
 interface RssFeedModalProps {
@@ -9,7 +9,8 @@ interface RssFeedModalProps {
 }
 
 export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) => {
-  const [copiedType, setCopiedType] = useState<'xml' | 'json' | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [selectedFeedCategory, setSelectedFeedCategory] = useState<'all' | FeedCategorySlug>('all');
   const [filterType, setFilterType] = useState<string>('all');
   const { playClick, playCommandExecute, playModalClose } = useSystemAudio();
 
@@ -21,16 +22,27 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
   };
 
   const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
-  const rssXmlUrl = `${currentOrigin}/rss.xml`;
+  const mainRssUrl = `${currentOrigin}/rss.xml`;
   const jsonFeedUrl = `${currentOrigin}/feed.json`;
 
-  const feedItems = getAllFeedItems(currentOrigin);
+  const categoryEndpoints: { slug: FeedCategorySlug; name: string; icon: React.FC<{ className?: string }>; url: string; xmlPath: string; color: string }[] = [
+    { slug: 'networking', name: 'Networking Feed', icon: Globe, url: `${currentOrigin}/rss/networking.xml`, xmlPath: '/rss/networking.xml', color: 'emerald' },
+    { slug: 'cybersecurity', name: 'Cybersecurity Feed', icon: Shield, url: `${currentOrigin}/rss/cybersecurity.xml`, xmlPath: '/rss/cybersecurity.xml', color: 'indigo' },
+    { slug: 'backend', name: 'Backend Feed', icon: Server, url: `${currentOrigin}/rss/backend.xml`, xmlPath: '/rss/backend.xml', color: 'cyan' },
+    { slug: 'linux', name: 'Linux Feed', icon: Terminal, url: `${currentOrigin}/rss/linux.xml`, xmlPath: '/rss/linux.xml', color: 'amber' },
+  ];
+
+  const allItems = getAllFeedItems(currentOrigin);
+
+  const categoryFilteredItems = selectedFeedCategory === 'all'
+    ? allItems
+    : allItems.filter(item => item.feedCategories.includes(selectedFeedCategory));
 
   const filteredItems = filterType === 'all'
-    ? feedItems
-    : feedItems.filter(item => item.type === filterType);
+    ? categoryFilteredItems
+    : categoryFilteredItems.filter(item => item.type === filterType);
 
-  const copyToClipboard = async (text: string, type: 'xml' | 'json') => {
+  const copyToClipboard = async (text: string, key: string) => {
     try {
       playCommandExecute();
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -43,8 +55,8 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
         document.execCommand('copy');
         document.body.removeChild(textarea);
       }
-      setCopiedType(type);
-      setTimeout(() => setCopiedType(null), 2500);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 2500);
     } catch (err) {
       console.error('Failed to copy feed URL:', err);
     }
@@ -69,13 +81,13 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
             </div>
             <div>
               <h2 id="rss-modal-title" className="text-base font-bold text-slate-100 flex items-center gap-2">
-                <span>RSS & Syndicate Feeds</span>
+                <span>RSS & Category Feeds</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 uppercase">
                   Live Dispatch
                 </span>
               </h2>
               <p className="text-xs text-slate-400">
-                Subscribe to new technical posts, security labs, and protocol research.
+                Subscribe to full feed or category-specific technical article channels.
               </p>
             </div>
           </div>
@@ -84,7 +96,7 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
             onClick={handleClose}
             id="close-rss-modal-btn"
             aria-label="Close RSS modal"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -94,36 +106,41 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
         <div className="flex-1 overflow-y-auto p-5 space-y-6">
           {/* Feed Endpoints Section */}
           <div className="space-y-3">
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Radio className="w-3.5 h-3.5 text-orange-400" />
-              <span>Syndication Endpoints</span>
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                <Radio className="w-3.5 h-3.5 text-orange-400" />
+                <span>Primary Syndication Endpoints</span>
+              </span>
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/40">
+                Auto-Discovery Active
+              </span>
+            </div>
 
-            {/* RSS 2.0 XML Box */}
-            <div className="p-3.5 rounded-lg bg-[#070a12] border border-slate-800 space-y-2">
+            {/* Main RSS 2.0 XML Box */}
+            <div className="p-3 rounded-lg bg-[#070a12] border border-slate-800 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-orange-300 flex items-center gap-1.5">
                   <FileCode2 className="w-3.5 h-3.5 text-orange-400" />
-                  <span>RSS 2.0 (XML Feed)</span>
+                  <span>Main Feed (All Articles) — /rss.xml</span>
                 </span>
                 <span className="text-[10px] font-mono text-slate-400">
-                  Standard Feed (Feedly, NetNewsWire, Inoreader)
+                  Full Technical Journal
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <input
                   type="text"
                   readOnly
-                  value={rssXmlUrl}
+                  value={mainRssUrl}
                   className="flex-1 px-3 py-1.5 rounded bg-[#0b101c] border border-slate-700/80 font-mono text-xs text-slate-200 select-all focus:outline-none"
                 />
                 <button
-                  onClick={() => copyToClipboard(rssXmlUrl, 'xml')}
+                  onClick={() => copyToClipboard(mainRssUrl, 'main-xml')}
                   id="copy-rss-xml-url-btn"
-                  className="px-3 py-1.5 rounded bg-orange-600 hover:bg-orange-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 rounded bg-orange-600 hover:bg-orange-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
                   title="Copy RSS 2.0 Feed URL"
                 >
-                  {copiedType === 'xml' ? (
+                  {copiedKey === 'main-xml' ? (
                     <>
                       <Check className="w-3.5 h-3.5" />
                       <span>Copied!</span>
@@ -147,50 +164,84 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
               </div>
             </div>
 
-            {/* JSON Feed 1.1 Box */}
-            <div className="p-3.5 rounded-lg bg-[#070a12] border border-slate-800 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-cyan-300 flex items-center gap-1.5">
-                  <FileCode2 className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>JSON Feed 1.1 Specification</span>
-                </span>
-                <span className="text-[10px] font-mono text-slate-400">
-                  Modern API & Script Readers
-                </span>
+            {/* Category-Specific RSS Feeds Accordion/List */}
+            <div className="space-y-2 pt-1">
+              <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
+                Category-Specific Feeds:
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {categoryEndpoints.map((cat) => {
+                  const Icon = cat.icon;
+                  const count = allItems.filter(i => i.feedCategories.includes(cat.slug)).length;
+                  return (
+                    <div
+                      key={cat.slug}
+                      className="p-2.5 rounded-lg bg-[#070a12] border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between gap-2"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                          <Icon className="w-3.5 h-3.5 text-slate-400" />
+                          <span>{cat.name}</span>
+                        </span>
+                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400">
+                          {count} articles
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[11px] font-mono text-slate-400 truncate flex-1 bg-[#0b101c] px-2 py-1 rounded border border-slate-800">
+                          {cat.xmlPath}
+                        </span>
+                        <button
+                          onClick={() => copyToClipboard(cat.url, cat.slug)}
+                          className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                          title={`Copy ${cat.name} URL`}
+                        >
+                          {copiedKey === cat.slug ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                        <a
+                          href={cat.xmlPath}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                          title={`Open ${cat.xmlPath} in new tab`}
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  readOnly
-                  value={jsonFeedUrl}
-                  className="flex-1 px-3 py-1.5 rounded bg-[#0b101c] border border-slate-700/80 font-mono text-xs text-slate-200 select-all focus:outline-none"
-                />
+            </div>
+
+            {/* JSON Feed 1.1 Box */}
+            <div className="p-2.5 rounded-lg bg-[#070a12] border border-slate-800/80 flex items-center justify-between gap-2">
+              <span className="text-xs text-cyan-300 font-mono flex items-center gap-1.5">
+                <FileCode2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                <span>JSON Feed 1.1: /feed.json</span>
+              </span>
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => copyToClipboard(jsonFeedUrl, 'json')}
                   id="copy-json-feed-url-btn"
-                  className="px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 text-xs font-mono border border-cyan-800/50 flex items-center gap-1 transition-colors cursor-pointer"
                   title="Copy JSON Feed URL"
                 >
-                  {copiedType === 'json' ? (
-                    <>
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy URL</span>
-                    </>
-                  )}
+                  {copiedKey === 'json' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  <span>{copiedKey === 'json' ? 'Copied' : 'Copy'}</span>
                 </button>
                 <a
                   href="/feed.json"
                   target="_blank"
                   rel="noreferrer"
-                  className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                  className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
                   title="Open /feed.json in new tab"
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
             </div>
@@ -198,31 +249,54 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
 
           {/* Feed Filter & Feed Stream Preview */}
           <div className="space-y-3 pt-2 border-t border-slate-800/80">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
-                Feed Content Stream ({filteredItems.length} items)
-              </span>
-              <div className="flex items-center gap-1 text-[11px] font-mono">
-                {['all', 'lab', 'research', 'pillar', 'project'].map((type) => (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
+                  Feed Article Stream ({filteredItems.length} items)
+                </span>
+                <div className="flex items-center gap-1 text-[11px] font-mono">
+                  {['all', 'pillar', 'lab', 'research', 'project'].map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => {
+                        playClick();
+                        setFilterType(type);
+                      }}
+                      className={`px-2 py-0.5 rounded capitalize transition-colors cursor-pointer ${
+                        filterType === type
+                          ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40 font-bold'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Category pills filter */}
+              <div className="flex items-center gap-1.5 text-[11px] font-mono overflow-x-auto pb-1">
+                <span className="text-slate-500 text-[10px]">Filter Feed:</span>
+                {(['all', 'networking', 'cybersecurity', 'backend', 'linux'] as const).map((cat) => (
                   <button
-                    key={type}
+                    key={cat}
                     onClick={() => {
                       playClick();
-                      setFilterType(type);
+                      setSelectedFeedCategory(cat);
                     }}
-                    className={`px-2 py-0.5 rounded capitalize transition-colors ${
-                      filterType === type
-                        ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40 font-bold'
-                        : 'text-slate-400 hover:text-slate-200'
+                    className={`px-2 py-0.5 rounded capitalize text-[11px] transition-colors cursor-pointer ${
+                      selectedFeedCategory === cat
+                        ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 font-semibold'
+                        : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
                     }`}
                   >
-                    {type}
+                    {cat === 'all' ? 'All Channels' : cat}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+            <div className="space-y-2.5 max-h-56 overflow-y-auto pr-1">
               {filteredItems.map((item) => (
                 <div
                   key={item.id}
@@ -242,7 +316,7 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
                     {item.contentSnippet || item.description}
                   </p>
                   <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-1">
-                    <span>Published: {item.date.split(' ').slice(0, 4).join(' ')}</span>
+                    <span>Author: Yeasin • {item.date.split(' ').slice(0, 4).join(' ')}</span>
                     <a
                       href={item.link}
                       onClick={onClose}
@@ -261,11 +335,11 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
         {/* Footer */}
         <div className="px-5 py-3 bg-[#080c16] border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
           <span className="font-mono text-[11px]">
-            RFC 822 & Atom Compliant • Auto-discovering in &lt;head&gt;
+            RFC 822 & Atom Compliant • 5 Active Syndication Channels
           </span>
           <button
             onClick={onClose}
-            className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+            className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors cursor-pointer"
           >
             Done
           </button>
@@ -274,3 +348,4 @@ export const RssFeedModal: React.FC<RssFeedModalProps> = ({ isOpen, onClose }) =
     </div>
   );
 };
+

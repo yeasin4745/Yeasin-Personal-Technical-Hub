@@ -1,7 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
-import { generateRss2Xml, generateJsonFeed, getAllFeedItems } from './src/utils/rssFeed';
+import {
+  generateRss2Xml,
+  generateJsonFeed,
+  getAllFeedItems,
+  getFeedItemsByCategory,
+  CATEGORY_FEEDS,
+  FeedCategorySlug,
+} from './src/utils/rssFeed';
 
 const app = express();
 const PORT = 3000;
@@ -289,7 +296,7 @@ const getBaseUrl = (req: Request): string => {
   return `${protocol}://${host}`;
 };
 
-// RSS 2.0 XML Feed route
+// Main RSS 2.0 XML Feed route
 app.get(['/rss.xml', '/feed.xml', '/api/rss'], (req: Request, res: Response): void => {
   try {
     const baseUrl = getBaseUrl(req);
@@ -304,11 +311,37 @@ app.get(['/rss.xml', '/feed.xml', '/api/rss'], (req: Request, res: Response): vo
   }
 });
 
-// JSON Feed 1.1 Specification route
+// Category-Specific RSS 2.0 Feeds (/rss/networking.xml, /rss/cybersecurity.xml, /rss/backend.xml, /rss/linux.xml)
+app.get(['/rss/:category.xml', '/rss/:category', '/api/rss/:category'], (req: Request, res: Response): void => {
+  try {
+    const rawCategory = req.params.category?.replace(/\.xml$/, '').toLowerCase() as FeedCategorySlug;
+    if (!CATEGORY_FEEDS[rawCategory]) {
+      res.status(404).setHeader('Content-Type', 'text/plain').send(`Unknown category feed '${rawCategory}'. Available: networking, cybersecurity, backend, linux`);
+      return;
+    }
+
+    const baseUrl = getBaseUrl(req);
+    const xml = generateRss2Xml(baseUrl, rawCategory);
+
+    res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=1800, s-maxage=3600');
+    res.status(200).send(xml);
+  } catch (err) {
+    console.error('[Category RSS Generation Error]', err);
+    res.status(500).setHeader('Content-Type', 'text/plain').send('Failed to generate category RSS feed.');
+  }
+});
+
+// JSON Feed 1.1 Specification route (supports ?category=...)
 app.get(['/feed.json', '/api/feed.json'], (req: Request, res: Response): void => {
   try {
     const baseUrl = getBaseUrl(req);
-    const jsonFeed = generateJsonFeed(baseUrl);
+    const categoryQuery = req.query.category as string | undefined;
+    const validCat = categoryQuery && CATEGORY_FEEDS[categoryQuery.toLowerCase() as FeedCategorySlug]
+      ? (categoryQuery.toLowerCase() as FeedCategorySlug)
+      : undefined;
+
+    const jsonFeed = generateJsonFeed(baseUrl, validCat);
 
     res.setHeader('Content-Type', 'application/feed+json; charset=utf-8');
     res.setHeader('Cache-Control', 'public, max-age=1800, s-maxage=3600');
@@ -319,11 +352,16 @@ app.get(['/feed.json', '/api/feed.json'], (req: Request, res: Response): void =>
   }
 });
 
-// Quick REST summary of all feed items for client components
+// Quick REST summary of feed items for client components
 app.get('/api/feed/items', (req: Request, res: Response): void => {
   const baseUrl = getBaseUrl(req);
-  const items = getAllFeedItems(baseUrl);
-  res.status(200).json({ total: items.length, items });
+  const categoryQuery = req.query.category as string | undefined;
+  const validCat = categoryQuery && CATEGORY_FEEDS[categoryQuery.toLowerCase() as FeedCategorySlug]
+    ? (categoryQuery.toLowerCase() as FeedCategorySlug)
+    : undefined;
+
+  const items = validCat ? getFeedItemsByCategory(baseUrl, validCat) : getAllFeedItems(baseUrl);
+  res.status(200).json({ total: items.length, category: validCat || 'all', items });
 });
 
 // ==========================================

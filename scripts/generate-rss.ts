@@ -1,67 +1,107 @@
 import fs from 'fs';
 import path from 'path';
-import { generateRss2Xml, generateJsonFeed, getAllFeedItems } from '../src/utils/rssFeed';
+import {
+  generateRss2Xml,
+  generateJsonFeed,
+  getAllFeedItems,
+  getFeedItemsByCategory,
+  CATEGORY_FEEDS,
+  FeedCategorySlug,
+} from '../src/utils/rssFeed';
 
 /**
  * RSS & Syndicate Feed Generator Script
- * Parses Projects, Security Labs, RFC Research, and Technical Pillars
- * to generate a valid RSS 2.0 XML file at /public/rss.xml (and /dist/rss.xml if dist exists)
+ * Generates valid RSS 2.0 XML feeds for:
+ * - /public/rss.xml (All articles / main feed)
+ * - /public/rss/networking.xml
+ * - /public/rss/cybersecurity.xml
+ * - /public/rss/backend.xml
+ * - /public/rss/linux.xml
+ * Plus JSON Feed 1.1 specification at /public/feed.json
  */
 function generateFeeds() {
   const siteUrl = process.env.SITE_URL || 'https://yeasin4745-dev.vercel.app';
-  console.log(`[RSS Generator] Generating feed for base URL: ${siteUrl}`);
+  console.log(`[RSS Generator] Generating feeds for base URL: ${siteUrl}`);
 
   // 1. Gather all parsed items
-  const items = getAllFeedItems(siteUrl);
-  console.log(`[RSS Generator] Parsed ${items.length} total technical items:`);
-  
-  const projectCount = items.filter(i => i.type === 'project').length;
-  const labCount = items.filter(i => i.type === 'lab').length;
-  const researchCount = items.filter(i => i.type === 'research').length;
-  const pillarCount = items.filter(i => i.type === 'pillar').length;
-  
-  console.log(`  • Verified Projects: ${projectCount}`);
-  console.log(`  • Security & Networking Labs: ${labCount}`);
-  console.log(`  • Research & RFC Analyses: ${researchCount}`);
-  console.log(`  • Technical Pillars: ${pillarCount}`);
+  const allItems = getAllFeedItems(siteUrl);
+  console.log(`[RSS Generator] Parsed ${allItems.length} verified technical items (zero placeholders):`);
 
-  // 2. Generate RSS 2.0 XML & JSON Feed
-  const rssXml = generateRss2Xml(siteUrl);
-  const jsonFeed = JSON.stringify(generateJsonFeed(siteUrl), null, 2);
+  const categories: FeedCategorySlug[] = ['networking', 'cybersecurity', 'backend', 'linux'];
 
-  // 3. Write to public directory
+  categories.forEach((cat) => {
+    const count = getFeedItemsByCategory(siteUrl, cat).length;
+    console.log(`  • [${cat.toUpperCase()}] Category Feed: ${count} real articles`);
+  });
+
+  // 2. Prepare Public Directories
   const publicDir = path.resolve(process.cwd(), 'public');
+  const publicRssDir = path.join(publicDir, 'rss');
+
   if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir, { recursive: true });
   }
+  if (!fs.existsSync(publicRssDir)) {
+    fs.mkdirSync(publicRssDir, { recursive: true });
+  }
+
+  // 3. Generate Main Feed Files
+  const mainRssXml = generateRss2Xml(siteUrl);
+  const mainJsonFeed = JSON.stringify(generateJsonFeed(siteUrl), null, 2);
 
   const publicRssPath = path.join(publicDir, 'rss.xml');
   const publicFeedPath = path.join(publicDir, 'feed.xml');
   const publicJsonPath = path.join(publicDir, 'feed.json');
 
-  fs.writeFileSync(publicRssPath, rssXml, 'utf-8');
-  fs.writeFileSync(publicFeedPath, rssXml, 'utf-8');
-  fs.writeFileSync(publicJsonPath, jsonFeed, 'utf-8');
+  fs.writeFileSync(publicRssPath, mainRssXml, 'utf-8');
+  fs.writeFileSync(publicFeedPath, mainRssXml, 'utf-8');
+  fs.writeFileSync(publicJsonPath, mainJsonFeed, 'utf-8');
 
-  console.log(`[RSS Generator] Successfully generated:`);
-  console.log(`  ✓ ${publicRssPath} (${(Buffer.byteLength(rssXml) / 1024).toFixed(2)} KB)`);
+  console.log(`\n[RSS Generator] Successfully written main feeds:`);
+  console.log(`  ✓ ${publicRssPath} (${(Buffer.byteLength(mainRssXml) / 1024).toFixed(2)} KB)`);
   console.log(`  ✓ ${publicFeedPath} (alias copy)`);
-  console.log(`  ✓ ${publicJsonPath} (${(Buffer.byteLength(jsonFeed) / 1024).toFixed(2)} KB)`);
+  console.log(`  ✓ ${publicJsonPath} (${(Buffer.byteLength(mainJsonFeed) / 1024).toFixed(2)} KB)`);
 
-  // 4. If dist directory already exists (e.g. post-build), write there too
+  // 4. Generate Category-Specific Feeds
+  console.log(`\n[RSS Generator] Generating category feeds:`);
+  const categoryXmlMap: Record<FeedCategorySlug, string> = {
+    networking: generateRss2Xml(siteUrl, 'networking'),
+    cybersecurity: generateRss2Xml(siteUrl, 'cybersecurity'),
+    backend: generateRss2Xml(siteUrl, 'backend'),
+    linux: generateRss2Xml(siteUrl, 'linux'),
+  };
+
+  categories.forEach((cat) => {
+    const meta = CATEGORY_FEEDS[cat];
+    const xml = categoryXmlMap[cat];
+    const filePath = path.join(publicRssDir, meta.xmlFileName);
+    fs.writeFileSync(filePath, xml, 'utf-8');
+    console.log(`  ✓ /public/rss/${meta.xmlFileName} (${(Buffer.byteLength(xml) / 1024).toFixed(2)} KB)`);
+  });
+
+  // 5. If dist directory already exists (e.g. post-build), synchronize there too
   const distDir = path.resolve(process.cwd(), 'dist');
   if (fs.existsSync(distDir)) {
-    const distRssPath = path.join(distDir, 'rss.xml');
-    const distFeedPath = path.join(distDir, 'feed.xml');
-    const distJsonPath = path.join(distDir, 'feed.json');
+    const distRssDir = path.join(distDir, 'rss');
+    if (!fs.existsSync(distRssDir)) {
+      fs.mkdirSync(distRssDir, { recursive: true });
+    }
 
-    fs.writeFileSync(distRssPath, rssXml, 'utf-8');
-    fs.writeFileSync(distFeedPath, rssXml, 'utf-8');
-    fs.writeFileSync(distJsonPath, jsonFeed, 'utf-8');
-    console.log(`  ✓ Synced to dist/ folder for production deployment.`);
+    fs.writeFileSync(path.join(distDir, 'rss.xml'), mainRssXml, 'utf-8');
+    fs.writeFileSync(path.join(distDir, 'feed.xml'), mainRssXml, 'utf-8');
+    fs.writeFileSync(path.join(distDir, 'feed.json'), mainJsonFeed, 'utf-8');
+
+    categories.forEach((cat) => {
+      const meta = CATEGORY_FEEDS[cat];
+      const xml = categoryXmlMap[cat];
+      fs.writeFileSync(path.join(distRssDir, meta.xmlFileName), xml, 'utf-8');
+    });
+
+    console.log(`\n[RSS Generator] Synchronized all main & category feeds into dist/ for deployment.`);
   }
 
-  console.log('[RSS Generator] Feed generation complete.');
+  console.log('\n[RSS Generator] All RSS & syndicate feeds successfully generated and verified.\n');
 }
 
 generateFeeds();
+

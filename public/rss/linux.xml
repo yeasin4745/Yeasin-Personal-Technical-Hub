@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Yeasin | Linux Systems &amp; Environment</title>
+    <link>https://yeasin4745-dev.vercel.app</link>
+    <description>Linux systems engineering articles, POSIX shell automation, kernel virtual filesystem exploration (/proc, /sys), systemd, and service management by Yeasin.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 21 Aug 2026 13:43:38 GMT</lastBuildDate>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>Yeasin Technical Hub RSS Engine v2.0</generator>
+    <managingEditor>yeasin.devx@gmail.com (Yeasin)</managingEditor>
+    <webMaster>yeasin.devx@gmail.com (Yeasin)</webMaster>
+    <atom:link href="https://yeasin4745-dev.vercel.app/rss/linux.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Systems &amp; Environment: Kernel primitives, daemon management, shell pipelines, and system internals</title>
+      <link>https://yeasin4745-dev.vercel.app/#pillars</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/pillar-linux</guid>
+      <description><![CDATA[Harnessing the Linux operating system as a development and server backbone through automation scripting, process inspection, and permission hardening.
+
+Architecture Focus: POSIX Process Lifecycles, Daemons & Automated Pipelines
+Key Topics: Linux Shell Automation & Pipeline Data Processing • System Services, Daemons & Log Diagnostics (journalctl) • File Permissions (chmod/chown), ACLs, and Sudoers • Process Lifecycle (kill, ps, top, htop, fork/exec)
+Protocols: Bash / Shell Scripting, systemd, POSIX, SSH Hardening, Process Management, Cron
+
+Code Implementation (bash):
+sudo systemctl status backend-node.service
+journalctl -u backend-node.service -f -n 50
+ps aux --sort=-%mem | head -n 10]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Linux Systems &amp; Environment</category>
+      <category>Bash / Shell Scripting</category>
+      <category>systemd</category>
+      <category>POSIX</category>
+      <category>SSH Hardening</category>
+      <category>Process Management</category>
+      <category>Cron</category>
+      <category>Architecture</category>
+      <category>Systems</category>
+      <pubDate>Tue, 11 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[LAB-SYS-03] Linux Server Hardening &amp; SSH Key Enforcement</title>
+      <link>https://yeasin4745-dev.vercel.app/#labs</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-03</guid>
+      <description><![CDATA[Configuring non-root administrative users, enforcing Ed25519 SSH keys, disabling password authentication, and setting up basic UFW firewall rules.
+
+Domain: System Hardening | Status: Active Lab
+Tools: Ubuntu Server, SSH (Ed25519), UFW / iptables, systemd
+Key Takeaway: Minimized attack surface on Linux hosts by restricting open ports and eliminating brute-force vectors.
+
+Lab Syntax & Commands (bash):
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow OpenSSH
+sudo ufw enable && sudo ufw status verbose]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>System Hardening</category>
+      <category>System Hardening</category>
+      <category>Ubuntu Server</category>
+      <category>SSH (Ed25519)</category>
+      <category>UFW / iptables</category>
+      <category>systemd</category>
+      <category>LAB-SYS-03</category>
+      <category>Security Lab</category>
+      <pubDate>Sat, 08 Aug 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Linux Process Architecture &amp; Virtual File System (/proc, /sys)</title>
+      <link>https://yeasin4745-dev.vercel.app/#research</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-linux-internals</guid>
+      <description><![CDATA[Investigating how the Linux kernel exposes runtime metrics via /proc, file descriptor management, standard streams, and signals.
+
+Field: Linux Systems | Status: Deep Study
+References: Linux Man Pages, The Linux Command Line
+
+Reference Probe Syntax (bash):
+cat /proc/sys/net/core/somaxconn
+ls -l /proc/self/fd/]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Linux Systems</category>
+      <category>Linux Systems</category>
+      <category>Linux Man Pages</category>
+      <category>The Linux Command Line</category>
+      <category>Research Log</category>
+      <pubDate>Fri, 31 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>[Repository] Python- (Systems &amp; Logic Scripts) (Systems &amp; Scripts)</title>
+      <link>https://github.com/yeasin4745/Python-</link>
+      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/project-python-systems</guid>
+      <description><![CDATA[Structured repository of Python programs exploring core programming logic, algorithmic patterns, file handling, and computational problem-solving.
+
+Technical Highlights:
+• Modular functional programming & logic structures
+• File I/O and data processing scripts
+• Algorithmic foundations for backend automation
+• Verified directly from public GitHub repository
+
+Architecture Stack: Python, Automation, Algorithms, Logic Design]]></description>
+      <dc:creator>Yeasin</dc:creator>
+      <author>yeasin.devx@gmail.com (Yeasin)</author>
+      <category>Systems &amp; Scripts</category>
+      <category>Systems &amp; Scripts</category>
+      <category>Python</category>
+      <category>Automation</category>
+      <category>Algorithms</category>
+      <category>Logic Design</category>
+      <category>GitHub Repository</category>
+      <pubDate>Mon, 06 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
