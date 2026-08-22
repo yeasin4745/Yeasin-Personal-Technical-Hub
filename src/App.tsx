@@ -14,11 +14,21 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { TerminalModal } from './components/TerminalModal';
 import { RssFeedModal } from './components/RssFeedModal';
+import { BootSequence } from './components/BootSequence';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [rssModalOpen, setRssModalOpen] = useState(false);
+  const [isBooting, setIsBooting] = useState(() => {
+    // Check if session has already booted or user prefers reduced motion
+    if (typeof window !== 'undefined') {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const alreadyBooted = sessionStorage.getItem('yeasin_hub_booted') === 'true';
+      return !reducedMotion && !alreadyBooted;
+    }
+    return false;
+  });
 
   // Global hotkey support for opening CLI terminal (Ctrl+K / Cmd+K / `)
   useEffect(() => {
@@ -41,6 +51,9 @@ export default function App() {
     <ThemeProvider>
       <AudioProvider>
         <div className="relative min-h-screen bg-[#070a10] text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 bg-grid-pattern overflow-hidden">
+          {/* Initial Lightweight Cybersecurity Hub Boot Sequence */}
+          {isBooting && <BootSequence onComplete={() => setIsBooting(false)} />}
+
           {/* Fixed Viewport Scroll Progress Indicator */}
           <ScrollProgress />
 

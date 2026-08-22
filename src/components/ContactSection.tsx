@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { GitFork, Send, ShieldCheck, Terminal, AlertCircle, Globe, Lock, Check, Linkedin, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO, EXTENSIBLE_PROFILES } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
-import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection } from './ScrollReveal';
+import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection, CyberHudFrame } from './ScrollReveal';
+import { TiltCard } from './TiltCard';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -103,7 +104,7 @@ export const ContactSection: React.FC = () => {
     <FadeInUpSection id="contact" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header with ScrollReveal */}
+        {/* Section Header with Viewport ScrollReveal */}
         <ScrollReveal className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-xs font-mono text-cyan-300">
             <Terminal className="w-3.5 h-3.5" />
@@ -123,84 +124,88 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <ScrollReveal>
               {/* Verified Identity & Channel Card */}
-              <div className="bg-[#0b101c] border border-cyan-500/30 rounded-xl p-6 space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                  <div className="flex items-center gap-3">
-                    <ProfileImage
-                      size="sm"
-                      interactive={false}
-                      showBadge={false}
-                      glowIntensity="subtle"
-                      id="contact-profile-avatar"
-                    />
-                    <div>
-                      <span className="font-display font-bold text-sm text-white block">
-                        {PERSONAL_INFO.name}
-                      </span>
-                      <span className="font-mono text-[11px] text-cyan-400 block">
-                        @{PERSONAL_INFO.handle}
-                      </span>
+              <TiltCard glareColor="cyan" maxTilt={4} depth={5}>
+                <div className="bg-[#0b101c] border border-cyan-500/30 rounded-xl p-6 space-y-4 shadow-xl">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <div className="flex items-center gap-3">
+                      <ProfileImage
+                        size="sm"
+                        interactive={false}
+                        showBadge={false}
+                        glowIntensity="subtle"
+                        id="contact-profile-avatar"
+                      />
+                      <div>
+                        <span className="font-display font-bold text-sm text-white block">
+                          {PERSONAL_INFO.name}
+                        </span>
+                        <span className="font-mono text-[11px] text-cyan-400 block">
+                          @{PERSONAL_INFO.handle}
+                        </span>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
+                      VERIFIED IDENTITY
+                    </span>
                   </div>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
-                    VERIFIED IDENTITY
-                  </span>
-                </div>
 
-                <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold uppercase">
-                  <Lock className="w-4 h-4" />
-                  <span>Secure Inquiry Transmission</span>
+                  <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold uppercase">
+                    <Lock className="w-4 h-4" />
+                    <span>Secure Inquiry Transmission</span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Transmit direct technical inquiries and collaboration proposals securely through the encrypted endpoint. All messages are securely forwarded directly to Yeasin.
+                  </p>
+                  
+                  <div className="bg-[#070a12] p-3 rounded-lg border border-slate-800 flex items-center gap-2 text-xs text-emerald-400 font-mono">
+                    <ShieldCheck className="w-4 h-4 shrink-0" />
+                    <span>End-to-End TLS 1.3 Transport & Anti-Spam Protected</span>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Transmit direct technical inquiries and collaboration proposals securely through the encrypted endpoint. All messages are securely forwarded directly to Yeasin.
-                </p>
-                
-                <div className="bg-[#070a12] p-3 rounded-lg border border-slate-800 flex items-center gap-2 text-xs text-emerald-400 font-mono">
-                  <ShieldCheck className="w-4 h-4 shrink-0" />
-                  <span>End-to-End TLS 1.3 Transport & Anti-Spam Protected</span>
-                </div>
-              </div>
+              </TiltCard>
             </ScrollReveal>
 
             {/* Professional LinkedIn Connect Button */}
             <ScrollReveal delay={0.08}>
-              <a
-                href={PERSONAL_INFO.linkedinUrl || 'https://linkedin.com/in/yeasin4745'}
-                target="_blank"
-                rel="noopener noreferrer"
-                id="contact-linkedin-btn"
-                aria-label="Connect with Yeasin on LinkedIn (opens in new tab)"
-                className="group relative flex items-center justify-between p-4 rounded-xl bg-[#0b101c] hover:bg-[#0c1424] border border-blue-500/30 hover:border-blue-400 text-slate-200 transition-all duration-300 shadow-md shadow-blue-950/20 hover:shadow-[0_0_22px_rgba(59,130,246,0.22)] transform hover:-translate-y-0.5 cursor-pointer block"
-              >
-                <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-10 h-10 rounded-lg bg-blue-950/80 border border-blue-500/40 flex items-center justify-center text-blue-400 group-hover:text-blue-300 group-hover:bg-blue-900/60 group-hover:border-blue-300 transition-all duration-300 shrink-0">
-                    <Linkedin className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-display font-bold text-sm text-white group-hover:text-blue-300 transition-colors">
-                        LinkedIn Profile
-                      </span>
-                      <span className="text-[10px] font-mono text-blue-400 bg-blue-950/80 px-2 py-0.5 rounded border border-blue-500/30 font-semibold">
-                        VERIFIED
+              <TiltCard glareColor="indigo" maxTilt={4} depth={4}>
+                <a
+                  href={PERSONAL_INFO.linkedinUrl || 'https://linkedin.com/in/yeasin4745'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="contact-linkedin-btn"
+                  aria-label="Connect with Yeasin on LinkedIn (opens in new tab)"
+                  className="group relative flex items-center justify-between p-4 rounded-xl bg-[#0b101c] hover:bg-[#0c1424] border border-blue-500/30 hover:border-blue-400 text-slate-200 transition-all duration-300 shadow-md shadow-blue-950/20 hover:shadow-[0_0_22px_rgba(59,130,246,0.22)] transform hover:-translate-y-0.5 cursor-pointer block"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-10 h-10 rounded-lg bg-blue-950/80 border border-blue-500/40 flex items-center justify-center text-blue-400 group-hover:text-blue-300 group-hover:bg-blue-900/60 group-hover:border-blue-300 transition-all duration-300 shrink-0">
+                      <Linkedin className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="font-display font-bold text-sm text-white group-hover:text-blue-300 transition-colors">
+                          LinkedIn Profile
+                        </span>
+                        <span className="text-[10px] font-mono text-blue-400 bg-blue-950/80 px-2 py-0.5 rounded border border-blue-500/30 font-semibold">
+                          VERIFIED
+                        </span>
+                      </div>
+                      <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-300 transition-colors truncate block">
+                        linkedin.com/in/yeasin4745
                       </span>
                     </div>
-                    <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-300 transition-colors truncate block">
-                      linkedin.com/in/yeasin4745
-                    </span>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 group-hover:text-blue-300 transition-colors shrink-0 pl-2">
-                  <span className="hidden sm:inline font-medium">Connect</span>
-                  <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-                </div>
-              </a>
+                  <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 group-hover:text-blue-300 transition-colors shrink-0 pl-2">
+                    <span className="hidden sm:inline font-medium">Connect</span>
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                  </div>
+                </a>
+              </TiltCard>
             </ScrollReveal>
 
             {/* Extensible Verified Profiles List with Staggered Scroll Reveal */}
             <ScrollReveal delay={0.12}>
-              <div className="bg-[#0b101c] border border-slate-800 rounded-xl p-6 space-y-4">
+              <div className="bg-[#0b101c] border border-slate-800 rounded-xl p-6 space-y-4 shadow-lg">
                 <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
                   Verified Online Profiles & Web Hubs:
                 </h3>
@@ -273,7 +278,7 @@ export const ContactSection: React.FC = () => {
           {/* Right Column: Interactive Secure Message Transmitter */}
           <div className="lg:col-span-7">
             <ScrollReveal delay={0.15}>
-              <div className="bg-[#0b101c] border border-cyan-500/30 rounded-xl p-6 sm:p-8 shadow-2xl">
+              <CyberHudFrame accent="cyan" id="contact-form-hud-frame">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
                   <div>
                     <h3 className="text-lg font-display font-bold text-white">
@@ -319,7 +324,7 @@ export const ContactSection: React.FC = () => {
                         value={formData.senderName}
                         onChange={(e) => setFormData({ ...formData, senderName: e.target.value })}
                         placeholder="e.g. Alex (systems dev)"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50 transition-colors"
                       />
                     </div>
 
@@ -336,7 +341,7 @@ export const ContactSection: React.FC = () => {
                         value={formData.senderEmail}
                         onChange={(e) => setFormData({ ...formData, senderEmail: e.target.value })}
                         placeholder="name@domain.com"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50 transition-colors"
                       />
                     </div>
                   </div>
@@ -355,7 +360,7 @@ export const ContactSection: React.FC = () => {
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       placeholder="e.g. Backend Collaboration / Networking Query"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50 transition-colors"
                     />
                   </div>
 
@@ -378,7 +383,7 @@ export const ContactSection: React.FC = () => {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Describe your technical inquiry, project question, or collaboration opportunity..."
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none resize-none disabled:opacity-50"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070b14] border border-slate-800 focus:border-cyan-500 text-xs font-mono text-white placeholder:text-slate-600 focus:outline-none resize-none disabled:opacity-50 transition-colors"
                     />
                   </div>
 
@@ -391,7 +396,7 @@ export const ContactSection: React.FC = () => {
                       type="submit"
                       id="contact-submit-btn"
                       disabled={status === 'sending'}
-                      className="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs font-mono flex items-center gap-2 transition-all shadow-md shadow-cyan-500/20 disabled:opacity-50 cursor-pointer"
+                      className="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs font-mono flex items-center gap-2 transition-all shadow-md shadow-cyan-500/20 disabled:opacity-50 cursor-pointer active:scale-95"
                     >
                       {status === 'sending' ? (
                         <>
@@ -425,7 +430,7 @@ export const ContactSection: React.FC = () => {
                     </div>
                   )}
                 </form>
-              </div>
+              </CyberHudFrame>
             </ScrollReveal>
           </div>
 

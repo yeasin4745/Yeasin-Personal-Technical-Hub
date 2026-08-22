@@ -1,8 +1,9 @@
 import React from 'react';
-import { User, Terminal, Shield, Network, Server } from 'lucide-react';
+import { User, Terminal, Shield, Network, Server, CheckCircle2 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ProfileImage } from './ProfileImage';
 import { ScrollReveal, StaggerContainer, StaggerItem, FadeInUpSection } from './ScrollReveal';
+import { TiltCard } from './TiltCard';
 
 export const AboutSection: React.FC = () => {
   return (
@@ -23,54 +24,56 @@ export const AboutSection: React.FC = () => {
                 Building Strong Foundations in Systems Engineering
               </h2>
 
-              <div className="bg-[#0c1220] border border-cyan-500/30 rounded-xl p-5 space-y-4">
-                <div className="flex items-center gap-4 pb-4 border-b border-slate-800">
-                  <ProfileImage
-                    size="md"
-                    interactive={false}
-                    showBadge={false}
-                    glowIntensity="medium"
-                    id="about-profile-avatar"
-                  />
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-white">
-                      {PERSONAL_INFO.name}
-                    </h3>
-                    <span className="font-mono text-xs text-cyan-400 block">
-                      @{PERSONAL_INFO.handle}
-                    </span>
-                    <span className="block text-[11px] text-slate-400 font-mono mt-0.5">
-                      Legal: {PERSONAL_INFO.legalFullName}
-                    </span>
+              <TiltCard glareColor="cyan" maxTilt={4} depth={6}>
+                <div className="bg-[#0c1220] border border-cyan-500/30 rounded-xl p-5 space-y-4 shadow-xl">
+                  <div className="flex items-center gap-4 pb-4 border-b border-slate-800">
+                    <ProfileImage
+                      size="md"
+                      interactive={false}
+                      showBadge={false}
+                      glowIntensity="medium"
+                      id="about-profile-avatar"
+                    />
+                    <div>
+                      <h3 className="font-display font-bold text-lg text-white">
+                        {PERSONAL_INFO.name}
+                      </h3>
+                      <span className="font-mono text-xs text-cyan-400 block">
+                        @{PERSONAL_INFO.handle}
+                      </span>
+                      <span className="block text-[11px] text-slate-400 font-mono mt-0.5">
+                        Legal: {PERSONAL_INFO.legalFullName}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="space-y-2 text-xs font-mono text-slate-300">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500">LOCATION:</span>
-                    <span className="text-slate-200">{PERSONAL_INFO.location}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500">PRIMARY FOCUS:</span>
-                    <span className="text-cyan-300">Backend, Net, Sec, Linux</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500">GITHUB REPOS:</span>
-                    <a
-                      href={PERSONAL_INFO.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-cyan-400 hover:underline"
-                    >
-                      github.com/{PERSONAL_INFO.handle}
-                    </a>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500">STATUS:</span>
-                    <span className="text-emerald-400">Active Technical Learner</span>
+                  <div className="space-y-2 text-xs font-mono text-slate-300">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">LOCATION:</span>
+                      <span className="text-slate-200">{PERSONAL_INFO.location}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">PRIMARY FOCUS:</span>
+                      <span className="text-cyan-300">Backend, Net, Sec, Linux</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">GITHUB REPOS:</span>
+                      <a
+                        href={PERSONAL_INFO.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-cyan-400 hover:underline"
+                      >
+                        github.com/{PERSONAL_INFO.handle}
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">STATUS:</span>
+                      <span className="text-emerald-400">Active Technical Learner</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
 
               {/* Quick Principles */}
               <div className="space-y-2.5 mt-6">
@@ -102,54 +105,70 @@ export const AboutSection: React.FC = () => {
               </div>
             </ScrollReveal>
 
-            {/* Core Values Matrix */}
+            {/* Core Values Staggered Grid */}
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <StaggerItem>
-                <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 space-y-1.5 h-full">
-                  <div className="flex items-center gap-2 text-cyan-400 font-mono font-bold text-xs">
-                    <Server className="w-4 h-4" />
-                    <span>Backend Discipline</span>
+                <TiltCard glareColor="cyan" maxTilt={4} depth={4} className="h-full">
+                  <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition-colors h-full">
+                    <div className="p-2 rounded-lg bg-cyan-950 text-cyan-400 w-fit mb-3 border border-cyan-500/30">
+                      <Server className="w-4 h-4" />
+                    </div>
+                    <h4 className="font-display font-bold text-white text-sm mb-1">
+                      Systems-First Thinking
+                    </h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Understanding operating system internals, process memory spaces, asynchronous concurrency, and POSIX file streams.
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-400">
-                    Clean separation of concerns, structured error handling, stateless service design, and secure database interactions.
-                  </p>
-                </div>
+                </TiltCard>
               </StaggerItem>
 
               <StaggerItem>
-                <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 space-y-1.5 h-full">
-                  <div className="flex items-center gap-2 text-emerald-400 font-mono font-bold text-xs">
-                    <Network className="w-4 h-4" />
-                    <span>Protocol Rigor</span>
+                <TiltCard glareColor="emerald" maxTilt={4} depth={4} className="h-full">
+                  <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 hover:border-emerald-500/40 transition-colors h-full">
+                    <div className="p-2 rounded-lg bg-emerald-950 text-emerald-400 w-fit mb-3 border border-emerald-500/30">
+                      <Network className="w-4 h-4" />
+                    </div>
+                    <h4 className="font-display font-bold text-white text-sm mb-1">
+                      Protocol Depth
+                    </h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Studying OSI and TCP/IP stack protocols, packet routing mechanics, DNS lookup workflows, and socket lifecycle management.
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-400">
-                    Understanding standard RFCs, socket lifecycle, handshake overhead, and transport efficiency.
-                  </p>
-                </div>
+                </TiltCard>
               </StaggerItem>
 
               <StaggerItem>
-                <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 space-y-1.5 h-full">
-                  <div className="flex items-center gap-2 text-indigo-400 font-mono font-bold text-xs">
-                    <Shield className="w-4 h-4" />
-                    <span>Security by Design</span>
+                <TiltCard glareColor="indigo" maxTilt={4} depth={4} className="h-full">
+                  <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 hover:border-indigo-500/40 transition-colors h-full">
+                    <div className="p-2 rounded-lg bg-indigo-950 text-indigo-400 w-fit mb-3 border border-indigo-500/30">
+                      <Shield className="w-4 h-4" />
+                    </div>
+                    <h4 className="font-display font-bold text-white text-sm mb-1">
+                      Defensive Security
+                    </h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Auditing access boundaries, implementing input validation routines, managing firewall rules, and mitigating OWASP Top 10 vectors.
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-400">
-                    Defensive validation, principle of least privilege, secure headers, and encrypted channels.
-                  </p>
-                </div>
+                </TiltCard>
               </StaggerItem>
 
               <StaggerItem>
-                <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 space-y-1.5 h-full">
-                  <div className="flex items-center gap-2 text-amber-400 font-mono font-bold text-xs">
-                    <Terminal className="w-4 h-4" />
-                    <span>Linux Fluency</span>
+                <TiltCard glareColor="amber" maxTilt={4} depth={4} className="h-full">
+                  <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 hover:border-amber-500/40 transition-colors h-full">
+                    <div className="p-2 rounded-lg bg-amber-950 text-amber-400 w-fit mb-3 border border-amber-500/30">
+                      <Terminal className="w-4 h-4" />
+                    </div>
+                    <h4 className="font-display font-bold text-white text-sm mb-1">
+                      Verifiable Honesty
+                    </h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Refusing superficial inflated credentials; prioritizing transparently verifiable GitHub code and technical research documentation.
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-400">
-                    CLI pipeline mastery, automated shell scripting, daemon management, and system diagnosis.
-                  </p>
-                </div>
+                </TiltCard>
               </StaggerItem>
             </StaggerContainer>
           </div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { GitFork, ExternalLink, CheckCircle, Clock, AlertCircle, Code2 } from 'lucide-react';
 import { VERIFIED_PROJECTS, PERSONAL_INFO } from '../data/portfolioData';
 import { ScrollReveal, FadeInUpSection } from './ScrollReveal';
+import { TiltCard } from './TiltCard';
 
 export const ProjectsSection: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'verified' | 'pending'>('all');
@@ -18,7 +19,7 @@ export const ProjectsSection: React.FC = () => {
     <FadeInUpSection id="projects" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header with ScrollReveal */}
+        {/* Section Header with Viewport ScrollReveal */}
         <ScrollReveal className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-xs font-mono text-cyan-300 mb-3">
@@ -71,11 +72,8 @@ export const ProjectsSection: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        {/* Project Cards Grid with Framer Motion subtle entry animations */}
-        <motion.div
-          layout={!shouldReduceMotion}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        {/* Project Cards Grid with Viewport Sequential Stagger & 3D Tilt */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <motion.div
@@ -84,152 +82,134 @@ export const ProjectsSection: React.FC = () => {
                 initial={
                   shouldReduceMotion
                     ? { opacity: 1 }
-                    : { opacity: 0, y: 22, scale: 0.98 }
+                    : { opacity: 0, y: 30, scale: 0.96, filter: 'blur(4px)' }
                 }
-                animate={{
+                whileInView={{
                   opacity: 1,
                   y: 0,
                   scale: 1,
+                  filter: 'blur(0px)',
                   transition: {
-                    duration: 0.4,
-                    delay: shouldReduceMotion ? 0 : index * 0.06,
-                    ease: [0.21, 0.47, 0.32, 0.98],
+                    duration: 0.5,
+                    delay: shouldReduceMotion ? 0 : (index % 3) * 0.12,
+                    ease: [0.16, 1, 0.3, 1],
                   },
                 }}
+                viewport={{ once: false, amount: 0.15, margin: '-20px' }}
                 exit={
                   shouldReduceMotion
                     ? { opacity: 0 }
                     : {
                         opacity: 0,
-                        scale: 0.96,
-                        y: 10,
+                        scale: 0.95,
+                        y: 15,
+                        filter: 'blur(3px)',
                         transition: { duration: 0.25, ease: 'easeIn' },
-                      }
-                }
-                whileHover={
-                  shouldReduceMotion
-                    ? undefined
-                    : {
-                        y: -5,
-                        transition: { duration: 0.2, ease: 'easeOut' },
                       }
                 }
                 className="h-full"
               >
-                <div
-                  id={`project-card-${project.id}`}
-                  className={`h-full rounded-xl border p-6 flex flex-col justify-between transition-all duration-200 ${
-                    project.isVerifiedReal
-                      ? 'bg-[#0d1322] border-slate-800 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-950/20'
-                      : 'bg-[#0a0e17] border-dashed border-amber-500/30'
-                  }`}
+                <TiltCard
+                  glareColor={project.isVerifiedReal ? 'cyan' : 'amber'}
+                  maxTilt={6}
+                  depth={8}
+                  className="h-full"
                 >
-                  <div>
-                    {/* Status Indicator */}
-                    <div className="flex items-center justify-between gap-2 mb-4">
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-800/90 text-slate-300 border border-slate-700">
-                        {project.category}
-                      </span>
-
-                      {project.isVerifiedReal ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400">
-                          <CheckCircle className="w-3.5 h-3.5" />
-                          Verified Repo
+                  <div
+                    id={`project-card-${project.id}`}
+                    className={`h-full rounded-xl border p-6 flex flex-col justify-between transition-all duration-200 ${
+                      project.isVerifiedReal
+                        ? 'bg-[#0d1322] border-slate-800 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-950/30'
+                        : 'bg-[#0a0e17] border-dashed border-amber-500/30'
+                    }`}
+                  >
+                    <div>
+                      {/* Status Indicator */}
+                      <div className="flex items-center justify-between gap-2 mb-4">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-800/90 text-slate-300 border border-slate-700">
+                          {project.category}
                         </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded border border-amber-500/30">
-                          <AlertCircle className="w-3.5 h-3.5" />
-                          Pending User Input
-                        </span>
-                      )}
-                    </div>
 
-                    {/* Project Title & Repo info */}
-                    <h3 className="text-lg font-display font-bold text-white mb-1">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs font-mono text-cyan-400 block mb-3">
-                      {project.repoName}
-                    </span>
-
-                    <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-
-                    {/* Highlights */}
-                    <div className="space-y-1.5 mb-6">
-                      {project.technicalHighlights.map((highlight, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-[11px] text-slate-400">
-                          <span className="text-cyan-400 font-bold">›</span>
-                          <span>{highlight}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Bottom tags & Links */}
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.architectureTags.map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#131a2b] text-slate-300 border border-slate-800"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {project.githubUrl ? (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        id={`project-link-${project.id}`}
-                        className="w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono flex items-center justify-center gap-2 border border-slate-700 hover:border-slate-600 transition-colors"
-                      >
-                        <GitFork className="w-3.5 h-3.5 text-cyan-400" />
-                        <span>View Repository on GitHub</span>
-                        <ExternalLink className="w-3 h-3 ml-auto text-slate-400" />
-                      </a>
-                    ) : (
-                      <div className="w-full py-2 px-3 rounded-lg bg-amber-950/20 text-amber-300/80 text-[11px] font-mono flex items-center justify-center gap-2 border border-amber-500/20">
-                        <Clock className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Awaiting project details from Yeasin</span>
+                        {project.isVerifiedReal ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400">
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            Verified Repo
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded border border-amber-500/30">
+                            <Clock className="w-3 h-3" />
+                            {project.status}
+                          </span>
+                        )}
                       </div>
-                    )}
+
+                      {/* Project Title */}
+                      <h3 className="text-lg font-display font-bold text-white mb-2 flex items-center gap-2">
+                        <span>{project.title}</span>
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                        {project.description}
+                      </p>
+
+                      {/* Architecture Highlights */}
+                      <div className="space-y-1.5 mb-5 bg-[#090d18] p-3 rounded-lg border border-slate-800/80">
+                        <span className="text-[10px] font-mono text-slate-400 uppercase font-semibold block mb-1">
+                          Architecture & Standards:
+                        </span>
+                        {project.technicalHighlights.map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-300 font-mono">
+                            <span className="text-cyan-400">▸</span>
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Card Footer: Tech Stack & Real Link */}
+                    <div>
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {project.architectureTags.map((tech, idx) => (
+                          <span
+                            key={idx}
+                            className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#10172a] text-cyan-300 border border-slate-800"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                        {project.isVerifiedReal && project.githubUrl ? (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            id={`project-link-${project.id}`}
+                            className="inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 hover:underline font-semibold"
+                          >
+                            <GitFork className="w-3.5 h-3.5" />
+                            <span>View Source Code</span>
+                            <ExternalLink className="w-3 h-3 ml-0.5" />
+                          </a>
+                        ) : (
+                          <span className="text-[11px] font-mono text-slate-500 italic">
+                            In-progress research / slot pending
+                          </span>
+                        )}
+
+                        <span className="text-[10px] font-mono text-slate-500">
+                          ID: {project.id}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </TiltCard>
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
-
-        {/* GitHub profile banner with ScrollReveal */}
-        <ScrollReveal delay={0.15} className="mt-10 p-4 rounded-xl bg-gradient-to-r from-[#0d1424] to-[#0a0f1b] border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-cyan-400">
-              <GitFork className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">
-                Looking for all public code commits and updates?
-              </h4>
-              <p className="text-xs text-slate-400">
-                Explore all active repositories on GitHub profile: <strong className="text-cyan-300">@{PERSONAL_INFO.handle}</strong>
-              </p>
-            </div>
-          </div>
-          <a
-            href={PERSONAL_INFO.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            id="projects-github-cta"
-            className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs transition-colors shrink-0"
-          >
-            Visit github.com/{PERSONAL_INFO.handle}
-          </a>
-        </ScrollReveal>
+        </div>
 
       </div>
     </FadeInUpSection>
