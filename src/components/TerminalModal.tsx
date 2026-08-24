@@ -4,6 +4,7 @@ import { PERSONAL_INFO, VERIFIED_PROJECTS, SECURITY_LABS, RESEARCH_ITEMS, TECHNI
 import { useTheme } from '../context/ThemeContext';
 import { useSystemAudio } from '../context/AudioContext';
 import { parseAnsiToReact, AnsiText, ANSI } from '../utils/ansiParser';
+import { TerminalOutputPrinter } from './TerminalOutputPrinter';
 
 interface TerminalModalProps {
   isOpen: boolean;
@@ -70,6 +71,7 @@ interface CommandLog {
   output: React.ReactNode;
   timestamp: string;
   status?: 'success' | 'error' | 'system' | 'neutral';
+  shouldAnimate?: boolean;
 }
 
 export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose }) => {
@@ -1506,13 +1508,14 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
     setSelectedSuggestionIndex(0);
 
     setHistory((prev) => [
-      ...prev,
+      ...prev.map((item) => ({ ...item, shouldAnimate: false })),
       {
         id: `cmd-${Date.now()}`,
         command: rawCmd,
         timestamp: time,
         output,
         status: logStatus,
+        shouldAnimate: true,
       },
     ]);
     setInputVal('');
@@ -1730,7 +1733,28 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                     {item.timestamp}
                   </span>
                 </div>
-                <div className="pl-5 py-1">{item.output}</div>
+                <div className="pl-5 py-1">
+                  {item.shouldAnimate ? (
+                    <TerminalOutputPrinter
+                      isClassicGreen={isClassicGreen}
+                      animate={true}
+                      speedMs={22}
+                      onTick={() => {
+                        if (isAudioEnabled) {
+                          playMechanicalTick();
+                        }
+                        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      onComplete={() => {
+                        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    >
+                      {item.output}
+                    </TerminalOutputPrinter>
+                  ) : (
+                    item.output
+                  )}
+                </div>
               </div>
             );
           })}
