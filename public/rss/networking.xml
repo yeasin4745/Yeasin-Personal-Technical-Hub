@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Yeasin | Computer Networking &amp; Protocol Research</title>
-    <link>https://yeasin4745-dev.vercel.app</link>
+    <link>/</link>
     <description>Technical articles, wire-level packet analyses, Wireshark captures, TCP/IP specifications, and routing architecture by Yeasin.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Aug 2026 13:43:38 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 02:18:18 GMT</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <generator>Yeasin Technical Hub RSS Engine v2.0</generator>
     <managingEditor>yeasin.devx@gmail.com (Yeasin)</managingEditor>
     <webMaster>yeasin.devx@gmail.com (Yeasin)</webMaster>
-    <atom:link href="https://yeasin4745-dev.vercel.app/rss/networking.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/rss/networking.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Computer Networking &amp; Protocols: Wire-level packet communication, routing logic, and protocol stacks</title>
-      <link>https://yeasin4745-dev.vercel.app/#pillars</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/pillar-networking</guid>
+      <link>/#pillars</link>
+      <guid isPermaLink="false">/article/pillar-networking</guid>
       <description><![CDATA[Deconstructing the OSI & TCP/IP models, analyzing packet lifecycles with Wireshark, socket-level communication, and DNS/routing topologies.
 
 Architecture Focus: Layer 3/4 Packet Routing, Sockets & Protocol Analysis
@@ -40,8 +40,8 @@ ping -c 4 -M do -s 1472 1.1.1.1]]></description>
     </item>
     <item>
       <title>[LAB-NET-01] Wireshark TCP Handshake &amp; Packet Flow Dissection</title>
-      <link>https://yeasin4745-dev.vercel.app/#labs</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-01</guid>
+      <link>/#labs</link>
+      <guid isPermaLink="false">/article/lab-lab-01</guid>
       <description><![CDATA[Capturing and analyzing SYN, SYN-ACK, ACK sequence numbers, window scaling, and connection termination (FIN/RST) across local and remote connections.
 
 Domain: Protocol Analysis | Status: Documented
@@ -64,8 +64,8 @@ sudo tcpdump -i any -nn -v 'tcp[tcpflags] & (tcp-syn|tcp-ack|tcp-fin) != 0 and p
     </item>
     <item>
       <title>[LAB-NET-04] Subnet Topology &amp; CIDR Allocation Planning</title>
-      <link>https://yeasin4745-dev.vercel.app/#labs</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-04</guid>
+      <link>/#labs</link>
+      <guid isPermaLink="false">/article/lab-lab-04</guid>
       <description><![CDATA[Architecting multi-tier network topologies, isolating backend database subnets from public ingress, and calculating broadcast/network address boundaries.
 
 Domain: Networking | Status: Planned Scenario
@@ -88,8 +88,8 @@ ip route show]]></description>
     </item>
     <item>
       <title>RFC 793 / RFC 9293: Transmission Control Protocol (TCP) Specification</title>
-      <link>https://yeasin4745-dev.vercel.app/#research</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-rfc-793</guid>
+      <link>/#research</link>
+      <guid isPermaLink="false">/article/research-rfc-793</guid>
       <description><![CDATA[Studying state transition diagrams, sliding window algorithms, congestion window expansion, and socket teardown semantics.
 
 Field: RFC & Protocol Study | Status: Deep Study
@@ -109,15 +109,15 @@ cat /proc/sys/net/ipv4/tcp_wmem]]></description>
     </item>
     <item>
       <title>RFC 9110: HTTP Semantics &amp; Transport Evolution (HTTP/1.1 to HTTP/3)</title>
-      <link>https://yeasin4745-dev.vercel.app/#research</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-rfc-9110</guid>
+      <link>/#research</link>
+      <guid isPermaLink="false">/article/research-rfc-9110</guid>
       <description><![CDATA[Analyzing stateless request-response mechanics, idempotency of methods, keep-alive connections, and QUIC over UDP.
 
 Field: RFC & Protocol Study | Status: Deep Study
 References: IETF RFC 9110, Cloudflare Learning Guides
 
 Reference Probe Syntax (bash):
-curl -Iv --http2 https://yeasin4745-dev.vercel.app/ -o /dev/null]]></description>
+curl -Iv --http2 / -o /dev/null]]></description>
       <dc:creator>Yeasin</dc:creator>
       <author>yeasin.devx@gmail.com (Yeasin)</author>
       <category>RFC &amp; Protocol Study</category>

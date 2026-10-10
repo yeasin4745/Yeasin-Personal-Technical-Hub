@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Yeasin | Linux Systems &amp; Environment</title>
-    <link>https://yeasin4745-dev.vercel.app</link>
+    <link>/</link>
     <description>Linux systems engineering articles, POSIX shell automation, kernel virtual filesystem exploration (/proc, /sys), systemd, and service management by Yeasin.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Aug 2026 13:43:38 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 02:18:18 GMT</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <generator>Yeasin Technical Hub RSS Engine v2.0</generator>
     <managingEditor>yeasin.devx@gmail.com (Yeasin)</managingEditor>
     <webMaster>yeasin.devx@gmail.com (Yeasin)</webMaster>
-    <atom:link href="https://yeasin4745-dev.vercel.app/rss/linux.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/rss/linux.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux Systems &amp; Environment: Kernel primitives, daemon management, shell pipelines, and system internals</title>
-      <link>https://yeasin4745-dev.vercel.app/#pillars</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/pillar-linux</guid>
+      <link>/#pillars</link>
+      <guid isPermaLink="false">/article/pillar-linux</guid>
       <description><![CDATA[Harnessing the Linux operating system as a development and server backbone through automation scripting, process inspection, and permission hardening.
 
 Architecture Focus: POSIX Process Lifecycles, Daemons & Automated Pipelines
@@ -40,8 +40,8 @@ ps aux --sort=-%mem | head -n 10]]></description>
     </item>
     <item>
       <title>[LAB-SYS-03] Linux Server Hardening &amp; SSH Key Enforcement</title>
-      <link>https://yeasin4745-dev.vercel.app/#labs</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/lab-lab-03</guid>
+      <link>/#labs</link>
+      <guid isPermaLink="false">/article/lab-lab-03</guid>
       <description><![CDATA[Configuring non-root administrative users, enforcing Ed25519 SSH keys, disabling password authentication, and setting up basic UFW firewall rules.
 
 Domain: System Hardening | Status: Active Lab
@@ -67,8 +67,8 @@ sudo ufw enable && sudo ufw status verbose]]></description>
     </item>
     <item>
       <title>Linux Process Architecture &amp; Virtual File System (/proc, /sys)</title>
-      <link>https://yeasin4745-dev.vercel.app/#research</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/research-linux-internals</guid>
+      <link>/#research</link>
+      <guid isPermaLink="false">/article/research-linux-internals</guid>
       <description><![CDATA[Investigating how the Linux kernel exposes runtime metrics via /proc, file descriptor management, standard streams, and signals.
 
 Field: Linux Systems | Status: Deep Study
@@ -89,7 +89,7 @@ ls -l /proc/self/fd/]]></description>
     <item>
       <title>[Repository] Python- (Systems &amp; Logic Scripts) (Systems &amp; Scripts)</title>
       <link>https://github.com/yeasin4745/Python-</link>
-      <guid isPermaLink="false">https://yeasin4745-dev.vercel.app/article/project-python-systems</guid>
+      <guid isPermaLink="false">/article/project-python-systems</guid>
       <description><![CDATA[Structured repository of Python programs exploring core programming logic, algorithmic patterns, file handling, and computational problem-solving.
 
 Technical Highlights:

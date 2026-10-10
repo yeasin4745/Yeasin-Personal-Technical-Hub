@@ -20,8 +20,11 @@ import {
  * Plus JSON Feed 1.1 specification at /public/feed.json
  */
 function generateFeeds() {
-  const siteUrl = process.env.SITE_URL || 'https://yeasin4745-dev.vercel.app';
-  console.log(`[RSS Generator] Generating feeds for base URL: ${siteUrl}`);
+  let siteUrl = process.env.SITE_URL || '';
+  if (/\.vercel\.app/i.test(siteUrl)) {
+    siteUrl = '';
+  }
+  console.log(`[RSS Generator] Generating feeds for base URL: ${siteUrl || '(relative root)'}`);
 
   // 1. Gather all parsed items
   const allItems = getAllFeedItems(siteUrl);

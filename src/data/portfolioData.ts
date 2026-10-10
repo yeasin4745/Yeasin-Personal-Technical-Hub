@@ -99,8 +99,8 @@ ping -c 4 -M do -s 1472 1.1.1.1`,
       language: 'bash',
       title: 'TLS 1.3 Cipher & Security Headers Audit',
       description: 'Testing defensive HTTP response headers and cryptographic ciphers.',
-      code: `curl -sI https://yeasin-sec.vercel.app/api/health | grep -iE '(strict-transport|x-frame|content-security)'
-openssl s_client -connect yeasin-sec.vercel.app:443 -tls1_3`,
+      code: `curl -sI /api/health | grep -iE '(strict-transport|x-frame|content-security)'
+openssl s_client -connect localhost:443 -tls1_3`,
     },
   },
   {
@@ -229,8 +229,8 @@ export const SECURITY_LABS: SecurityLabItem[] = [
       language: 'bash',
       title: 'CORS Pre-Flight & Defensive Headers Inspection',
       description: 'Audit API endpoint headers for strict transport security and frame restrictions.',
-      code: `curl -i -X OPTIONS https://yeasin4745-dev.vercel.app/api/contact \\
-  -H "Origin: https://yeasin-sec.vercel.app" \\
+      code: `curl -i -X OPTIONS /api/contact \\
+  -H "Origin: http://localhost:3000" \\
   -H "Access-Control-Request-Method: POST"`,
     },
   },
@@ -301,7 +301,7 @@ cat /proc/sys/net/ipv4/tcp_wmem`,
       language: 'bash',
       title: 'HTTP/2 Protocol Negotiation Probe',
       description: 'Verifying TLS ALPN negotiation for HTTP/2 frames.',
-      code: `curl -Iv --http2 https://yeasin4745-dev.vercel.app/ -o /dev/null`,
+      code: `curl -Iv --http2 / -o /dev/null`,
     },
   },
   {
@@ -334,7 +334,7 @@ ls -l /proc/self/fd/`,
       description: 'Validate that cross-tenant resource requests return 403 Forbidden.',
       code: `curl -s -o /dev/null -w "%{http_code}\\n" \\
   -H "Authorization: Bearer <AUTH_TOKEN>" \\
-  https://yeasin-sec.vercel.app/api/restricted_resource`,
+  /api/restricted_resource`,
     },
   },
 ];
@@ -355,29 +355,5 @@ export const EXTENSIBLE_PROFILES: ExtensibleSocialProfile[] = [
     isVerified: true,
     type: 'linkedin',
     note: 'Professional network, career updates, and verified engineering credentials.',
-  },
-  {
-    platform: 'Primary Technical Hub',
-    handle: 'yeasin4745-dev.vercel.app',
-    url: 'https://yeasin4745-dev.vercel.app',
-    isVerified: true,
-    type: 'website',
-    note: 'Primary production hub for backend architecture and systems documentation.',
-  },
-  {
-    platform: 'Node.js Technical Hub (Secondary)',
-    handle: 'yeasin4745-node.vercel.app',
-    url: 'https://yeasin4745-node.vercel.app/',
-    isVerified: true,
-    type: 'website',
-    note: 'Secondary official technical hub for Node.js systems, server micro-architectures, and backend experiments.',
-  },
-  {
-    platform: 'Security & Systems Hub',
-    handle: 'yeasin-sec.vercel.app',
-    url: 'https://yeasin-sec.vercel.app',
-    isVerified: true,
-    type: 'website',
-    note: 'Dedicated domain for network security, protocol analysis, and lab explorations.',
   },
 ];

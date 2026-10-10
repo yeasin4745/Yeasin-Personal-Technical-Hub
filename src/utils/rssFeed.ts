@@ -296,7 +296,7 @@ ${tagElements}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>${escapeXml(feedTitle)}</title>
-    <link>${escapeXml(cleanBase)}</link>
+    <link>${escapeXml(cleanBase || '/')}</link>
     <description>${escapeXml(feedDescription)}</description>
     <language>en-us</language>
     <lastBuildDate>${buildDate}</lastBuildDate>

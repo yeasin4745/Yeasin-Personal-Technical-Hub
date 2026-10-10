@@ -2,7 +2,6 @@
  * Centralized Site & SEO Configuration
  *
  * Single source of truth for website URL, metadata, and canonical routing.
- * Primary production domain: https://yeasin4745-dev.vercel.app
  * Overridable via `VITE_SITE_URL` environment variable.
  */
 
@@ -10,7 +9,7 @@ export const SITE_CONFIG = {
   name: 'Yeasin',
   legalFullName: 'Md Yeasin Mia',
   handle: 'yeasin4745',
-  productionDomain: 'https://yeasin4745-dev.vercel.app',
+  productionDomain: '',
   title: 'Yeasin (yeasin4745) | Backend Development, Networking & Cybersecurity Hub',
   shortTitle: 'Yeasin | Backend & Network Security',
   description:
@@ -37,9 +36,17 @@ export const SITE_CONFIG = {
     const metaEnv = (import.meta as unknown as { env?: Record<string, string> })?.env;
     const envUrl = metaEnv?.VITE_SITE_URL || metaEnv?.NEXT_PUBLIC_SITE_URL;
     if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
-      return envUrl.trim().replace(/\/+$/, '');
+      const clean = envUrl.trim().replace(/\/+$/, '');
+      if (!/\.vercel\.app/i.test(clean)) {
+        return clean;
+      }
     }
-    return this.productionDomain;
+    if (typeof window !== 'undefined' && window.location?.origin) {
+      if (!/\.vercel\.app/i.test(window.location.origin)) {
+        return window.location.origin;
+      }
+    }
+    return '';
   },
 
   /**

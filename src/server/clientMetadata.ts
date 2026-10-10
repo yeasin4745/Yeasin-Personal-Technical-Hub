@@ -291,8 +291,6 @@ export function extractCoarseLocation(req: RequestLike): CoarseLocation {
  * Known trusted source website allowlist & dynamic origin resolver
  */
 const TRUSTED_ORIGINS_ALLOWLIST = [
-  'https://yeasin4745-dev.vercel.app',
-  'https://yeasin4745-node.vercel.app',
   'https://yeasin4745.dev',
   'https://yeasin.dev',
 ];
@@ -310,7 +308,7 @@ export function resolveSourceWebsite(req: RequestLike): {
   const originHeader = getHeader(req, 'origin');
   const refererHeader = getHeader(req, 'referer');
   const forwardedHost = getHeader(req, 'x-forwarded-host');
-  const hostHeader = forwardedHost || getHeader(req, 'host') || 'yeasin4745-dev.vercel.app';
+  const hostHeader = forwardedHost || getHeader(req, 'host') || 'localhost:3000';
   
   const forwardedProto = getHeader(req, 'x-forwarded-proto');
   const protocol = forwardedProto ? forwardedProto.split(',')[0].trim() : req.socket?.encrypted ? 'https' : 'https';

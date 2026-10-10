@@ -996,9 +996,6 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 <p>• <strong>Verified Email:</strong> <span className="text-emerald-300 font-mono">{PERSONAL_INFO.email}</span></p>
                 <p>• <strong>GitHub:</strong> <a href={PERSONAL_INFO.githubUrl} target="_blank" rel="noreferrer" className="text-emerald-400 underline">{PERSONAL_INFO.githubUrl}</a></p>
                 <p>• <strong>LinkedIn:</strong> <a href={PERSONAL_INFO.linkedinUrl} target="_blank" rel="noreferrer" className="text-blue-400 underline">{PERSONAL_INFO.linkedinUrl}</a></p>
-                <p>• <strong>Primary Technical Hub:</strong> <a href="https://yeasin4745-dev.vercel.app" target="_blank" rel="noreferrer" className="text-cyan-400 underline">https://yeasin4745-dev.vercel.app</a></p>
-                <p>• <strong>Secondary Hub (Node.js):</strong> <a href="https://yeasin4745-node.vercel.app/" target="_blank" rel="noreferrer" className="text-emerald-400 underline">https://yeasin4745-node.vercel.app/</a></p>
-                <p>• <strong>Security & Systems Hub:</strong> <a href="https://yeasin-sec.vercel.app" target="_blank" rel="noreferrer" className="text-indigo-400 underline">https://yeasin-sec.vercel.app</a></p>
               </div>
               <p className="text-[11px] text-slate-400 pt-1">
                 Direct client-side routing with zero third-party telemetry.
