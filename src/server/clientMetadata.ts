@@ -288,12 +288,14 @@ export function extractCoarseLocation(req: RequestLike): CoarseLocation {
 }
 
 /**
- * Known trusted source website allowlist & dynamic origin resolver
+ * Trusted production origins & dynamic origin resolver.
+ * Populated from environment configuration instead of hardcoded domains.
  */
-const TRUSTED_ORIGINS_ALLOWLIST = [
-  'https://yeasin4745.dev',
-  'https://yeasin.dev',
-];
+function getTrustedOriginsAllowlist(): string[] {
+  const envUrl = process.env.APP_URL || process.env.VITE_SITE_URL || process.env.SITE_URL;
+  if (!envUrl || envUrl.trim() === '') return [];
+  return [envUrl.trim().replace(/\/+$/, '')];
+}
 
 /**
  * Resolves the source website dynamically from request metadata & safe environment configuration.
@@ -313,9 +315,11 @@ export function resolveSourceWebsite(req: RequestLike): {
   const forwardedProto = getHeader(req, 'x-forwarded-proto');
   const protocol = forwardedProto ? forwardedProto.split(',')[0].trim() : req.socket?.encrypted ? 'https' : 'https';
 
+  const trustedOrigins = getTrustedOriginsAllowlist();
+
   // Check if Origin matches any trusted production origin
   if (originHeader) {
-    for (const trusted of TRUSTED_ORIGINS_ALLOWLIST) {
+    for (const trusted of trustedOrigins) {
       if (originHeader.toLowerCase() === trusted.toLowerCase() || originHeader.toLowerCase() === `${trusted.toLowerCase()}/`) {
         return {
           sourceWebsite: trusted,
@@ -325,8 +329,8 @@ export function resolveSourceWebsite(req: RequestLike): {
         };
       }
     }
-    // Check if origin matches vercel or run.app preview domains
-    if (/\.vercel\.app$/i.test(originHeader) || /\.run\.app$/i.test(originHeader) || /localhost|127\.0\.0\.1/i.test(originHeader)) {
+    // Check if origin matches vercel preview domains
+    if (/\.vercel\.app$/i.test(originHeader) || /localhost|127\.0\.0\.1/i.test(originHeader)) {
       return {
         sourceWebsite: originHeader.replace(/\/+$/, ''),
         origin: originHeader,
@@ -341,7 +345,7 @@ export function resolveSourceWebsite(req: RequestLike): {
     try {
       const parsedUrl = new URL(refererHeader);
       const originFromReferer = parsedUrl.origin;
-      for (const trusted of TRUSTED_ORIGINS_ALLOWLIST) {
+      for (const trusted of trustedOrigins) {
         if (originFromReferer.toLowerCase() === trusted.toLowerCase()) {
           return {
             sourceWebsite: trusted,
@@ -351,7 +355,7 @@ export function resolveSourceWebsite(req: RequestLike): {
           };
         }
       }
-      if (/\.vercel\.app$/i.test(originFromReferer) || /\.run\.app$/i.test(originFromReferer) || /localhost|127\.0\.0\.1/i.test(originFromReferer)) {
+      if (/\.vercel\.app$/i.test(originFromReferer) || /localhost|127\.0\.0\.1/i.test(originFromReferer)) {
         return {
           sourceWebsite: originFromReferer,
           origin: originFromReferer,

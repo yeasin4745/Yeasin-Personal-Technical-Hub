@@ -134,8 +134,8 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
               className={`inline-block font-display font-black tracking-[0.16em] uppercase transition-all duration-150 ${
                 isVisible
                   ? isNewlyConstructed
-                    ? 'animate-letter-construct text-cyan-200'
-                    : 'opacity-100 scale-100 text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-sky-300'
+                    ? 'animate-letter-construct text-violet-200'
+                    : 'opacity-100 scale-100 text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-100 to-sky-300'
                   : 'opacity-0 scale-90 w-0 pointer-events-none select-none overflow-hidden'
               }`}
               style={{
@@ -160,21 +160,21 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
       >
         {/* Top cybersecurity telemetry signal bar */}
         <div className="flex items-center gap-2 mb-2.5">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#08101e]/90 border border-cyan-500/30 text-[11px] font-mono text-cyan-300 backdrop-blur-md shadow-sm shadow-cyan-950/40">
+          <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#08101e]/90 border border-violet-500/30 text-[11px] font-mono text-violet-300 backdrop-blur-md shadow-sm shadow-violet-950/40">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
             <span className="text-slate-400 tracking-wider font-semibold">IDENTITY //</span>
-            <span className="text-cyan-300 font-bold tracking-wide">SEC.NODE:4745</span>
+            <span className="text-violet-300 font-bold tracking-wide">SEC.NODE:4745</span>
             <span className="text-slate-600 font-mono">|</span>
             <span className="text-emerald-400 font-medium hidden xs:inline text-[10px]">TLS 1.3 SECURED</span>
           </div>
-          <span className="hidden sm:inline-block w-12 h-[1px] bg-gradient-to-r from-cyan-500/40 via-cyan-400/20 to-transparent" />
+          <span className="hidden sm:inline-block w-12 h-[1px] bg-gradient-to-r from-violet-500/40 via-violet-400/20 to-transparent" />
         </div>
 
         {/* Clean Unboxed Cyber Wordmark */}
         <div className="relative group py-1">
           {/* Subtle ambient luminous aura behind wordmark */}
           <div
-            className={`absolute -inset-2 bg-gradient-to-r from-cyan-500/20 via-sky-500/15 to-indigo-500/15 rounded-xl blur-xl opacity-60 group-hover:opacity-95 transition-opacity duration-700 pointer-events-none ${
+            className={`absolute -inset-2 bg-gradient-to-r from-violet-500/20 via-sky-500/15 to-indigo-500/15 rounded-xl blur-xl opacity-60 group-hover:opacity-95 transition-opacity duration-700 pointer-events-none ${
               !prefersReducedMotion ? 'wordmark-glow-ambient' : ''
             }`}
           />
@@ -182,7 +182,7 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
           <div className="relative flex items-center min-h-[48px] sm:min-h-[64px] lg:min-h-[72px]">
             {/* Left technical bracket accent */}
             <span
-              className="font-mono text-cyan-400/80 text-3xl sm:text-5xl lg:text-6xl font-light select-none mr-2 font-bold transition-opacity"
+              className="font-mono text-violet-400/80 text-3xl sm:text-5xl lg:text-6xl font-light select-none mr-2 font-bold transition-opacity"
               aria-hidden="true"
             >
               [›
@@ -197,8 +197,8 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
               {/* Active Terminal Cursor */}
               {!prefersReducedMotion && (
                 <span
-                  className={`inline-block w-2 sm:w-2.5 h-7 sm:h-10 bg-cyan-400 ml-2 rounded-xs shadow-[0_0_12px_#00f0ff] ${
-                    phase === 'holding' ? 'animate-signal-blink' : 'opacity-100 shadow-[0_0_16px_#00f0ff]'
+                  className={`inline-block w-2 sm:w-2.5 h-7 sm:h-10 bg-violet-400 ml-2 rounded-xs shadow-[0_0_12px_#a78bfa] ${
+                    phase === 'holding' ? 'animate-signal-blink' : 'opacity-100 shadow-[0_0_16px_#a78bfa]'
                   } align-middle`}
                   aria-hidden="true"
                 />
@@ -207,7 +207,7 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
 
             {/* Right technical bracket accent */}
             <span
-              className="font-mono text-cyan-400/80 text-3xl sm:text-5xl lg:text-6xl font-light select-none ml-2 font-bold transition-opacity"
+              className="font-mono text-violet-400/80 text-3xl sm:text-5xl lg:text-6xl font-light select-none ml-2 font-bold transition-opacity"
               aria-hidden="true"
             >
               ‹]
@@ -217,19 +217,19 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
 
         {/* Subordinate Handle & Systems Metadata */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2">
-          <span className="font-mono text-xs text-cyan-300 font-semibold px-2.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 shadow-xs">
+          <span className="font-mono text-xs text-violet-300 font-semibold px-2.5 py-0.5 rounded bg-violet-950/80 border border-violet-500/40 shadow-xs">
             @{PERSONAL_INFO.handle}
           </span>
           <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-cyan-400" />
+            <span className="w-1 h-1 rounded-full bg-violet-400" />
             <span>Backend Systems & Network Security Specialist</span>
           </span>
         </div>
 
         {/* Bottom micro circuit trace accent */}
         <div className="w-full max-w-[320px] sm:max-w-[420px] flex items-center gap-2 mt-2 opacity-75">
-          <div className="w-1.5 h-1.5 rounded-full border border-cyan-400 bg-cyan-950" />
-          <div className="h-[1px] flex-1 bg-gradient-to-r from-cyan-400/60 via-sky-500/30 to-transparent" />
+          <div className="w-1.5 h-1.5 rounded-full border border-violet-400 bg-violet-950" />
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-violet-400/60 via-sky-500/30 to-transparent" />
           <span className="text-[10px] font-mono text-slate-500 tracking-wider">SEC.UID // 0x4745_SYS</span>
         </div>
       </div>
@@ -245,17 +245,17 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
         aria-label="YEASIN"
       >
         <div className="relative flex items-center min-h-[24px]">
-          <span className="font-mono text-cyan-500/60 text-sm mr-0.5 select-none">[</span>
+          <span className="font-mono text-violet-500/60 text-sm mr-0.5 select-none">[</span>
           <span className="font-display font-black text-base tracking-[0.14em] uppercase text-white">
             {renderAnimatedLetters(false)}
           </span>
-          <span className="font-mono text-cyan-500/60 text-sm ml-0.5 select-none">]</span>
+          <span className="font-mono text-violet-500/60 text-sm ml-0.5 select-none">]</span>
           {!prefersReducedMotion && (
-            <span className="inline-block w-1.5 h-3.5 bg-cyan-400 ml-1 rounded-xs shadow-[0_0_6px_#00f0ff] animate-signal-blink" />
+            <span className="inline-block w-1.5 h-3.5 bg-violet-400 ml-1 rounded-xs shadow-[0_0_6px_#a78bfa] animate-signal-blink" />
           )}
         </div>
         {showHandle && (
-          <span className="font-mono text-[10px] text-cyan-400/90 tracking-wider px-1.5 py-0.5 rounded bg-[#091120] border border-cyan-500/30">
+          <span className="font-mono text-[10px] text-violet-400/90 tracking-wider px-1.5 py-0.5 rounded bg-[#091120] border border-violet-500/30">
             @{PERSONAL_INFO.handle}
           </span>
         )}
@@ -274,13 +274,13 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
       <div className="relative flex items-center min-h-[28px] sm:min-h-[32px]">
         {/* Ambient background hover aura */}
         <div
-          className={`absolute -inset-1 bg-cyan-500/15 rounded blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ${
+          className={`absolute -inset-1 bg-violet-500/15 rounded blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ${
             !prefersReducedMotion ? 'wordmark-glow-ambient' : ''
           }`}
         />
 
         {/* Left minimal terminal bracket */}
-        <span className="font-mono text-cyan-500/60 text-base sm:text-lg font-light select-none mr-1" aria-hidden="true">
+        <span className="font-mono text-violet-500/60 text-base sm:text-lg font-light select-none mr-1" aria-hidden="true">
           [
         </span>
 
@@ -290,14 +290,14 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
         </div>
 
         {/* Right minimal terminal bracket */}
-        <span className="font-mono text-cyan-500/60 text-base sm:text-lg font-light select-none ml-1" aria-hidden="true">
+        <span className="font-mono text-violet-500/60 text-base sm:text-lg font-light select-none ml-1" aria-hidden="true">
           ]
         </span>
 
         {/* Digital blinking cursor node */}
         {!prefersReducedMotion && (
           <span
-            className={`inline-block w-1 sm:w-1.5 h-3.5 sm:h-4 bg-cyan-400 ml-1 rounded-xs shadow-[0_0_8px_#00f0ff] ${
+            className={`inline-block w-1 sm:w-1.5 h-3.5 sm:h-4 bg-violet-400 ml-1 rounded-xs shadow-[0_0_8px_#a78bfa] ${
               phase === 'holding' ? 'animate-signal-blink' : 'opacity-100'
             }`}
             aria-hidden="true"
@@ -308,7 +308,7 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
       {/* Secondary technical handle @yeasin4745 */}
       {showHandle && (
         <div className="hidden xs:inline-flex items-center">
-          <span className="font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded bg-[#091120] text-cyan-400/90 border border-cyan-500/30 group-hover:border-cyan-400/60 group-hover:text-cyan-300 transition-colors tracking-wide shadow-sm shadow-cyan-950/40">
+          <span className="font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded bg-[#091120] text-violet-400/90 border border-violet-500/30 group-hover:border-violet-400/60 group-hover:text-violet-300 transition-colors tracking-wide shadow-sm shadow-violet-950/40">
             @{PERSONAL_INFO.handle}
           </span>
         </div>

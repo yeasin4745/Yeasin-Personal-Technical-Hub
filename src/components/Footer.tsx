@@ -1,15 +1,14 @@
 import React from 'react';
-import { Terminal, ArrowUp, GitFork, Shield, Rss, Lock } from 'lucide-react';
+import { Terminal, ArrowUp, GitFork, Shield, Lock } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface FooterProps {
   onOpenTerminal: () => void;
-  onOpenRss: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenTerminal }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -29,15 +28,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
             </p>
             <div className="pt-1 flex flex-wrap items-center gap-3">
               <ThemeSwitcher id="footer-theme-switcher" />
-              <button
-                onClick={onOpenRss}
-                id="footer-rss-btn"
-                type="button"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-950/40 hover:bg-orange-900/60 text-orange-300 border border-orange-500/30 hover:border-orange-400 text-xs font-mono transition-all cursor-pointer"
-              >
-                <Rss className="w-3.5 h-3.5 text-orange-400" />
-                <span>RSS Feed (/rss.xml)</span>
-              </button>
             </div>
           </div>
 
@@ -47,13 +37,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
               Direct Sections
             </span>
             <ul className="space-y-1.5 text-xs">
-              <li><a href="#overview" className="hover:text-cyan-400 transition-colors">Overview</a></li>
-              <li><a href="#pillars" className="hover:text-cyan-400 transition-colors">Technical Pillars</a></li>
-              <li><a href="#projects" className="hover:text-cyan-400 transition-colors">Verified Projects</a></li>
-              <li><a href="#labs" className="hover:text-cyan-400 transition-colors">Security & Labs</a></li>
-              <li><a href="#research" className="hover:text-cyan-400 transition-colors">Research & RFCs</a></li>
-              <li><a href="#about" className="hover:text-cyan-400 transition-colors">About & Mindset</a></li>
-              <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Direct Contact</a></li>
+              <li><a href="#overview" className="hover:text-violet-400 transition-colors">Overview</a></li>
+              <li><a href="#pillars" className="hover:text-violet-400 transition-colors">Technical Pillars</a></li>
+              <li><a href="#projects" className="hover:text-violet-400 transition-colors">Verified Projects</a></li>
+              <li><a href="#labs" className="hover:text-violet-400 transition-colors">Security & Labs</a></li>
+              <li><a href="#research" className="hover:text-violet-400 transition-colors">Research & RFCs</a></li>
+              <li><a href="#about" className="hover:text-violet-400 transition-colors">About & Mindset</a></li>
+              <li><a href="#contact" className="hover:text-violet-400 transition-colors">Direct Contact</a></li>
             </ul>
           </div>
 
@@ -67,23 +57,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal, onOpenRss }) => 
                 href={PERSONAL_INFO.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 text-slate-300 hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-2 text-slate-300 hover:text-violet-400 transition-colors"
               >
-                <GitFork className="w-3.5 h-3.5 text-cyan-400" />
+                <GitFork className="w-3.5 h-3.5 text-violet-400" />
                 <span>GitHub: @{PERSONAL_INFO.handle}</span>
               </a>
               <a
                 href="#contact"
-                className="flex items-center gap-2 text-slate-300 hover:text-cyan-300 transition-colors"
+                className="flex items-center gap-2 text-slate-300 hover:text-violet-300 transition-colors"
               >
                 <Lock className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Secure Contact Channel</span>
               </a>
               <button
                 onClick={onOpenTerminal}
-                className="flex items-center gap-2 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer text-left pt-1"
+                className="flex items-center gap-2 text-slate-400 hover:text-violet-300 transition-colors cursor-pointer text-left pt-1"
               >
-                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                <Terminal className="w-3.5 h-3.5 text-violet-400" />
                 <span>Launch Interactive CLI Terminal</span>
               </button>
             </div>

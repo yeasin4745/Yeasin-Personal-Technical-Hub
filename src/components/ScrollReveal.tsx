@@ -252,7 +252,7 @@ interface CyberHudFrameProps {
   children: ReactNode;
   className?: string;
   id?: string;
-  accent?: 'cyan' | 'emerald' | 'indigo' | 'amber';
+  accent?: 'violet' | 'emerald' | 'indigo' | 'amber';
   active?: boolean;
 }
 
@@ -260,18 +260,18 @@ export const CyberHudFrame: React.FC<CyberHudFrameProps> = ({
   children,
   className = '',
   id,
-  accent = 'cyan',
+  accent = 'violet',
   active = true,
 }) => {
   const accentColors = {
-    cyan: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/5',
+    violet: 'border-violet-500/30 text-violet-400 bg-violet-500/5',
     emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5',
     indigo: 'border-indigo-500/30 text-indigo-400 bg-indigo-500/5',
     amber: 'border-amber-500/30 text-amber-400 bg-amber-500/5',
   };
 
   const cornerBorder = {
-    cyan: 'border-cyan-400',
+    violet: 'border-violet-400',
     emerald: 'border-emerald-400',
     indigo: 'border-indigo-400',
     amber: 'border-amber-400',

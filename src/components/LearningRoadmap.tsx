@@ -44,7 +44,7 @@ export const LearningRoadmap: React.FC = () => {
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950/80 text-indigo-300 border border-indigo-500/30 font-semibold">
                         {item.category}
                       </span>
-                      <span className="text-[11px] font-mono text-cyan-400 flex items-center gap-1">
+                      <span className="text-[11px] font-mono text-violet-400 flex items-center gap-1">
                         <Clock className="w-3 h-3" />
                         {item.status}
                       </span>
@@ -95,10 +95,10 @@ export const LearningRoadmap: React.FC = () => {
 
         {/* Learning Methodology Card with ScrollReveal */}
         <ScrollReveal delay={0.1}>
-          <div className="bg-[#090d17] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+          <div className="bg-[#090d17] border border-violet-500/20 rounded-2xl p-6 sm:p-8 relative overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-mono font-bold text-sm">
+                <div className="w-8 h-8 rounded-lg bg-violet-950 border border-violet-500/40 flex items-center justify-center text-violet-400 font-mono font-bold text-sm">
                   01
                 </div>
                 <h4 className="font-display font-bold text-white text-sm">

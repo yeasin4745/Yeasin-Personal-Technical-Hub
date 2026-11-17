@@ -205,7 +205,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
             }`}
             style={{
               padding: size === 'hero' ? '3px' : '2px',
-              background: `conic-gradient(from 0deg, #00f0ff, #38bdf8 25%, #6366f1 50%, #10b981 75%, #00f0ff 100%)`,
+              background: `conic-gradient(from 0deg, #a78bfa, #8b5cf6 25%, #6366f1 50%, #10b981 75%, #a78bfa 100%)`,
               WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 2.5px), #fff calc(100% - 2px))',
               mask: 'radial-gradient(farthest-side, transparent calc(100% - 2.5px), #fff calc(100% - 2px))',
             }}
@@ -214,7 +214,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
           {/* Reverse Micro-Tick Accent Ring for high-tech precision */}
           {(size === 'hero' || size === 'lg') && (
             <div
-              className={`absolute -inset-1.5 sm:-inset-2 rounded-full border border-dashed border-cyan-500/30 pointer-events-none ${
+              className={`absolute -inset-1.5 sm:-inset-2 rounded-full border border-dashed border-violet-500/30 pointer-events-none ${
                 !prefersReducedMotion ? 'animate-neon-spin-reverse' : ''
               }`}
             />
@@ -223,16 +223,16 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
           {/* Precision Cyber Cardinal Nodes for Hero */}
           {size === 'hero' && (
             <>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_#00f0ff] z-20" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-violet-300 shadow-[0_0_8px_#a78bfa] z-20" />
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] z-20" />
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8] z-20" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_#8b5cf6] z-20" />
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_8px_#6366f1] z-20" />
             </>
           )}
 
           {/* Layer 3: Inner High-Depth Shield & Inner Luminous Bezel */}
           <div
-            className={`relative ${currentSize.imageBox} rounded-full overflow-hidden bg-[#040810] border-[1.5px] border-cyan-400/80 shadow-[inset_0_0_16px_rgba(6,182,212,0.4),0_0_12px_rgba(6,182,212,0.35)] flex items-center justify-center z-10`}
+            className={`relative ${currentSize.imageBox} rounded-full overflow-hidden bg-[#040810] border-[1.5px] border-violet-400/80 shadow-[inset_0_0_16px_rgba(6,182,212,0.4),0_0_12px_rgba(6,182,212,0.35)] flex items-center justify-center z-10`}
           >
             {/* Background tech grid */}
             <div className="absolute inset-0 bg-grid-pattern opacity-30 z-0" />
@@ -250,35 +250,35 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#0b1424] via-[#070d18] to-[#040810] text-center p-3 z-10 relative">
                 {/* Circuit node decorative accents */}
-                <div className="absolute top-3 right-3 text-cyan-500/20 pointer-events-none">
+                <div className="absolute top-3 right-3 text-violet-500/20 pointer-events-none">
                   <Cpu className="w-8 h-8" />
                 </div>
-                <div className="absolute bottom-3 left-3 text-cyan-500/20 pointer-events-none">
+                <div className="absolute bottom-3 left-3 text-violet-500/20 pointer-events-none">
                   <Terminal className="w-6 h-6" />
                 </div>
 
                 <div className="relative flex flex-col items-center justify-center">
-                  <div className="flex items-center gap-1 text-cyan-400/80 mb-1">
-                    <Shield className="w-4 h-4 text-cyan-400" />
-                    <span className="font-mono text-[10px] tracking-widest uppercase text-cyan-300">
+                  <div className="flex items-center gap-1 text-violet-400/80 mb-1">
+                    <Shield className="w-4 h-4 text-violet-400" />
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-violet-300">
                       SEC // ARCH
                     </span>
                   </div>
 
                   <span
-                    className={`font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-cyan-400 drop-shadow-[0_2px_10px_rgba(6,182,212,0.4)] ${currentSize.monogramSize}`}
+                    className={`font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-violet-400 drop-shadow-[0_2px_10px_rgba(6,182,212,0.4)] ${currentSize.monogramSize}`}
                   >
                     {initials}
                   </span>
 
                   <span
-                    className={`font-mono font-semibold text-cyan-300 mt-1 ${currentSize.subSize}`}
+                    className={`font-mono font-semibold text-violet-300 mt-1 ${currentSize.subSize}`}
                   >
                     @{PERSONAL_INFO.handle}
                   </span>
 
                   {size === 'hero' && (
-                    <div className="mt-2 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-[10px] font-mono text-cyan-300">
+                    <div className="mt-2 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-violet-950/80 border border-violet-500/30 text-[10px] font-mono text-violet-300">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                       <span>ONLINE // SYSTEMS READY</span>
                     </div>
@@ -300,11 +300,11 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
       {showBadge && (size === 'hero' || size === 'lg') && (
         <div className="relative -mt-3 sm:-mt-4 z-30 flex items-center justify-center">
           <div
-            className={`inline-flex items-center gap-1.5 rounded-full bg-[#080d1a]/95 border border-cyan-500/50 ${currentSize.badgeSize} font-mono font-bold text-cyan-300 shadow-lg shadow-black/80 backdrop-blur-md`}
+            className={`inline-flex items-center gap-1.5 rounded-full bg-[#080d1a]/95 border border-violet-500/50 ${currentSize.badgeSize} font-mono font-bold text-violet-300 shadow-lg shadow-black/80 backdrop-blur-md`}
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] animate-pulse" />
             <span className="tracking-wider">{badgeText}</span>
-            <ShieldCheck className={`${currentSize.iconSize} text-cyan-400`} />
+            <ShieldCheck className={`${currentSize.iconSize} text-violet-400`} />
           </div>
         </div>
       )}

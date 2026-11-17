@@ -7,7 +7,7 @@ interface TiltCardProps {
   id?: string;
   maxTilt?: number; // Maximum tilt angle in degrees (default 6)
   glareOpacity?: number;
-  glareColor?: 'cyan' | 'emerald' | 'indigo' | 'amber' | 'default';
+  glareColor?: 'violet' | 'emerald' | 'indigo' | 'amber' | 'default';
   depth?: number; // 3D translateZ in px (default 8)
   onClick?: () => void;
 }
@@ -18,7 +18,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   id,
   maxTilt = 6,
   glareOpacity = 0.15,
-  glareColor = 'cyan',
+  glareColor = 'violet',
   depth = 8,
   onClick,
 }) => {
@@ -100,7 +100,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         return `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(99, 102, 241, ${glareOpacity * 1.5}), transparent 60%)`;
       case 'amber':
         return `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(245, 158, 11, ${glareOpacity * 1.5}), transparent 60%)`;
-      case 'cyan':
+      case 'violet':
       default:
         return `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(6, 182, 212, ${glareOpacity * 1.5}), transparent 60%)`;
     }

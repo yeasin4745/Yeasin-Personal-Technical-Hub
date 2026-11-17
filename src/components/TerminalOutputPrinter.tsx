@@ -116,12 +116,12 @@ export const TerminalOutputPrinter: React.FC<TerminalOutputPrinterProps> = ({
           className={`inline-block w-2 h-3.5 animate-pulse ${
             isClassicGreen
               ? 'bg-emerald-400 shadow-sm shadow-emerald-400/50'
-              : 'bg-cyan-400 shadow-sm shadow-cyan-400/50'
+              : 'bg-violet-400 shadow-sm shadow-violet-400/50'
           }`}
         />
         <span
           className={`text-[10px] font-mono italic opacity-60 group-hover:opacity-100 transition-opacity ${
-            isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'
+            isClassicGreen ? 'text-emerald-400' : 'text-violet-400'
           }`}
         >
           streaming output... [click or ESC to skip]

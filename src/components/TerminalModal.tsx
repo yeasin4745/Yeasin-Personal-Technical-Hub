@@ -60,7 +60,6 @@ export const COMMAND_REGISTRY: TerminalCommandDef[] = [
   { command: 'theme', description: 'Toggle site-wide accessibility theme', category: 'Session & Display' },
   { command: 'theme contrast', description: 'Enable High Contrast accessibility mode', category: 'Session & Display', aliases: ['theme high-contrast'] },
   { command: 'theme dark', description: 'Enable Cyber Dark default theme', category: 'Session & Display' },
-  { command: 'rss', description: 'Syndication endpoints (XML & JSON feeds)', category: 'Session & Display', aliases: ['feed', 'feeds'] },
   { command: 'clear', description: 'Clear terminal screen log (or Ctrl+L)', category: 'Core', aliases: ['cls', 'reset'] },
   { command: 'exit', description: 'Close interactive console window', category: 'Core', aliases: ['quit', 'close'] },
 ];
@@ -157,11 +156,11 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               Connected to Yeasin Technical Host (yeasin4745.node)
             </span>
           </div>
-          <p className="text-cyan-400 text-xs">
+          <p className="text-violet-400 text-xs">
             Core Focus: Backend Architecture • Computer Networking • Cybersecurity • Linux Systems
           </p>
           <p className="text-slate-400 text-xs">
-            Type <span className="text-emerald-300 font-bold cursor-pointer underline" onClick={() => setInputVal('help')}>'help'</span> or <span className="text-cyan-300 font-bold cursor-pointer underline" onClick={() => setInputVal('colors')}>'colors'</span> to view ANSI palette & diagnostic directory.
+            Type <span className="text-emerald-300 font-bold cursor-pointer underline" onClick={() => setInputVal('help')}>'help'</span> or <span className="text-violet-300 font-bold cursor-pointer underline" onClick={() => setInputVal('colors')}>'colors'</span> to view ANSI palette & diagnostic directory.
           </p>
         </div>
       ),
@@ -398,7 +397,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
 
       output = (
         <div className="text-xs font-mono space-y-1 py-1">
-          <p className={isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'}>
+          <p className={isClassicGreen ? 'text-emerald-300' : 'text-violet-300'}>
             PING {host} (127.0.0.1): 56 data bytes
           </p>
           <div className="space-y-0.5 pl-1 text-[11.5px]">
@@ -415,12 +414,12 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               64 bytes from {host}: icmp_seq=4 ttl=64 time=<span className="text-emerald-400 font-bold">{pingTime4} ms</span>
             </p>
           </div>
-          <div className={`border-t pt-1 mt-1 text-[11px] ${isClassicGreen ? 'border-emerald-500/30' : 'border-cyan-500/20'}`}>
+          <div className={`border-t pt-1 mt-1 text-[11px] ${isClassicGreen ? 'border-emerald-500/30' : 'border-violet-500/20'}`}>
             <p className="text-emerald-400 font-semibold">--- {host} ping statistics ---</p>
             <p className={isClassicGreen ? 'text-emerald-200/90' : 'text-slate-300'}>
               4 packets transmitted, 4 received, <span className="text-emerald-400 font-bold">0% packet loss</span>, time 3004ms
             </p>
-            <p className={isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}>
+            <p className={isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}>
               rtt min/avg/max = {pingTime3}/{avg}/{pingTime2} ms
             </p>
           </div>
@@ -438,17 +437,17 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className="space-y-3 text-xs font-mono">
               <div className="flex items-center gap-2">
                 <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 px-1.5 py-0.5 rounded text-[10px] font-bold">[OK]</span>
-                <span className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-cyan-300 font-semibold'}>
+                <span className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-violet-300 font-semibold'}>
                   INTERACTIVE TECHNICAL CONSOLE — COMMAND DIRECTORY:
                 </span>
               </div>
 
               {/* Category: Identity & Architecture */}
               <div className="space-y-1">
-                <p className={`text-[11px] font-bold uppercase tracking-wider ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>
+                <p className={`text-[11px] font-bold uppercase tracking-wider ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>
                   [1] Identity & Architecture Pillars:
                 </p>
-                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pl-2 border-l ${isClassicGreen ? 'border-emerald-500/30 text-emerald-200/90' : 'border-cyan-500/30 text-slate-300'}`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pl-2 border-l ${isClassicGreen ? 'border-emerald-500/30 text-emerald-200/90' : 'border-violet-500/30 text-slate-300'}`}>
                   <div><button type="button" onClick={() => setInputVal('whoami')} className="text-emerald-400 font-bold hover:underline cursor-pointer">whoami</button> : Yeasin's technical identity & credentials</div>
                   <div><button type="button" onClick={() => setInputVal('about')} className="text-emerald-400 font-bold hover:underline cursor-pointer">about</button> : Profile bio, engineering background & philosophy</div>
                   <div><button type="button" onClick={() => setInputVal('skills')} className="text-emerald-400 font-bold hover:underline cursor-pointer">skills</button> : Core stack, competencies & protocol mastery</div>
@@ -461,25 +460,24 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
 
               {/* Category: Content, Code & Projects */}
               <div className="space-y-1">
-                <p className={`text-[11px] font-bold uppercase tracking-wider ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>
+                <p className={`text-[11px] font-bold uppercase tracking-wider ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>
                   [2] Content, Repositories & Contact:
                 </p>
-                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pl-2 border-l ${isClassicGreen ? 'border-emerald-500/30 text-emerald-200/90' : 'border-cyan-500/30 text-slate-300'}`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pl-2 border-l ${isClassicGreen ? 'border-emerald-500/30 text-emerald-200/90' : 'border-violet-500/30 text-slate-300'}`}>
                   <div><button type="button" onClick={() => setInputVal('projects')} className="text-emerald-400 font-bold hover:underline cursor-pointer">projects</button> : Verified GitHub repositories (nodeJS-server, etc.)</div>
                   <div><button type="button" onClick={() => setInputVal('articles')} className="text-emerald-400 font-bold hover:underline cursor-pointer">articles</button> : Published technical articles & RFC research</div>
                   <div><button type="button" onClick={() => setInputVal('github')} className="text-emerald-400 font-bold hover:underline cursor-pointer">github</button> : GitHub profile (@yeasin4745) & repository links</div>
                   <div><button type="button" onClick={() => setInputVal('contact')} className="text-emerald-400 font-bold hover:underline cursor-pointer">contact</button> : Direct contact form, verified email & hubs</div>
                   <div><button type="button" onClick={() => setInputVal('labs')} className="text-emerald-400 font-bold hover:underline cursor-pointer">labs</button> : Network & cybersecurity lab journals</div>
-                  <div><button type="button" onClick={() => setInputVal('rss')} className="text-emerald-400 font-bold hover:underline cursor-pointer">rss</button> : Syndication feed endpoints (XML & JSON feeds)</div>
                 </div>
               </div>
 
               {/* Category: System Diagnostics & Console Utilities */}
               <div className="space-y-1">
-                <p className={`text-[11px] font-bold uppercase tracking-wider ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>
+                <p className={`text-[11px] font-bold uppercase tracking-wider ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>
                   [3] Diagnostics & Console Environment:
                 </p>
-                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pl-2 border-l ${isClassicGreen ? 'border-emerald-500/30 text-emerald-200/90' : 'border-cyan-500/30 text-slate-300'}`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pl-2 border-l ${isClassicGreen ? 'border-emerald-500/30 text-emerald-200/90' : 'border-violet-500/30 text-slate-300'}`}>
                   <div><button type="button" onClick={() => setInputVal('neofetch')} className="text-emerald-400 font-bold hover:underline cursor-pointer">neofetch</button> : System specs & ASCII logo display</div>
                   <div><button type="button" onClick={() => setInputVal('status')} className="text-emerald-400 font-bold hover:underline cursor-pointer">status</button> : Real-time telemetry, uptime & stack health</div>
                   <div><button type="button" onClick={() => setInputVal('netstat')} className="text-emerald-400 font-bold hover:underline cursor-pointer">netstat</button> : Active protocol listeners & network sockets</div>
@@ -507,13 +505,13 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className={`text-xs space-y-2.5 font-mono border-l-2 pl-3 py-1.5 rounded-r-md ${
               isClassicGreen
                 ? 'text-emerald-200 border-emerald-400 bg-emerald-950/30'
-                : 'text-slate-200 border-cyan-400 bg-cyan-950/20'
+                : 'text-slate-200 border-violet-400 bg-violet-950/20'
             }`}>
               <div className={`flex flex-wrap items-center justify-between gap-2 border-b pb-2 ${
-                isClassicGreen ? 'border-emerald-500/30' : 'border-cyan-500/20'
+                isClassicGreen ? 'border-emerald-500/30' : 'border-violet-500/20'
               }`}>
                 <div>
-                  <span className={`font-bold text-sm ${isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'}`}>
+                  <span className={`font-bold text-sm ${isClassicGreen ? 'text-emerald-300' : 'text-violet-300'}`}>
                     {PERSONAL_INFO.name}
                   </span>
                   <span className={`text-xs ml-2 ${isClassicGreen ? 'text-emerald-400/80' : 'text-slate-400'}`}>
@@ -529,21 +527,21 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               </div>
 
               <div className={`italic text-[11px] leading-relaxed ${
-                isClassicGreen ? 'text-emerald-300/90' : 'text-cyan-200/90'
+                isClassicGreen ? 'text-emerald-300/90' : 'text-violet-200/90'
               }`}>
                 "{PERSONAL_INFO.tagline}"
               </div>
 
               <div className="text-xs leading-relaxed space-y-0.5">
-                <p className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>TECHNICAL PROFILE & BIO:</p>
+                <p className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>TECHNICAL PROFILE & BIO:</p>
                 <p className={isClassicGreen ? 'text-emerald-200/90' : 'text-slate-300'}>{PERSONAL_INFO.roleSummary}</p>
               </div>
 
               <div className="space-y-1 text-xs">
-                <p className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>CORE SPECIALIZATIONS:</p>
+                <p className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>CORE SPECIALIZATIONS:</p>
                 <div className={`grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] ${isClassicGreen ? 'text-emerald-200/90' : 'text-slate-300'}`}>
                   <div className="flex items-start gap-1.5">
-                    <span className={`font-bold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>▸</span>
+                    <span className={`font-bold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>▸</span>
                     <span><strong>Backend Systems:</strong> Node.js, Python, REST APIs, Async I/O, PostgreSQL</span>
                   </div>
                   <div className="flex items-start gap-1.5">
@@ -562,7 +560,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               </div>
 
               <div className={`border-t pt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] ${
-                isClassicGreen ? 'border-emerald-500/20 text-emerald-300/80' : 'border-cyan-500/20 text-slate-400'
+                isClassicGreen ? 'border-emerald-500/20 text-emerald-300/80' : 'border-violet-500/20 text-slate-400'
               }`}>
                 <div>
                   <span className={isClassicGreen ? 'text-emerald-500' : 'text-slate-500'}>Location:</span>{' '}
@@ -592,10 +590,10 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className={`text-xs space-y-2.5 font-mono border-l-2 pl-3 py-1.5 rounded-r-md ${
               isClassicGreen
                 ? 'text-emerald-200 border-emerald-400 bg-emerald-950/30'
-                : 'text-slate-200 border-cyan-400 bg-cyan-950/20'
+                : 'text-slate-200 border-violet-400 bg-violet-950/20'
             }`}>
               <div className="flex items-center justify-between">
-                <p className={`font-bold text-sm ${isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'}`}>
+                <p className={`font-bold text-sm ${isClassicGreen ? 'text-emerald-300' : 'text-violet-300'}`}>
                   ABOUT YEASIN (MD YEASIN MIA)
                 </p>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
@@ -631,7 +629,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className="text-xs space-y-3 font-mono">
               <div className="flex items-center gap-2">
                 <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 px-1.5 py-0.5 rounded text-[10px] font-bold">[OK]</span>
-                <span className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-cyan-300 font-semibold'}>
+                <span className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-violet-300 font-semibold'}>
                   CORE ENGINEERING COMPETENCIES & PROTOCOLS:
                 </span>
               </div>
@@ -645,7 +643,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   >
                     <div className="flex items-center justify-between">
                       <span className={`font-bold ${
-                        pillar.id === 'backend' ? 'text-cyan-400' :
+                        pillar.id === 'backend' ? 'text-violet-400' :
                         pillar.id === 'networking' ? 'text-emerald-400' :
                         pillar.id === 'security' ? 'text-indigo-400' : 'text-amber-400'
                       }`}>
@@ -755,14 +753,14 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           output = (
             <div className={`text-xs space-y-2.5 font-mono border-l-2 pl-3 py-1.5 rounded-r-md ${
               isClassicGreen
-                ? 'text-emerald-200 border-cyan-400 bg-emerald-950/30'
-                : 'text-slate-200 border-cyan-400 bg-cyan-950/20'
+                ? 'text-emerald-200 border-violet-400 bg-emerald-950/30'
+                : 'text-slate-200 border-violet-400 bg-violet-950/20'
             }`}>
               <div className="flex items-center justify-between">
-                <span className="font-bold text-cyan-400 text-sm">
+                <span className="font-bold text-violet-400 text-sm">
                   DOMAIN: Backend Systems & Architecture
                 </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-700">
+                <span className="text-[10px] px-2 py-0.5 rounded bg-violet-900/60 text-violet-300 border border-violet-700">
                   CORE DOMAIN 01
                 </span>
               </div>
@@ -770,7 +768,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 Engineering resilient server backends, structured REST endpoints, asynchronous request pipelines, and secure database interactions.
               </p>
               <div className="space-y-1 text-[11.5px]">
-                <p className="font-semibold text-cyan-300">CORE BACKEND FOCUS AREAS:</p>
+                <p className="font-semibold text-violet-300">CORE BACKEND FOCUS AREAS:</p>
                 <p>• <strong>Asynchronous Event Loop:</strong> Non-blocking I/O, worker threads, and promise concurrency control in Node.js.</p>
                 <p>• <strong>API Architecture:</strong> Modular Express route separation, middleware error pipelines, and request validation.</p>
                 <p>• <strong>Security & Auth:</strong> JWT authentication lifecycles, rate limiting, and password hashing.</p>
@@ -822,7 +820,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           output = (
             <div className="text-xs space-y-2.5 font-mono">
               <div className="flex items-center justify-between">
-                <p className={`${isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'} font-bold`}>
+                <p className={`${isClassicGreen ? 'text-emerald-300' : 'text-violet-300'} font-bold`}>
                   VERIFIED PUBLIC REPOSITORIES (GitHub @{PERSONAL_INFO.handle}):
                 </p>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
@@ -904,7 +902,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           output = (
             <div className="text-xs space-y-2.5 font-mono">
               <div className="flex items-center justify-between">
-                <p className={`${isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'} font-bold`}>
+                <p className={`${isClassicGreen ? 'text-emerald-300' : 'text-violet-300'} font-bold`}>
                   PUBLISHED TECHNICAL ARTICLES & RFC RESEARCH:
                 </p>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
@@ -921,7 +919,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-emerald-400 text-[12px]">{item.title}</span>
-                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">
+                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-violet-950 text-violet-300 border border-violet-800">
                         {item.category}
                       </span>
                     </div>
@@ -935,12 +933,6 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   </div>
                 ))}
               </div>
-              <div className={`p-2 rounded text-[11px] ${isClassicGreen ? 'bg-emerald-950/60 text-emerald-300' : 'bg-slate-900 text-slate-300'}`}>
-                <span>View XML RSS Syndication: </span>
-                <button type="button" onClick={() => setInputVal('rss')} className="text-emerald-400 font-bold underline cursor-pointer">
-                  type 'rss'
-                </button>
-              </div>
             </div>
           );
           logStatus = 'success';
@@ -953,7 +945,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className={`text-xs space-y-2.5 font-mono border-l-2 pl-3 py-1.5 rounded-r-md ${
               isClassicGreen
                 ? 'text-emerald-200 border-emerald-400 bg-emerald-950/30'
-                : 'text-slate-200 border-cyan-400 bg-cyan-950/20'
+                : 'text-slate-200 border-violet-400 bg-violet-950/20'
             }`}>
               <div className="flex items-center justify-between">
                 <span className="font-bold text-sm text-emerald-400">
@@ -968,7 +960,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 <p><strong>URL:</strong> <a href={PERSONAL_INFO.githubUrl} target="_blank" rel="noreferrer" className="text-emerald-400 underline font-bold">{PERSONAL_INFO.githubUrl}</a></p>
               </div>
               <div className="space-y-1">
-                <p className="font-semibold text-cyan-300">FEATURED REPOSITORIES:</p>
+                <p className="font-semibold text-violet-300">FEATURED REPOSITORIES:</p>
                 <p>• <strong>nodeJS-server:</strong> Custom Node.js HTTP dispatcher, middleware chains & API lifecycle (<a href="https://github.com/yeasin4745/nodeJS-server" target="_blank" rel="noreferrer" className="text-emerald-400 underline">yeasin4745/nodeJS-server</a>)</p>
                 <p>• <strong>Python-:</strong> Core computational logic, algorithms, file I/O & automation scripts (<a href="https://github.com/yeasin4745/Python-" target="_blank" rel="noreferrer" className="text-emerald-400 underline">yeasin4745/Python-</a>)</p>
               </div>
@@ -988,7 +980,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className={`text-xs space-y-2 font-mono border-l-2 pl-3 py-1.5 rounded-r-md ${
               isClassicGreen
                 ? 'text-emerald-200 border-emerald-400 bg-emerald-950/30'
-                : 'text-slate-200 border-cyan-400 bg-cyan-950/20'
+                : 'text-slate-200 border-violet-400 bg-violet-950/20'
             }`}>
               <p className="font-bold text-sm text-emerald-400">VERIFIED CONTACT CHANNELS & HUBS:</p>
               <div className="space-y-1 text-[11.5px]">
@@ -1014,7 +1006,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               <div className="space-y-1.5">
                 {SECURITY_LABS.map((l) => (
                   <div key={l.id} className="border-l-2 border-emerald-500/40 pl-2">
-                    <span className={`font-mono font-semibold ${isClassicGreen ? 'text-emerald-300' : 'text-cyan-400'}`}>[{l.code}] {l.title}</span>
+                    <span className={`font-mono font-semibold ${isClassicGreen ? 'text-emerald-300' : 'text-violet-400'}`}>[{l.code}] {l.title}</span>
                     <p className={`text-[11px] ${isClassicGreen ? 'text-emerald-200/80' : 'text-slate-400'}`}>{l.summary}</p>
                     <p className={`text-[10px] ${isClassicGreen ? 'text-emerald-500' : 'text-slate-500'}`}>Tools: {l.toolsUsed.join(', ')} • Key takeaway: {l.keyTakeaway}</p>
                   </div>
@@ -1044,7 +1036,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   </div>
                 ))}
               </div>
-              <p className={`text-[10.5px] pt-1 ${isAudioEnabled ? 'text-cyan-400' : 'text-slate-500'}`}>
+              <p className={`text-[10.5px] pt-1 ${isAudioEnabled ? 'text-violet-400' : 'text-slate-500'}`}>
                 Audio Subsystem: {isAudioEnabled ? 'ACTIVE (Web Audio Mechanical & Bell)' : 'MUTED'}
               </p>
             </div>
@@ -1057,11 +1049,11 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
         case 'ports':
           output = (
             <div className={`text-xs font-mono space-y-1 ${isClassicGreen ? 'text-emerald-200' : 'text-slate-300'}`}>
-              <p className={`font-bold ${isClassicGreen ? 'text-emerald-300' : 'text-cyan-400'}`}>ACTIVE PROTOCOL LISTENERS & SOCKETS (SIMULATED):</p>
+              <p className={`font-bold ${isClassicGreen ? 'text-emerald-300' : 'text-violet-400'}`}>ACTIVE PROTOCOL LISTENERS & SOCKETS (SIMULATED):</p>
               <div className="p-2 rounded bg-slate-950/80 border border-slate-800 space-y-0.5 text-[11px]">
                 <p><span className="text-emerald-400 font-bold">tcp</span>  0  0  0.0.0.0:443      0.0.0.0:*  <span className="text-emerald-300 font-bold">LISTEN</span>  [HTTPS / TLS 1.3 Enforced]</p>
                 <p><span className="text-emerald-400 font-bold">tcp</span>  0  0  0.0.0.0:80       0.0.0.0:*  <span className="text-emerald-300 font-bold">LISTEN</span>  [HTTP 301 Permanent Redirect]</p>
-                <p><span className="text-cyan-400 font-bold">tcp</span>  0  0  127.0.0.1:3000   0.0.0.0:*  <span className="text-cyan-300 font-bold">LISTEN</span>  [nodeJS-server REST Service]</p>
+                <p><span className="text-violet-400 font-bold">tcp</span>  0  0  127.0.0.1:3000   0.0.0.0:*  <span className="text-violet-300 font-bold">LISTEN</span>  [nodeJS-server REST Service]</p>
                 <p><span className="text-amber-400 font-bold">udp</span>  0  0  0.0.0.0:53       0.0.0.0:*          [DNS Recursive Resolver]</p>
               </div>
               <p className="text-emerald-400 text-[11px]">Protocol State: ESTABLISHED • Zero Exposed Non-Standard Ports</p>
@@ -1078,7 +1070,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <div className="text-xs space-y-3 font-mono">
               <div className="flex items-center gap-2">
                 <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 px-1.5 py-0.2 rounded text-[10px] font-bold">[OK]</span>
-                <span className={`font-semibold ${isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'}`}>
+                <span className={`font-semibold ${isClassicGreen ? 'text-emerald-300' : 'text-violet-300'}`}>
                   ANSI COLOR & STATUS SIGNAL SYSTEM:
                 </span>
               </div>
@@ -1116,7 +1108,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-amber-500" /><span className="text-amber-300 font-bold">33 Yellow</span></div>
                   <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-blue-500" /><span className="text-blue-400 font-bold">34 Blue</span></div>
                   <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-purple-500" /><span className="text-purple-400 font-bold">35 Magenta</span></div>
-                  <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-cyan-400" /><span className="text-cyan-300 font-bold">36 Cyan</span></div>
+                  <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-violet-400" /><span className="text-violet-300 font-bold">36 Cyan</span></div>
                   <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-slate-100" /><span className="text-slate-200 font-bold">37 White</span></div>
                 </div>
               </div>
@@ -1127,7 +1119,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               }`}>
                 <span className="font-semibold text-emerald-400">Pro-tip:</span> Try running:{' '}
                 <span
-                  className="underline text-cyan-300 cursor-pointer font-bold"
+                  className="underline text-violet-300 cursor-pointer font-bold"
                   onClick={() => setInputVal('echo -e "\\x1b[32m[SUCCESS]\\x1b[0m All systems nominal. \\x1b[33m[SYS]\\x1b[0m Audio active."')}
                 >
                   echo -e "\x1b[32m[SUCCESS]\x1b[0m All systems nominal. \x1b[33m[SYS]\x1b[0m Audio active."
@@ -1142,7 +1134,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
         case 'hist':
           output = (
             <div className="space-y-1.5 text-xs font-mono">
-              <p className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-cyan-300 font-semibold'}>
+              <p className={isClassicGreen ? 'text-emerald-300 font-semibold' : 'text-violet-300 font-semibold'}>
                 COMMAND EXECUTION HISTORY:
               </p>
               {commandHistory.length === 0 ? (
@@ -1163,7 +1155,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                           inputRef.current?.focus();
                         }}
                         className={`text-left font-mono hover:underline cursor-pointer ${
-                          isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'
+                          isClassicGreen ? 'text-emerald-300' : 'text-violet-300'
                         }`}
                         title={`Click to recall "${cmdStr}"`}
                       >
@@ -1174,7 +1166,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 </div>
               )}
               <p className={`text-[11px] pt-1 ${isClassicGreen ? 'text-emerald-500/80' : 'text-slate-400'}`}>
-                Navigate command history using <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-cyan-300 font-bold'}>↑ (Up)</span> and <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-cyan-300 font-bold'}>↓ (Down)</span> arrow keys at the prompt.
+                Navigate command history using <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-violet-300 font-bold'}>↑ (Up)</span> and <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-violet-300 font-bold'}>↓ (Down)</span> arrow keys at the prompt.
               </p>
             </div>
           );
@@ -1225,7 +1217,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
 
           output = (
             <div className={`text-xs font-mono space-y-1 ${isClassicGreen ? 'text-emerald-200' : 'text-slate-200'}`}>
-              <p className={`font-semibold ${isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'}`}>
+              <p className={`font-semibold ${isClassicGreen ? 'text-emerald-300' : 'text-violet-300'}`}>
                 {linuxDateStr}
               </p>
               <p className={`text-[11px] ${isClassicGreen ? 'text-emerald-500' : 'text-slate-500'}`}>
@@ -1251,8 +1243,8 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             setAudioEnabled(true);
             playTerminalBeep();
             output = (
-              <div className="text-xs space-y-1 text-cyan-300 font-mono">
-                <p className="text-cyan-400 font-bold">✓ SYSTEM AUDIO ENABLED [UNMUTED]</p>
+              <div className="text-xs space-y-1 text-violet-300 font-mono">
+                <p className="text-violet-400 font-bold">✓ SYSTEM AUDIO ENABLED [UNMUTED]</p>
                 <p className="text-slate-300 text-[11px]">Subtle mechanical key switch acoustics, bell beeps, and command feedback are now active.</p>
               </div>
             );
@@ -1277,7 +1269,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             if (next) playTerminalBeep();
             output = (
               <div className="text-xs space-y-1 font-mono">
-                <p className={next ? 'text-cyan-400 font-bold' : 'text-amber-400 font-bold'}>
+                <p className={next ? 'text-violet-400 font-bold' : 'text-amber-400 font-bold'}>
                   ✓ SYSTEM AUDIO: {next ? 'ENABLED [UNMUTED]' : 'DISABLED [MUTED]'}
                 </p>
                 <p className="text-slate-400 text-[11px]">Type 'audio on' or 'audio off' to set state explicitly.</p>
@@ -1307,8 +1299,8 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           } else if (cmd.includes('cyber') || cmd.includes('modern')) {
             setTerminalTheme('modern-cyber');
             output = (
-              <div className="text-xs space-y-1 text-cyan-300 font-mono">
-                <p className="text-cyan-400 font-bold terminal-glow-cyan">✓ TERMINAL THEME UPDATED: Modern Cyber</p>
+              <div className="text-xs space-y-1 text-violet-300 font-mono">
+                <p className="text-violet-400 font-bold terminal-glow-violet">✓ TERMINAL THEME UPDATED: Modern Cyber</p>
                 <p className="text-slate-300 text-[11px]">Multi-chromatic neon highlights and electric signals active.</p>
               </div>
             );
@@ -1317,7 +1309,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             setTerminalTheme(next);
             output = (
               <div className="text-xs space-y-1 font-mono">
-                <p className={next === 'classic-green' ? 'text-emerald-400 font-bold' : 'text-cyan-400 font-bold'}>
+                <p className={next === 'classic-green' ? 'text-emerald-400 font-bold' : 'text-violet-400 font-bold'}>
                   ✓ TERMINAL THEME TOGGLED: {next === 'classic-green' ? 'Classic Green' : 'Modern Cyber'}
                 </p>
                 <p className="text-slate-400 text-[11px]">Type 'color green' or 'color cyber' to switch directly.</p>
@@ -1340,7 +1332,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 <pre className={`font-mono text-[11px] leading-[1.18] font-bold ${
                   isClassicGreen
                     ? 'text-emerald-400 terminal-glow-green'
-                    : 'text-cyan-400 terminal-glow-cyan'
+                    : 'text-violet-400 terminal-glow-violet'
                 }`}>
 {`       .------------------.
       /  __  ______  _  __ \\
@@ -1362,26 +1354,26 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               {/* Neofetch System Information Fields */}
               <div className="space-y-0.5 text-xs font-mono flex-1">
                 <div className="pb-1">
-                  <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-cyan-300 font-bold'}>yeasin</span>
+                  <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-violet-300 font-bold'}>yeasin</span>
                   <span className={isClassicGreen ? 'text-emerald-500' : 'text-slate-400'}>@</span>
                   <span className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-indigo-400 font-bold'}>sys.local</span>
                   <div className={`h-[1px] w-full my-1 ${isClassicGreen ? 'bg-emerald-500/40' : 'bg-slate-700'}`} />
                 </div>
 
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>OS:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Linux (POSIX 6.8.0-netsec-hardened)</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Host:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Yeasin Technical Portfolio v2.4 (x86_64)</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Role:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Backend Dev & Systems Researcher</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Kernel:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>6.8.0-sys-async (Linux POSIX)</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Uptime:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Active Continuous Systems Research</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Packages:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Node.js, Express, Python 3, Vite, Tailwind</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Shell:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>yeasin-sh v1.2.0 (interactive)</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Resolution:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Responsive Canvas (WebGL Grid)</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Terminal:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>React XTerm / CRT Phosphor [{isClassicGreen ? 'Classic Green' : 'Modern Cyber'}]</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>CPU:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Asynchronous V8 Event Loop @ 8 Cores</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Memory:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Active / Optimized Static SPA Runtime</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Protocols:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>TCP/IP, Sockets, TLS 1.3, HTTP/2, REST</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Audio FX:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>{isAudioEnabled ? 'Active [Web Audio API]' : 'Muted (type "audio on")'}</span></div>
-                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`}>Location:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>{PERSONAL_INFO.location}</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>OS:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Linux (POSIX 6.8.0-netsec-hardened)</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Host:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Yeasin Technical Portfolio v2.4 (x86_64)</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Role:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Backend Dev & Systems Researcher</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Kernel:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>6.8.0-sys-async (Linux POSIX)</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Uptime:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Active Continuous Systems Research</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Packages:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Node.js, Express, Python 3, Vite, Tailwind</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Shell:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>yeasin-sh v1.2.0 (interactive)</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Resolution:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Responsive Canvas (WebGL Grid)</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Terminal:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>React XTerm / CRT Phosphor [{isClassicGreen ? 'Classic Green' : 'Modern Cyber'}]</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>CPU:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Asynchronous V8 Event Loop @ 8 Cores</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Memory:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>Active / Optimized Static SPA Runtime</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Protocols:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>TCP/IP, Sockets, TLS 1.3, HTTP/2, REST</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Audio FX:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>{isAudioEnabled ? 'Active [Web Audio API]' : 'Muted (type "audio on")'}</span></div>
+                <div><span className={`font-semibold ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`}>Location:</span> <span className={isClassicGreen ? 'text-emerald-100' : 'text-slate-200'}>{PERSONAL_INFO.location}</span></div>
 
                 {/* Color test strip palette */}
                 <div className="flex items-center gap-1.5 pt-2 select-none">
@@ -1391,29 +1383,10 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   <span className="w-3.5 h-3 rounded-sm bg-amber-500 inline-block" title="Yellow" />
                   <span className="w-3.5 h-3 rounded-sm bg-blue-500 inline-block" title="Blue" />
                   <span className="w-3.5 h-3 rounded-sm bg-purple-500 inline-block" title="Magenta" />
-                  <span className="w-3.5 h-3 rounded-sm bg-cyan-400 inline-block" title="Cyan" />
+                  <span className="w-3.5 h-3 rounded-sm bg-violet-400 inline-block" title="Cyan" />
                   <span className="w-3.5 h-3 rounded-sm bg-slate-200 inline-block" title="White" />
                 </div>
               </div>
-            </div>
-          );
-          logStatus = 'success';
-          break;
-
-        case 'rss':
-        case 'feed':
-        case 'feeds':
-          output = (
-            <div className="text-xs font-mono space-y-2">
-              <p className={isClassicGreen ? 'text-emerald-300 font-bold' : 'text-orange-400 font-bold'}>SYNDICATION & RSS FEED ENDPOINTS:</p>
-              <div className={`space-y-1 ${isClassicGreen ? 'text-emerald-200' : 'text-slate-300'}`}>
-                <p>• <strong className={isClassicGreen ? 'text-emerald-400' : 'text-orange-300'}>RSS 2.0 XML:</strong> <a href="/rss.xml" target="_blank" rel="noreferrer" className={`${isClassicGreen ? 'text-emerald-300' : 'text-cyan-400'} underline`}>/rss.xml</a></p>
-                <p>• <strong className={isClassicGreen ? 'text-emerald-400' : 'text-orange-300'}>JSON Feed 1.1:</strong> <a href="/feed.json" target="_blank" rel="noreferrer" className={`${isClassicGreen ? 'text-emerald-300' : 'text-cyan-400'} underline`}>/feed.json</a></p>
-                <p>• <strong className={isClassicGreen ? 'text-emerald-400' : 'text-orange-300'}>REST Feed API:</strong> <a href="/api/feed/items" target="_blank" rel="noreferrer" className={`${isClassicGreen ? 'text-emerald-300' : 'text-cyan-400'} underline`}>/api/feed/items</a></p>
-              </div>
-              <p className={`text-[11px] ${isClassicGreen ? 'text-emerald-400/80' : 'text-slate-400'}`}>
-                Covers all verified labs, RFC studies, and systems posts with full XML payload enclosures.
-              </p>
             </div>
           );
           logStatus = 'success';
@@ -1435,8 +1408,8 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
           } else if (cmd === 'theme dark') {
             setTheme('cyber-dark');
             output = (
-              <div className="text-xs space-y-1 text-cyan-300 font-mono">
-                <p className="text-cyan-400 font-bold">✓ GLOBAL THEME UPDATED: Cyber Dark Theme</p>
+              <div className="text-xs space-y-1 text-violet-300 font-mono">
+                <p className="text-violet-400 font-bold">✓ GLOBAL THEME UPDATED: Cyber Dark Theme</p>
                 <p className="text-slate-300 text-[11px]">Subtle neon gradients and terminal glow enabled across site.</p>
               </div>
             );
@@ -1479,7 +1452,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 <span>yeasin-sh: <span className="font-mono font-bold text-rose-200">'{cmd}'</span>: command not found</span>
               </div>
               <p className="text-[11px] text-slate-400 pl-1">
-                Type <span className={`${isClassicGreen ? 'text-emerald-300 underline' : 'text-cyan-300 underline'} font-bold cursor-pointer`} onClick={() => setInputVal('help')}>'help'</span> to view the interactive console command directory.
+                Type <span className={`${isClassicGreen ? 'text-emerald-300 underline' : 'text-violet-300 underline'} font-bold cursor-pointer`} onClick={() => setInputVal('help')}>'help'</span> to view the interactive console command directory.
               </p>
             </div>
           );
@@ -1527,7 +1500,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
         } ${
           isClassicGreen
             ? 'bg-[#020a05] border border-emerald-500/50 shadow-2xl shadow-emerald-950/80'
-            : 'bg-[#0b0f19] border border-cyan-500/30 shadow-2xl shadow-cyan-950/50'
+            : 'bg-[#0b0f19] border border-violet-500/30 shadow-2xl shadow-violet-950/50'
         } rounded-xl flex flex-col overflow-hidden transition-all duration-200 font-mono`}
       >
         {/* Terminal Titlebar */}
@@ -1563,7 +1536,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             <span className={`text-xs font-semibold ml-2 flex items-center gap-1.5 ${
               isClassicGreen ? 'text-emerald-300' : 'text-slate-300'
             }`}>
-              <TerminalIcon className={`w-3.5 h-3.5 ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'}`} />
+              <TerminalIcon className={`w-3.5 h-3.5 ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'}`} />
               <span className="hidden sm:inline">yeasin@terminal: ~ [sys.telemetry]</span>
               <span className="sm:hidden">yeasin@terminal</span>
             </span>
@@ -1580,14 +1553,14 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 isAudioEnabled
                   ? isClassicGreen
                     ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300 shadow-sm shadow-emerald-500/20'
-                    : 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-sm shadow-cyan-500/20'
+                    : 'bg-violet-500/20 border-violet-500/50 text-violet-300 shadow-sm shadow-violet-500/20'
                   : 'bg-black/30 border-slate-700/60 text-slate-500 hover:text-slate-300'
               }`}
               title={isAudioEnabled ? 'System Audio: Active (Click to Mute)' : 'System Audio: Muted (Click to Enable FX)'}
               aria-label="Toggle Terminal Sound Effects"
             >
               {isAudioEnabled ? (
-                <Volume2 className={`w-3 h-3 ${isClassicGreen ? 'text-emerald-400' : 'text-cyan-400'} animate-pulse`} />
+                <Volume2 className={`w-3 h-3 ${isClassicGreen ? 'text-emerald-400' : 'text-violet-400'} animate-pulse`} />
               ) : (
                 <VolumeX className="w-3 h-3 text-slate-500" />
               )}
@@ -1629,12 +1602,12 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 }}
                 className={`px-2 py-0.5 rounded flex items-center gap-1.5 transition-all cursor-pointer ${
                   !isClassicGreen
-                    ? 'bg-cyan-500/25 text-cyan-300 font-bold border border-cyan-500/50 shadow-sm shadow-cyan-500/20'
-                    : 'text-slate-400 hover:text-cyan-300'
+                    ? 'bg-violet-500/25 text-violet-300 font-bold border border-violet-500/50 shadow-sm shadow-violet-500/20'
+                    : 'text-slate-400 hover:text-violet-300'
                 }`}
                 title="Switch to Modern Cyber theme"
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${!isClassicGreen ? 'bg-cyan-400 animate-pulse' : 'bg-cyan-800'}`} />
+                <span className={`w-1.5 h-1.5 rounded-full ${!isClassicGreen ? 'bg-violet-400 animate-pulse' : 'bg-violet-800'}`} />
                 <span className="text-[10.5px]">Modern Cyber</span>
               </button>
             </div>
@@ -1646,7 +1619,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                   setIsExpanded(!isExpanded);
                 }}
                 className={`p-1 rounded transition-colors cursor-pointer ${
-                  isClassicGreen ? 'hover:text-emerald-200 hover:bg-emerald-950/40' : 'hover:text-cyan-400 hover:bg-slate-800'
+                  isClassicGreen ? 'hover:text-emerald-200 hover:bg-emerald-950/40' : 'hover:text-violet-400 hover:bg-slate-800'
                 }`}
                 title="Toggle Size"
                 aria-label="Toggle Size"
@@ -1791,24 +1764,24 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                       isSelected
                         ? isClassicGreen
                           ? 'bg-emerald-500/25 text-emerald-200 border border-emerald-500/70 font-semibold shadow-sm shadow-emerald-500/20'
-                          : 'bg-cyan-500/25 text-cyan-200 border border-cyan-500/70 font-semibold shadow-sm shadow-cyan-500/20'
+                          : 'bg-violet-500/25 text-violet-200 border border-violet-500/70 font-semibold shadow-sm shadow-violet-500/20'
                         : isClassicGreen
                           ? 'bg-emerald-950/40 text-emerald-400/80 hover:text-emerald-200 hover:bg-emerald-900/50 border border-emerald-800/40'
-                          : 'bg-slate-800/60 text-slate-400 hover:text-cyan-300 hover:bg-slate-800 border border-slate-700/50'
+                          : 'bg-slate-800/60 text-slate-400 hover:text-violet-300 hover:bg-slate-800 border border-slate-700/50'
                     }`}
                     title={`${sug.command} — ${sug.description}`}
                   >
                     <span className="font-bold">{sug.command}</span>
                     <span className={`text-[9.5px] hidden md:inline ${
                       isSelected
-                        ? isClassicGreen ? 'text-emerald-300' : 'text-cyan-300'
+                        ? isClassicGreen ? 'text-emerald-300' : 'text-violet-300'
                         : isClassicGreen ? 'text-emerald-600' : 'text-slate-500'
                     }`}>
                       • {sug.description}
                     </span>
                     {isSelected && (
                       <span className={`text-[9px] px-1 py-0.2 rounded font-sans font-medium uppercase tracking-tight ${
-                        isClassicGreen ? 'bg-emerald-500/30 text-emerald-200' : 'bg-cyan-500/30 text-cyan-200'
+                        isClassicGreen ? 'bg-emerald-500/30 text-emerald-200' : 'bg-violet-500/30 text-violet-200'
                       }`}>
                         Tab ⇥
                       </span>
@@ -1860,7 +1833,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
                 <span className={`${
                   isClassicGreen
                     ? 'text-emerald-500/50 terminal-glow-green font-medium'
-                    : 'text-cyan-400/50 font-medium'
+                    : 'text-violet-400/50 font-medium'
                 }`}>
                   {ghostSuffix}
                 </span>
@@ -1881,7 +1854,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               className={`relative z-10 w-full bg-transparent font-mono text-xs focus:outline-none ${
                 isClassicGreen
                   ? 'text-emerald-300 placeholder:text-emerald-800/80'
-                  : 'text-cyan-300 placeholder:text-slate-600'
+                  : 'text-violet-300 placeholder:text-slate-600'
               }`}
               autoComplete="off"
               spellCheck="false"
@@ -1901,7 +1874,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
               className={`hidden sm:flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded border transition-colors cursor-pointer ${
                 isClassicGreen
                   ? 'bg-emerald-950/80 border-emerald-800/80 text-emerald-400 hover:text-emerald-200'
-                  : 'bg-slate-800/80 border-slate-700/80 text-slate-400 hover:text-cyan-300'
+                  : 'bg-slate-800/80 border-slate-700/80 text-slate-400 hover:text-violet-300'
               }`}
               title="Click or press Tab to auto-complete suggestion"
             >
@@ -1914,7 +1887,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose })
             className={`transition-colors p-1 cursor-pointer shrink-0 ${
               isClassicGreen
                 ? 'text-emerald-600 hover:text-emerald-300'
-                : 'text-slate-500 hover:text-cyan-400'
+                : 'text-slate-500 hover:text-violet-400'
             }`}
             title="Execute Command"
             aria-label="Execute Command"

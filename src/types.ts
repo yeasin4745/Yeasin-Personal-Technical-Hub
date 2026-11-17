@@ -20,7 +20,7 @@ export interface TechnicalPillar {
   subtitle: string;
   badge: string;
   description: string;
-  accentColor: 'cyan' | 'emerald' | 'indigo' | 'amber';
+  accentColor: 'violet' | 'emerald' | 'indigo' | 'amber';
   protocols: string[];
   keyTopics: string[];
   architectureFocus: string;

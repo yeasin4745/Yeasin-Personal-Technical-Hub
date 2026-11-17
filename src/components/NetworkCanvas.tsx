@@ -79,7 +79,7 @@ export const NetworkCanvas: React.FC = () => {
       : Math.min(Math.floor(width / 32), 40);
 
     const nodes: Node[] = [];
-    const colors = ['#00f0ff', '#38bdf8', '#10b981', '#6366f1'];
+    const colors = ['#a78bfa', '#8b5cf6', '#10b981', '#6366f1'];
 
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
@@ -115,7 +115,7 @@ export const NetworkCanvas: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = '#38bdf8';
+            ctx.strokeStyle = '#8b5cf6';
             ctx.globalAlpha = (1 - dist / maxDist) * 0.1;
             ctx.lineWidth = 0.6;
             ctx.stroke();
@@ -148,7 +148,7 @@ export const NetworkCanvas: React.FC = () => {
         targetIndex: t,
         progress: 0,
         speed: 0.008 + Math.random() * 0.01,
-        color: Math.random() > 0.4 ? '#00f0ff' : '#10b981',
+        color: Math.random() > 0.4 ? '#a78bfa' : '#10b981',
       });
     };
 
@@ -209,7 +209,7 @@ export const NetworkCanvas: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = '#38bdf8';
+            ctx.strokeStyle = '#8b5cf6';
             ctx.globalAlpha = (1 - dist / maxDist) * 0.15;
             ctx.lineWidth = 0.7;
             ctx.stroke();
