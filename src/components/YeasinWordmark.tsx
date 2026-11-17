@@ -11,7 +11,8 @@ interface YeasinWordmarkProps {
 }
 
 const FULL_NAME = 'YEASIN';
-const LETTERS = FULL_NAME.split(''); // ['Y', 'E', 'A', 'S', 'I', 'N']
+const TOPIC_WORDS = ['CYBERSECURITY', 'NETWORKING', 'BACKEND', 'LINUX'];
+const CYCLE_WORDS = [FULL_NAME, ...TOPIC_WORDS];
 
 export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
   variant = 'header',
@@ -23,7 +24,13 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
   const [visibleCount, setVisibleCount] = useState<number>(0);
   const [phase, setPhase] = useState<'typing' | 'holding' | 'deconstructing' | 'idle'>('typing');
   const [latestCharIndex, setLatestCharIndex] = useState<number>(-1);
+  const [wordIndex, setWordIndex] = useState<number>(0);
   const isMountedRef = useRef(true);
+
+  const isCycling = variant === 'hero';
+  const currentWord = isCycling ? CYCLE_WORDS[wordIndex] : FULL_NAME;
+  const LETTERS = currentWord.split('');
+  const isLongWord = currentWord.length > 8;
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -80,14 +87,14 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
             }
             return next;
           });
-        }, 220); // Smooth natural letter construction delay
+        }, isLongWord ? 120 : 220); // Faster cadence for longer topic words
       }
     } else if (phase === 'holding') {
-      // Hold complete "YEASIN" wordmark fully visible for 3.2 seconds
+      // Hold the completed wordmark fully visible before deconstruction
       timer = setTimeout(() => {
         if (!isMountedRef.current) return;
         setPhase('deconstructing');
-      }, 3200);
+      }, isCycling && wordIndex > 0 ? 2600 : 3200);
     } else if (phase === 'deconstructing') {
       if (visibleCount > 0) {
         timer = setTimeout(() => {
@@ -96,6 +103,9 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
             const next = prev - 1;
             if (next === 0) {
               setPhase('idle');
+              if (isCycling) {
+                setWordIndex((prevIdx) => (prevIdx + 1) % CYCLE_WORDS.length);
+              }
             }
             return next;
           });
@@ -106,7 +116,7 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
     }
 
     return () => clearTimeout(timer);
-  }, [phase, visibleCount, prefersReducedMotion]);
+  }, [phase, visibleCount, prefersReducedMotion, LETTERS.length, isLongWord, isCycling, wordIndex]);
 
   // Render individual animated letter array with accessible label
   const renderAnimatedLetters = (isHero: boolean) => {
@@ -156,13 +166,13 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
       <div
         id={id}
         className={`relative inline-flex flex-col items-start select-none ${className}`}
-        aria-label="YEASIN — Personal Technical Identity"
+        aria-label={`${FULL_NAME} — Personal Technical Identity`}
       >
         {/* Top cybersecurity telemetry signal bar */}
         <div className="flex items-center gap-2 mb-2.5">
           <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#08101e]/90 border border-violet-500/30 text-[11px] font-mono text-violet-300 backdrop-blur-md shadow-sm shadow-violet-950/40">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
-            <span className="text-slate-400 tracking-wider font-semibold">IDENTITY //</span>
+            <span className="text-slate-400 tracking-wider font-semibold">{currentWord === FULL_NAME ? 'IDENTITY //' : 'FOCUS //'}</span>
             <span className="text-violet-300 font-bold tracking-wide">SEC.NODE:4745</span>
             <span className="text-slate-600 font-mono">|</span>
             <span className="text-emerald-400 font-medium hidden xs:inline text-[10px]">TLS 1.3 SECURED</span>
@@ -182,7 +192,9 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
           <div className="relative flex items-center min-h-[48px] sm:min-h-[64px] lg:min-h-[72px]">
             {/* Left technical bracket accent */}
             <span
-              className="font-mono text-violet-400/80 text-3xl sm:text-5xl lg:text-6xl font-light select-none mr-2 font-bold transition-opacity"
+              className={`font-mono text-violet-400/80 font-light select-none mr-2 font-bold transition-opacity ${
+                isLongWord ? 'text-2xl sm:text-4xl lg:text-5xl' : 'text-3xl sm:text-5xl lg:text-6xl'
+              }`}
               aria-hidden="true"
             >
               [›
@@ -190,7 +202,9 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
 
             {/* Cinematic Animated Wordmark */}
             <div
-              className="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-none tracking-[0.16em] inline-flex items-center"
+              className={`font-display font-black leading-none inline-flex items-center ${
+                isLongWord ? 'text-2xl sm:text-4xl lg:text-5xl tracking-[0.1em]' : 'text-4xl sm:text-5xl lg:text-6xl tracking-[0.16em]'
+              }`}
             >
               {renderAnimatedLetters(true)}
 
@@ -207,7 +221,9 @@ export const YeasinWordmark: React.FC<YeasinWordmarkProps> = ({
 
             {/* Right technical bracket accent */}
             <span
-              className="font-mono text-violet-400/80 text-3xl sm:text-5xl lg:text-6xl font-light select-none ml-2 font-bold transition-opacity"
+              className={`font-mono text-violet-400/80 font-light select-none ml-2 font-bold transition-opacity ${
+                isLongWord ? 'text-2xl sm:text-4xl lg:text-5xl' : 'text-3xl sm:text-5xl lg:text-6xl'
+              }`}
               aria-hidden="true"
             >
               ‹]
