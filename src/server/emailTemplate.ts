@@ -112,7 +112,7 @@ export function buildHtmlEmail({
     signals.riskAssessment === 'ELEVATED'
       ? '#451a03; color: #f59e0b; border: 1px solid #d97706;'
       : signals.riskAssessment === 'MEDIUM'
-      ? '#1e293b; color: #38bdf8; border: 1px solid #0284c7;'
+      ? '#1e293b; color: #8b5cf6; border: 1px solid #0284c7;'
       : '#064e3b; color: #34d399; border: 1px solid #059669;';
 
   const indicatorsHtml =
@@ -153,7 +153,7 @@ export function buildHtmlEmail({
               </h1>
             </td>
             <td style="text-align: right; vertical-align: top;">
-              <span style="display: inline-block; padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 11px; font-weight: 600; background-color: #082f49; color: #38bdf8; border: 1px solid #0284c7;">
+              <span style="display: inline-block; padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 11px; font-weight: 600; background-color: #082f49; color: #8b5cf6; border: 1px solid #0284c7;">
                 ${safeSourceWebsite.replace(/^https?:\/\//, '')}
               </span>
             </td>
@@ -168,7 +168,7 @@ export function buildHtmlEmail({
         
         <!-- SECTION 1: VISITOR MESSAGE -->
         <div style="margin-bottom: 24px;">
-          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
+          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
             [VISITOR MESSAGE]
           </div>
 
@@ -180,7 +180,7 @@ export function buildHtmlEmail({
             <tr>
               <td style="padding: 6px 0; color: #94a3b8; font-size: 13px; font-weight: 600;">Email:</td>
               <td style="padding: 6px 0; font-size: 14px;">
-                <a href="mailto:${safeEmail}" style="color: #38bdf8; text-decoration: none; font-family: monospace; font-weight: 600;">
+                <a href="mailto:${safeEmail}" style="color: #8b5cf6; text-decoration: none; font-family: monospace; font-weight: 600;">
                   ${safeEmail}
                 </a>
               </td>
@@ -201,7 +201,7 @@ export function buildHtmlEmail({
 
         <!-- SECTION 2: REQUEST CONTEXT -->
         <div style="margin-bottom: 24px;">
-          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
+          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
             [REQUEST CONTEXT]
           </div>
 
@@ -212,7 +212,7 @@ export function buildHtmlEmail({
             </tr>
             <tr>
               <td style="padding: 4px 0; color: #94a3b8;">Source Website:</td>
-              <td style="padding: 4px 0; color: #38bdf8;"><a href="${safeSourceWebsite}" style="color: #38bdf8; text-decoration: none;">${safeSourceWebsite}</a></td>
+              <td style="padding: 4px 0; color: #8b5cf6;"><a href="${safeSourceWebsite}" style="color: #8b5cf6; text-decoration: none;">${safeSourceWebsite}</a></td>
             </tr>
             <tr>
               <td style="padding: 4px 0; color: #94a3b8;">Request Path:</td>
@@ -227,7 +227,7 @@ export function buildHtmlEmail({
 
         <!-- SECTION 3: CLIENT INFORMATION -->
         <div style="margin-bottom: 24px;">
-          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
+          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
             [CLIENT INFORMATION]
           </div>
 
@@ -264,7 +264,7 @@ export function buildHtmlEmail({
 
         <!-- SECTION 4: APPROXIMATE LOCATION -->
         <div style="margin-bottom: 24px;">
-          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
+          <div style="font-family: monospace; font-size: 11px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; border-bottom: 1px dashed #334155; padding-bottom: 6px;">
             [APPROXIMATE LOCATION (COARSE)]
           </div>
 

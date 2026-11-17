@@ -22,7 +22,7 @@ export const ProjectsSection: React.FC = () => {
         {/* Section Header with Viewport ScrollReveal */}
         <ScrollReveal className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-xs font-mono text-cyan-300 mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-950/70 border border-violet-500/30 text-xs font-mono text-violet-300 mb-3">
               <Code2 className="w-3.5 h-3.5" />
               <span>GITHUB REPOSITORIES & SYSTEMS CODE</span>
             </div>
@@ -41,7 +41,7 @@ export const ProjectsSection: React.FC = () => {
               id="filter-projects-all"
               className={`px-3 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                 activeFilter === 'all'
-                  ? 'bg-cyan-500 text-slate-950 font-semibold'
+                  ? 'bg-violet-500 text-slate-950 font-semibold'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -110,7 +110,7 @@ export const ProjectsSection: React.FC = () => {
                 className="h-full"
               >
                 <TiltCard
-                  glareColor={project.isVerifiedReal ? 'cyan' : 'amber'}
+                  glareColor={project.isVerifiedReal ? 'violet' : 'amber'}
                   maxTilt={6}
                   depth={8}
                   className="h-full"
@@ -119,7 +119,7 @@ export const ProjectsSection: React.FC = () => {
                     id={`project-card-${project.id}`}
                     className={`h-full rounded-xl border p-6 flex flex-col justify-between transition-all duration-200 ${
                       project.isVerifiedReal
-                        ? 'bg-[#0d1322] border-slate-800 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-950/30'
+                        ? 'bg-[#0d1322] border-slate-800 hover:border-violet-500/50 hover:shadow-xl hover:shadow-violet-950/30'
                         : 'bg-[#0a0e17] border-dashed border-amber-500/30'
                     }`}
                   >
@@ -160,7 +160,7 @@ export const ProjectsSection: React.FC = () => {
                         </span>
                         {project.technicalHighlights.map((item, idx) => (
                           <div key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-300 font-mono">
-                            <span className="text-cyan-400">▸</span>
+                            <span className="text-violet-400">▸</span>
                             <span>{item}</span>
                           </div>
                         ))}
@@ -173,7 +173,7 @@ export const ProjectsSection: React.FC = () => {
                         {project.architectureTags.map((tech, idx) => (
                           <span
                             key={idx}
-                            className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#10172a] text-cyan-300 border border-slate-800"
+                            className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#10172a] text-violet-300 border border-slate-800"
                           >
                             {tech}
                           </span>
@@ -187,7 +187,7 @@ export const ProjectsSection: React.FC = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             id={`project-link-${project.id}`}
-                            className="inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 hover:underline font-semibold"
+                            className="inline-flex items-center gap-1.5 text-xs font-mono text-violet-400 hover:text-violet-300 hover:underline font-semibold"
                           >
                             <GitFork className="w-3.5 h-3.5" />
                             <span>View Source Code</span>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Menu, X, GitFork, Rss } from 'lucide-react';
+import { Terminal, Menu, X, GitFork } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { YeasinWordmark } from './YeasinWordmark';
 import { ThemeSwitcher } from './ThemeSwitcher';
@@ -7,10 +7,9 @@ import { SystemAudioToggle } from './SystemAudioToggle';
 
 interface NavbarProps {
   onOpenTerminal: () => void;
-  onOpenRss: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
       id="main-navigation-header"
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-cyan-500/20 py-2.5 sm:py-3 shadow-lg shadow-black/50'
+          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-violet-500/20 py-2.5 sm:py-3 shadow-lg shadow-black/50'
           : 'bg-transparent py-3.5 sm:py-4'
       }`}
     >
@@ -58,7 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
             <a
               key={link.href}
               href={link.href}
-              className="text-xs font-medium text-slate-300 hover:text-cyan-400 transition-colors tracking-wide relative py-1 hover:after:w-full after:w-0 after:h-[2px] after:bg-cyan-400 after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-200"
+              className="text-xs font-medium text-slate-300 hover:text-violet-400 transition-colors tracking-wide relative py-1 hover:after:w-full after:w-0 after:h-[2px] after:bg-violet-400 after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-200"
             >
               {link.label}
             </a>
@@ -67,19 +66,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
 
         {/* Desktop Action triggers */}
         <div className="hidden lg:flex items-center gap-3">
-          {/* RSS Feed Trigger Button */}
-          <button
-            onClick={onOpenRss}
-            id="nav-rss-trigger"
-            type="button"
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-orange-950/40 hover:bg-orange-900/60 text-orange-300 hover:text-orange-200 border border-orange-500/30 hover:border-orange-400 text-xs font-medium transition-all cursor-pointer shadow-sm"
-            title="Subscribe to RSS & JSON Feeds"
-            aria-label="Subscribe to RSS Feed"
-          >
-            <Rss className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
-            <span className="font-mono">RSS</span>
-          </button>
-
           {/* High Contrast / Cyber Dark Theme Switcher */}
           <ThemeSwitcher id="nav-theme-switcher" />
 
@@ -89,10 +75,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
           <button
             onClick={onOpenTerminal}
             id="nav-terminal-trigger"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0e1524] hover:bg-cyan-950/60 border border-cyan-500/30 hover:border-cyan-400 text-cyan-300 text-xs font-mono transition-all shadow-sm hover:shadow-cyan-500/10 cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0e1524] hover:bg-violet-950/60 border border-violet-500/30 hover:border-violet-400 text-violet-300 text-xs font-mono transition-all shadow-sm hover:shadow-violet-500/10 cursor-pointer"
             title="Launch Interactive CLI Terminal"
           >
-            <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+            <Terminal className="w-3.5 h-3.5 text-violet-400" />
             <span>Interactive CLI</span>
             <kbd className="text-[10px] bg-slate-800 text-slate-400 px-1 py-0.5 rounded border border-slate-700">
               &gt;_
@@ -106,28 +92,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
             id="nav-github-link"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 hover:border-slate-600 transition-colors"
           >
-            <GitFork className="w-3.5 h-3.5 text-cyan-400" />
+            <GitFork className="w-3.5 h-3.5 text-violet-400" />
             <span>GitHub</span>
           </a>
         </div>
 
         {/* Responsive / Mobile Navigation Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
-          <button
-            onClick={onOpenRss}
-            id="mobile-rss-trigger"
-            className="p-2 rounded-lg bg-orange-950/40 border border-orange-500/40 text-orange-400 hover:text-orange-300 transition-colors cursor-pointer"
-            aria-label="Open RSS Feeds"
-            title="RSS Feed"
-          >
-            <Rss className="w-4 h-4" />
-          </button>
           <ThemeSwitcher variant="compact" id="mobile-quick-theme-toggle" />
           <SystemAudioToggle variant="compact" id="mobile-quick-audio-toggle" />
           <button
             onClick={onOpenTerminal}
             id="mobile-terminal-trigger"
-            className="p-2 rounded-lg bg-[#0e1524] border border-cyan-500/30 text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer"
+            className="p-2 rounded-lg bg-[#0e1524] border border-violet-500/30 text-violet-400 hover:text-violet-300 transition-colors cursor-pointer"
             aria-label="Open Terminal"
             title="Launch Interactive CLI Terminal"
           >
@@ -146,14 +123,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0a0e1a] border-b border-cyan-500/20 px-4 py-4 space-y-4 animate-in slide-in-from-top-2">
+        <div className="lg:hidden bg-[#0a0e1a] border-b border-violet-500/20 px-4 py-4 space-y-4 animate-in slide-in-from-top-2">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-cyan-400 py-2.5 px-3 rounded-lg hover:bg-slate-900/60 border-b border-slate-800/40 transition-colors"
+                className="text-sm font-medium text-slate-200 hover:text-violet-400 py-2.5 px-3 rounded-lg hover:bg-slate-900/60 border-b border-slate-800/40 transition-colors"
               >
                 {link.label}
               </a>
@@ -166,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenTerminal, onOpenRss }) => 
               rel="noreferrer"
               className="flex items-center justify-center gap-2 w-full py-2.5 text-center rounded-lg bg-slate-800 text-slate-200 text-xs font-medium border border-slate-700 hover:bg-slate-750 transition-colors"
             >
-              <GitFork className="w-4 h-4 text-cyan-400" />
+              <GitFork className="w-4 h-4 text-violet-400" />
               <span>GitHub (@{PERSONAL_INFO.handle})</span>
             </a>
           </div>

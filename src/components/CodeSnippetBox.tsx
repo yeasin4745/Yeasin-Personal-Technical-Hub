@@ -78,7 +78,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
         className={`p-1.5 rounded-md transition-all duration-150 cursor-pointer flex items-center justify-center ${
           copied
             ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
-            : 'bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-cyan-300 border border-slate-700 hover:border-cyan-500/30'
+            : 'bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-violet-300 border border-slate-700 hover:border-violet-500/30'
         } ${className}`}
       >
         {copied ? (
@@ -102,7 +102,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
       } ${
         copied
           ? 'bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.35)]'
-          : 'bg-[#121929] hover:bg-[#1a233a] text-slate-300 hover:text-cyan-300 border border-slate-700/80 hover:border-cyan-500/40'
+          : 'bg-[#121929] hover:bg-[#1a233a] text-slate-300 hover:text-violet-300 border border-slate-700/80 hover:border-violet-500/40'
       } ${className}`}
     >
       {copied ? (
@@ -112,7 +112,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
         </>
       ) : (
         <>
-          <Copy className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-300" />
+          <Copy className="w-3.5 h-3.5 text-slate-400 group-hover:text-violet-300" />
           <span>{label}</span>
         </>
       )}
@@ -146,7 +146,7 @@ export const CodeSnippetBox: React.FC<CodeSnippetBoxProps> = ({
   return (
     <div
       id={boxId}
-      className={`rounded-xl border border-slate-800 bg-[#060911] shadow-xl overflow-hidden font-mono text-xs group hover:border-cyan-500/30 transition-all ${className}`}
+      className={`rounded-xl border border-slate-800 bg-[#060911] shadow-xl overflow-hidden font-mono text-xs group hover:border-violet-500/30 transition-all ${className}`}
     >
       {/* Code Header Bar */}
       <div className="flex items-center justify-between px-3.5 py-2 bg-[#0a0f1c] border-b border-slate-800/80">
@@ -161,7 +161,7 @@ export const CodeSnippetBox: React.FC<CodeSnippetBoxProps> = ({
               {title}
             </span>
           ) : (
-            <div className="flex items-center gap-1 text-[10px] text-cyan-400 font-bold uppercase tracking-wider ml-1">
+            <div className="flex items-center gap-1 text-[10px] text-violet-400 font-bold uppercase tracking-wider ml-1">
               <Terminal className="w-3 h-3" />
               <span>{language}</span>
             </div>
@@ -194,7 +194,7 @@ export const CodeSnippetBox: React.FC<CodeSnippetBoxProps> = ({
       <div className={`overflow-x-auto text-slate-200 ${compact ? 'p-3' : 'p-4'}`}>
         <pre className="flex leading-relaxed font-mono select-text whitespace-pre text-xs">
           {prefix && (
-            <span className="select-none text-cyan-400 mr-2.5 font-bold shrink-0">
+            <span className="select-none text-violet-400 mr-2.5 font-bold shrink-0">
               {prefix}
             </span>
           )}

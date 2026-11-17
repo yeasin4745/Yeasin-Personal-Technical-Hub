@@ -7,7 +7,7 @@ interface BootSequenceProps {
 }
 
 const BOOT_STEPS = [
-  { text: 'INITIALIZING TECHNICAL HUB CORE...', label: 'SYS', color: 'text-cyan-400' },
+  { text: 'INITIALIZING TECHNICAL HUB CORE...', label: 'SYS', color: 'text-violet-400' },
   { text: 'LOADING BACKEND SUBSYSTEMS & NODE.JS RUNTIME...', label: 'CPU', color: 'text-sky-400' },
   { text: 'VERIFYING TCP/IP NETSTACK & WIRESHARK PROTOCOLS...', label: 'NET', color: 'text-emerald-400' },
   { text: 'ENFORCING OWASP HARDENING & TLS 1.3 CIPHER SUITES...', label: 'SEC', color: 'text-indigo-400' },
@@ -96,19 +96,19 @@ export const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
         >
           {/* Cyber grid & ambient glow */}
           <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 w-full max-w-lg bg-[#090e18]/95 border border-cyan-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-cyan-950/60 backdrop-blur-md">
+          <div className="relative z-10 w-full max-w-lg bg-[#090e18]/95 border border-violet-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-violet-950/60 backdrop-blur-md">
             
             {/* Top Bar with security indicator */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-5">
               <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#00f0ff]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-violet-400 animate-pulse shadow-[0_0_8px_#a78bfa]" />
                 <span className="font-mono text-xs font-bold text-slate-200 tracking-wider">
-                  YEASIN.DEV // CYBERSECURITY HUB
+                  YEASIN4745 // CYBERSECURITY HUB
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/40 font-semibold">
+              <span className="font-mono text-[10px] text-violet-300 bg-violet-950/80 px-2 py-0.5 rounded border border-violet-500/40 font-semibold">
                 SYS.INIT
               </span>
             </div>
@@ -136,7 +136,7 @@ export const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
             {/* Glowing Progress Bar */}
             <div className="space-y-2 mb-4">
               <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
-                <span className="flex items-center gap-1 text-cyan-400">
+                <span className="flex items-center gap-1 text-violet-400">
                   <Terminal className="w-3 h-3" />
                   <span>CALIBRATING ENVIRONMENT</span>
                 </span>
@@ -144,7 +144,7 @@ export const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
               </div>
               <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700/60">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-cyan-400 via-sky-400 to-emerald-400 rounded-full shadow-[0_0_10px_#00f0ff]"
+                  className="h-full bg-gradient-to-r from-violet-400 via-sky-400 to-emerald-400 rounded-full shadow-[0_0_10px_#a78bfa]"
                   style={{ width: `${progress}%` }}
                   transition={{ duration: 0.2 }}
                 />

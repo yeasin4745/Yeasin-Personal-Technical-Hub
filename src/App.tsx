@@ -13,13 +13,11 @@ import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { TerminalModal } from './components/TerminalModal';
-import { RssFeedModal } from './components/RssFeedModal';
 import { BootSequence } from './components/BootSequence';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [terminalOpen, setTerminalOpen] = useState(false);
-  const [rssModalOpen, setRssModalOpen] = useState(false);
   const [isBooting, setIsBooting] = useState(() => {
     // Check if session has already booted or user prefers reduced motion
     if (typeof window !== 'undefined') {
@@ -39,18 +37,17 @@ export default function App() {
       }
       if (e.key === 'Escape') {
         if (terminalOpen) setTerminalOpen(false);
-        if (rssModalOpen) setRssModalOpen(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [terminalOpen, rssModalOpen]);
+  }, [terminalOpen]);
 
   return (
     <ThemeProvider>
       <AudioProvider>
-        <div className="relative min-h-screen bg-[#070a10] text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 bg-grid-pattern overflow-hidden">
+        <div className="relative min-h-screen bg-[#0a0813] text-slate-200 selection:bg-violet-500/30 selection:text-violet-200 bg-grid-pattern overflow-hidden">
           {/* Initial Lightweight Cybersecurity Hub Boot Sequence */}
           {isBooting && <BootSequence onComplete={() => setIsBooting(false)} />}
 
@@ -63,7 +60,6 @@ export default function App() {
           {/* Primary Navigation */}
           <Navbar
             onOpenTerminal={() => setTerminalOpen(true)}
-            onOpenRss={() => setRssModalOpen(true)}
           />
 
           {/* Main Content Sections */}
@@ -80,19 +76,12 @@ export default function App() {
           {/* Footer */}
           <Footer
             onOpenTerminal={() => setTerminalOpen(true)}
-            onOpenRss={() => setRssModalOpen(true)}
           />
 
           {/* Interactive CLI Terminal Emulator Modal */}
           <TerminalModal
             isOpen={terminalOpen}
             onClose={() => setTerminalOpen(false)}
-          />
-
-          {/* RSS & Syndication Feed Modal */}
-          <RssFeedModal
-            isOpen={rssModalOpen}
-            onClose={() => setRssModalOpen(false)}
           />
 
           {/* Vercel Speed Insights Telemetry */}

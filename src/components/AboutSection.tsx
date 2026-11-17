@@ -15,7 +15,7 @@ export const AboutSection: React.FC = () => {
           {/* Left Column: Personal Identity & Overview with ScrollReveal */}
           <div className="lg:col-span-5 space-y-6">
             <ScrollReveal>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-400 mb-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-violet-400 mb-3">
                 <User className="w-3.5 h-3.5" />
                 <span>ABOUT & SYSTEMS MINDSET</span>
               </div>
@@ -24,8 +24,8 @@ export const AboutSection: React.FC = () => {
                 Building Strong Foundations in Systems Engineering
               </h2>
 
-              <TiltCard glareColor="cyan" maxTilt={4} depth={6}>
-                <div className="bg-[#0c1220] border border-cyan-500/30 rounded-xl p-5 space-y-4 shadow-xl">
+              <TiltCard glareColor="violet" maxTilt={4} depth={6}>
+                <div className="bg-[#0c1220] border border-violet-500/30 rounded-xl p-5 space-y-4 shadow-xl">
                   <div className="flex items-center gap-4 pb-4 border-b border-slate-800">
                     <ProfileImage
                       size="md"
@@ -38,7 +38,7 @@ export const AboutSection: React.FC = () => {
                       <h3 className="font-display font-bold text-lg text-white">
                         {PERSONAL_INFO.name}
                       </h3>
-                      <span className="font-mono text-xs text-cyan-400 block">
+                      <span className="font-mono text-xs text-violet-400 block">
                         @{PERSONAL_INFO.handle}
                       </span>
                       <span className="block text-[11px] text-slate-400 font-mono mt-0.5">
@@ -54,7 +54,7 @@ export const AboutSection: React.FC = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">PRIMARY FOCUS:</span>
-                      <span className="text-cyan-300">Backend, Net, Sec, Linux</span>
+                      <span className="text-violet-300">Backend, Net, Sec, Linux</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">GITHUB REPOS:</span>
@@ -62,7 +62,7 @@ export const AboutSection: React.FC = () => {
                         href={PERSONAL_INFO.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-cyan-400 hover:underline"
+                        className="text-violet-400 hover:underline"
                       >
                         github.com/{PERSONAL_INFO.handle}
                       </a>
@@ -78,7 +78,7 @@ export const AboutSection: React.FC = () => {
               {/* Quick Principles */}
               <div className="space-y-2.5 mt-6">
                 <div className="flex items-start gap-2 text-xs text-slate-300">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-1.5 shrink-0" />
                   <span>Zero superficial claims — every repository and lab is transparently documented.</span>
                 </div>
                 <div className="flex items-start gap-2 text-xs text-slate-300">
@@ -108,9 +108,9 @@ export const AboutSection: React.FC = () => {
             {/* Core Values Staggered Grid */}
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <StaggerItem>
-                <TiltCard glareColor="cyan" maxTilt={4} depth={4} className="h-full">
-                  <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition-colors h-full">
-                    <div className="p-2 rounded-lg bg-cyan-950 text-cyan-400 w-fit mb-3 border border-cyan-500/30">
+                <TiltCard glareColor="violet" maxTilt={4} depth={4} className="h-full">
+                  <div className="bg-[#0b101c] p-4 rounded-xl border border-slate-800 hover:border-violet-500/40 transition-colors h-full">
+                    <div className="p-2 rounded-lg bg-violet-950 text-violet-400 w-fit mb-3 border border-violet-500/30">
                       <Server className="w-4 h-4" />
                     </div>
                     <h4 className="font-display font-bold text-white text-sm mb-1">

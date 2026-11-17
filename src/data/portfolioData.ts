@@ -28,7 +28,7 @@ export const TECHNICAL_PILLARS: TechnicalPillar[] = [
     title: 'Backend Systems & Architecture',
     subtitle: 'High-throughput, asynchronous server engines and persistent data flows',
     badge: 'CORE DOMAIN 01',
-    accentColor: 'cyan',
+    accentColor: 'violet',
     description: 'Engineering resilient server backends, structured REST endpoints, asynchronous request pipelines, and secure database interactions.',
     protocols: ['Node.js', 'Express', 'Python', 'RESTful APIs', 'Async I/O', 'SQL/NoSQL'],
     keyTopics: [

@@ -7,7 +7,7 @@
   }
 
   body {
-    background-color: #070a10;
+    background-color: #0a0813;
     color: #e2e8f0;
     overflow-x: hidden;
   }
@@ -26,13 +26,13 @@
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
 }
 
 .bg-dot-pattern {
   background-size: 24px 24px;
-  background-image: radial-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
 }
 
 /* Scanline effect */
@@ -41,8 +41,8 @@
     to bottom,
     rgba(255,255,255,0),
     rgba(255,255,255,0) 50%,
-    rgba(0, 240, 255, 0.02) 50%,
-    rgba(0, 240, 255, 0.02)
+    rgba(167, 139, 250, 0.02) 50%,
+    rgba(167, 139, 250, 0.02)
   );
   background-size: 100% 4px;
 }
@@ -62,8 +62,8 @@
   text-shadow: 0 0 8px rgba(52, 211, 153, 0.45);
 }
 
-.terminal-glow-cyan {
-  text-shadow: 0 0 8px rgba(6, 182, 212, 0.45);
+.terminal-glow-violet {
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.45);
 }
 
 /* Neon Cybersecurity Ring Keyframes & Classes */
@@ -88,11 +88,11 @@
 @keyframes neon-glow-pulse {
   0%, 100% {
     opacity: 0.75;
-    filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.4)) drop-shadow(0 0 32px rgba(14, 165, 233, 0.25));
+    filter: drop-shadow(0 0 16px rgba(139, 92, 246, 0.4)) drop-shadow(0 0 32px rgba(124, 58, 237, 0.25));
   }
   50% {
     opacity: 1;
-    filter: drop-shadow(0 0 24px rgba(6, 182, 212, 0.65)) drop-shadow(0 0 44px rgba(16, 185, 129, 0.35));
+    filter: drop-shadow(0 0 24px rgba(139, 92, 246, 0.65)) drop-shadow(0 0 44px rgba(16, 185, 129, 0.35));
   }
 }
 
@@ -119,10 +119,10 @@
 
 @keyframes wordmark-glow-pulse {
   0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.3)) drop-shadow(0 0 20px rgba(56, 189, 248, 0.15));
+    filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.3)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.15));
   }
   50% {
-    filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.55)) drop-shadow(0 0 28px rgba(99, 102, 241, 0.25));
+    filter: drop-shadow(0 0 16px rgba(167, 139, 250, 0.55)) drop-shadow(0 0 28px rgba(99, 102, 241, 0.25));
   }
 }
 
@@ -155,9 +155,9 @@
     105deg,
     #ffffff 0%,
     #f1f5f9 20%,
-    #00f0ff 45%,
+    #a78bfa 45%,
     #ffffff 55%,
-    #7dd3fc 75%,
+    #c4b5fd 75%,
     #ffffff 100%
   );
   background-size: 250% auto;
@@ -186,17 +186,17 @@
   0% {
     opacity: 0;
     transform: translateY(-2px) scale(0.9);
-    filter: brightness(2) drop-shadow(0 0 14px #00f0ff);
+    filter: brightness(2) drop-shadow(0 0 14px #a78bfa);
   }
   50% {
     opacity: 1;
     transform: translateY(0) scale(1.05);
-    filter: brightness(1.4) drop-shadow(0 0 10px #00f0ff);
+    filter: brightness(1.4) drop-shadow(0 0 10px #a78bfa);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: brightness(1) drop-shadow(0 0 4px rgba(0, 240, 255, 0.4));
+    filter: brightness(1) drop-shadow(0 0 4px rgba(167, 139, 250, 0.4));
   }
 }
 
@@ -220,9 +220,9 @@
 .group:hover .wordmark-glitch-text::before,
 .wordmark-glitch-text:hover::before {
   opacity: 0.9;
-  color: #00f0ff;
-  -webkit-text-fill-color: #00f0ff;
-  text-shadow: -1.5px 0 #00f0ff;
+  color: #a78bfa;
+  -webkit-text-fill-color: #a78bfa;
+  text-shadow: -1.5px 0 #a78bfa;
   animation: cyber-glitch-slice-1 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -377,7 +377,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #070a10;
+  background: #0a0813;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -429,13 +429,13 @@ html.high-contrast .border-slate-800,
 html.high-contrast .border-slate-700,
 html.high-contrast .border-slate-800\/80,
 html.high-contrast .border-slate-800\/60,
-html.high-contrast .border-cyan-500\/20,
-html.high-contrast .border-cyan-500\/30 {
+html.high-contrast .border-violet-500\/20,
+html.high-contrast .border-violet-500\/30 {
   border-color: #38bdf8 !important;
   border-width: 1.5px !important;
 }
 
-html.high-contrast .bg-\[\#070a10\],
+html.high-contrast .bg-\[\#0a0813\],
 html.high-contrast .bg-\[\#080c14\],
 html.high-contrast .bg-\[\#0a0e1a\],
 html.high-contrast .bg-\[\#0b101c\],

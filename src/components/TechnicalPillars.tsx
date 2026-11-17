@@ -27,13 +27,13 @@ export const TechnicalPillars: React.FC = () => {
 
   const getAccentStyles = (accent: string) => {
     switch (accent) {
-      case 'cyan':
+      case 'violet':
         return {
-          border: 'border-cyan-500/40',
-          bg: 'bg-cyan-500/10',
-          text: 'text-cyan-400',
-          badgeBg: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/40',
-          glare: 'cyan' as const,
+          border: 'border-violet-500/40',
+          bg: 'bg-violet-500/10',
+          text: 'text-violet-400',
+          badgeBg: 'bg-violet-950/80 text-violet-300 border-violet-500/40',
+          glare: 'violet' as const,
         };
       case 'emerald':
         return {
@@ -61,11 +61,11 @@ export const TechnicalPillars: React.FC = () => {
         };
       default:
         return {
-          border: 'border-cyan-500/40',
-          bg: 'bg-cyan-500/10',
-          text: 'text-cyan-400',
-          badgeBg: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/40',
-          glare: 'cyan' as const,
+          border: 'border-violet-500/40',
+          bg: 'bg-violet-500/10',
+          text: 'text-violet-400',
+          badgeBg: 'bg-violet-950/80 text-violet-300 border-violet-500/40',
+          glare: 'violet' as const,
         };
     }
   };
@@ -76,7 +76,7 @@ export const TechnicalPillars: React.FC = () => {
         
         {/* Section Header with Viewport ScrollReveal */}
         <ScrollReveal className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-400">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-violet-400">
             <Layers className="w-3.5 h-3.5" />
             <span>SPECIALIZED TECHNICAL MATRIX</span>
           </div>
@@ -129,9 +129,9 @@ export const TechnicalPillars: React.FC = () => {
 
         {/* Active Pillar Details Card with ScrollReveal */}
         <ScrollReveal delay={0.1}>
-          <div className="bg-[#0b101c] border border-cyan-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+          <div className="bg-[#0b101c] border border-violet-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
             {/* Top Accent Line */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-indigo-500 to-emerald-500" />
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
@@ -139,7 +139,7 @@ export const TechnicalPillars: React.FC = () => {
               <div className="lg:col-span-6 space-y-6">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">
+                    <span className="text-xs font-mono text-violet-400 font-bold uppercase tracking-wider">
                       // CORE ARCHITECTURE & PROTOCOL RIGOR
                     </span>
                   </div>
@@ -175,7 +175,7 @@ export const TechnicalPillars: React.FC = () => {
                     {activePillar.protocols.map((proto, idx) => (
                       <span
                         key={idx}
-                        className="text-xs font-mono px-2.5 py-1 rounded bg-[#0f172a] text-cyan-300 border border-slate-700"
+                        className="text-xs font-mono px-2.5 py-1 rounded bg-[#0f172a] text-violet-300 border border-slate-700"
                       >
                         {proto}
                       </span>
@@ -190,7 +190,7 @@ export const TechnicalPillars: React.FC = () => {
                   <>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Code2 className="w-4 h-4 text-cyan-400" />
+                        <Code2 className="w-4 h-4 text-violet-400" />
                         <span className="text-xs font-mono text-slate-300 font-bold">
                           {activePillar.codeSnippet.title}
                         </span>
