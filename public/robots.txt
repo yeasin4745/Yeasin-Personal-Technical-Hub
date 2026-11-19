@@ -1,0 +1,5 @@
+# Replace the placeholder with the deployed canonical origin before production indexing.
+User-agent: *
+Allow: /
+
+Sitemap: https://REPLACE-WITH-REAL-DOMAIN/sitemap.xml
